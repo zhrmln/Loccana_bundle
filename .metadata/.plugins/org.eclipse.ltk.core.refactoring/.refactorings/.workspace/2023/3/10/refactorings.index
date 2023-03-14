@@ -1,0 +1,4 @@
+1678069476233	Delete resource 'LoccanaCashBankConfigs/src/main/synapse-config/api/LoccanaCashBank.xml'
+1678075771816	Delete resource 'LoccanaAccountingConfigs/src/main/synapse-config/sequences/LoccanaSellingGetResponseSuccess.xml'
+1678346427029	Delete resource 'LoccanaSellingConfigs/src/main/synapse-config/sequences/UpdateItem.xml'
+1678353357228	Delete resource 'LoccanaSellingConfigs/src/main/synapse-config/api/UpdateItemQTY.xml'

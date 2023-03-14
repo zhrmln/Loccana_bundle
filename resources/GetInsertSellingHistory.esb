@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<esb:EsbDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb">
+  <server type="SEQUENCE">
+    <children xsi:type="esb:Sequences" name="GetInsertSellingHistory">
+      <commentsList>     &lt;log description=&quot;Log start&quot; level=&quot;custom&quot;> </commentsList>
+      <commentsList>         &lt;property expression=&quot;get-property('dataSellingHistory')&quot; name=&quot;test insert data selling history&quot;/> </commentsList>
+      <commentsList>     &lt;/log> </commentsList>
+      <outputConnector>
+        <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.0/@inputConnector"/>
+      </outputConnector>
+      <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.9/@outputConnector/@outgoingLink"/>
+      <mediatorFlow>
+        <children xsi:type="esb:EnrichMediator" description="Deploy item untuk di olah" cloneSource="false" sourceProperty="items" targetType="body">
+          <sourceXpath prettyName="Source XPath" propertyName="xpath" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          <targetXpath prettyName="Target XPath" propertyName="xpath" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          <inlineRegistryKey prettyName="InlineKey" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <inputConnector incomingLinks="//@server/@children.0/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.1/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:ForEachMediator" description="Foreach array item mutations" forEachID="foreach-item-selling-history">
+          <forEachExpression propertyValue="json-eval($)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <target/>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.2/@inputConnector"/>
+          </outputConnector>
+          <targetOutputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.1/@mediatorFlow/@children.0/@inputConnector"/>
+          </targetOutputConnector>
+          <mediatorFlow>
+            <children xsi:type="esb:PropertyGroupMediator" description="input items">
+              <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@targetOutputConnector/@outgoingLink"/>
+              <outputConnector>
+                <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.1/@mediatorFlow/@children.1/@inputConnector"/>
+              </outputConnector>
+              <properties valueType="EXPRESSION" newPropertyName="sales_id">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.sales_id)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="item_id">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.item_id)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="unit_price">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.unit_price)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="qty">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.qty)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="qty_box">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.qty_box)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="qty_pcs">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.qty_pcs)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="box_amount">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.box_amount)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="price">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.price)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="notes">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.notes)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="mutation_id">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.mutation_id)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="approval_by">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.approval_by)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="approval_date">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="json-eval($.approval_date)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+              <properties valueType="EXPRESSION" newPropertyName="currentDate">
+                <inputConnector/>
+                <outputConnector/>
+                <valueExpression propertyValue="get-property('SYSTEM_DATE', 'yyyy-MM-dd HH:mm:ss')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </properties>
+            </children>
+            <children xsi:type="esb:PayloadFactoryMediator" payload="        &#xA;                    { &#xA;&#x9;&#x9;&#x9;            &quot;selling_id&quot;: &quot;$1&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;sales_id&quot;: &quot;$2&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;item_id&quot;: &quot;$3&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;unit_price&quot;: &quot;$4&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;qty&quot;: &quot;$5&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;qty_box&quot;: &quot;$6&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;qty_pcs&quot;: &quot;$7&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;box_amount&quot;: &quot;$8&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;price&quot;: &quot;$9&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;notes&quot;: &quot;$10&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;mutation_id&quot;: &quot;$11&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;approval_by&quot;: &quot;$12&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;approval_date&quot;: &quot;$13&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;created_at&quot;: &quot;$13&quot;,&#xA;&#x9;&#x9;&#x9;            &quot;updated_at&quot;: &quot;$13&quot;&#xA;&#x9;&#x9;&#x9;            &#xA;&#x9;&#x9;&#x9;        }&#xA;&#x9;&#x9;        " mediaType="json">
+              <payloadKey prettyName="Sequence Key" keyName="Sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('sellingsId')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('sales_id')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('item_id')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('unit_price')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('qty')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('qty_box')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('qty_pcs')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('box_amount')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('price')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('notes')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('mutation_id')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('approval_by')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <args argumentType="Expression">
+                <argumentExpression propertyValue="get-property('currentDate')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+              </args>
+              <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+              <outputConnector>
+                <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.1/@mediatorFlow/@children.2/@inputConnector"/>
+              </outputConnector>
+            </children>
+            <children xsi:type="esb:PropertyMediator" propertyName="messageType" propertyScope="axis2" value="application/json">
+              <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+              <outputConnector>
+                <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.1/@mediatorFlow/@children.3/@inputConnector"/>
+              </outputConnector>
+              <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+            </children>
+            <children xsi:type="esb:PropertyMediator" description="Data Items" valueType="EXPRESSION" newPropertyName="updateItemQTY">
+              <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+              <outputConnector>
+                <commentMediators commentText="             &lt;property description=&quot;Success&quot; expression=&quot;get-property('item_id')&quot; name=&quot;id_item&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/> "/>
+                <commentMediators commentText="             &lt;log description=&quot;Log start&quot; level=&quot;custom&quot;> "/>
+                <commentMediators commentText="                 &lt;property expression=&quot;get-property('id_item')&quot; name=&quot;test get data array item id&quot;/> "/>
+                <commentMediators commentText="             &lt;/log> "/>
+              </outputConnector>
+              <valueExpression propertyValue="json-eval($.return)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+            </children>
+          </mediatorFlow>
+          <sequenceKey prettyName="Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+        </children>
+        <children xsi:type="esb:PropertyMediator" description="Get result" valueType="EXPRESSION" newPropertyName="resultForeachSellingHistory">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.3/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:PayloadFactoryMediator" payload="&#xA;      &#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;&quot;createSellingHistoryBatch&quot;: {&#xA;&#x9;&#x9;&#x9;    &#x9;&quot;createSellingHistory&quot;: $1&#xA;&#x9;&#x9;&#x9;  &#x9;}&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;" mediaType="json">
+          <payloadKey prettyName="Sequence Key" keyName="Sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('resultForeachSellingHistory')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.4/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:PayloadFactoryMediator" payload="&#xA;      &#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;&quot;updateItemQty&quot;: {&#xA;&#x9;&#x9;&#x9;    &#x9;&quot;updateItemQTY&quot;: $1&#xA;&#x9;&#x9;&#x9;  &#x9;}&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;" mediaType="json">
+          <payloadKey prettyName="Sequence Key" keyName="Sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('resultForeachSellingHistory')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.5/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:PropertyMediator" description="Data Items" valueType="EXPRESSION" newPropertyName="dataSellingHistory">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.4/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.6/@inputConnector"/>
+            <commentMediators commentText="     &lt;log description=&quot;Log start&quot; level=&quot;custom&quot;> "/>
+            <commentMediators commentText="         &lt;property expression=&quot;get-property('dataSellingHistory')&quot; name=&quot;test insert data selling history&quot;/> "/>
+            <commentMediators commentText="     &lt;/log> "/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:EnrichMediator" cloneSource="false" sourceProperty="dataSellingHistory" targetType="body">
+          <sourceXpath prettyName="Source XPath" propertyName="xpath" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          <targetXpath prettyName="Target XPath" propertyName="xpath" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          <inlineRegistryKey prettyName="InlineKey" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.5/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.7/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:DSSMediator" description="Batch insert ke selling history" serviceName="LoccanaSellingDataService" sourceType="BODY" availableDataServices="LoccanaSellingDataService">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.6/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.8/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:PropertyMediator" description="Result" valueType="EXPRESSION" newPropertyName="resultSellingHistory">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.7/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.9/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:PropertyMediator" description="Success" valueType="EXPRESSION" newPropertyName="data">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.8/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($.return)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+      </mediatorFlow>
+      <onError prettyName="OnError sequence Key" keyName="OnError sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+    </children>
+  </server>
+</esb:EsbDiagram>

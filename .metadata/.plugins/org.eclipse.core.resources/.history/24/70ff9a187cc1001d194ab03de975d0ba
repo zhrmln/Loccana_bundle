@@ -1,0 +1,700 @@
+<data name="LoccanaAccounting" serviceNamespace="" serviceGroup="" transports="http https">
+    <description/>
+    <!--   START CONNECTION TO SERVER WSO2 -->
+    <config id="DataSourceSelling">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://161.97.171.156:3306/loccana_selling</property>
+    <property name="username">admindb</property>
+    <property name="password">Sukaluyu2931!#</property>
+  </config>
+  <config id="DataSourceMasterData">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://161.97.171.156:3306/loccana_masterdata</property>
+    <property name="username">admindb</property>
+    <property name="password">Sukaluyu2931!#</property>
+  </config>
+  <config id="DataSourceInventory">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://161.97.171.156:3306/loccana_inventory</property>
+    <property name="username">admindb</property>
+    <property name="password">Sukaluyu2931!#</property>
+  </config>
+  <config id="DataSourceCashBank">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://161.97.171.156:3306/loccana_cashbank</property>
+    <property name="username">admindb</property>
+    <property name="password">Sukaluyu2931!#</property>
+  </config>
+  <config id="DataSourcePO">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://161.97.171.156:3306/loccana_procurement</property>
+    <property name="username">admindb</property>
+    <property name="password">Sukaluyu2931!#</property>
+  </config>
+<!-- END CONNECTION To SERVER WSO2 -->
+
+<!-- BEGAN QUERY REPORT UTANG NO_LIMIT -->
+	 <query id="getReportUtangNoLimitListQuery" useConfig="DataSourceCashBank">
+	    <sql>
+	    	<![CDATA[
+				SELECT *,GROUP_CONCAT(item_name,'') AS items,
+			SUM(price_fulls) AS price_full, SUM(invoice_saldos) AS invoice_saldo,
+			SUM(dpps) dpp, SUM(bulan_berjalans) AS bulan_berjalan,
+			SUM(saldos) AS saldo 
+			FROM (
+			SELECT 
+			d.`no_selling`,
+			a.`invoice_number`,
+			a.`date_invoice`,
+			a.`due_date`,
+			f.`item_code`,
+			f.`item_name`,
+			g.`base_qty`,
+			h.`symbol`,
+			CONCAT(f.`item_name`,'',g.`base_qty`,'',h.`symbol`) AS items1,
+			b.`unit_price`,
+			b.`qty`,
+			b.`qty_box`,
+			b.`qty_pcs`,
+			b.`discount`,
+			b.`price`-(b.price*(b.`discount`/100)) AS price_fulls,
+			b.price-(b.price*(b.discount/100)) AS invoice_saldos,
+			b.price-(b.price*(b.discount/100)) - ((b.price-(b.price*(b.discount/100)))/(d.tax)) AS dpps,
+			((b.price-(b.price*(b.discount/100)))/(d.tax)) AS ppn,
+			IF(d.`term_of_payment` = "Cash",0,d.`term_of_payment`) topys,
+			IF(k.bayar_saldo IS NULL,0,k.bayar_saldo) AS bayar_saldo,
+			DATEDIFF(NOW(),a.`date_invoice`) umur, 
+			e.`name`,
+			IF(a.`date_invoice` BETWEEN :start_date AND :end_date,b.price-(b.price*(b.discount/100)) ,0 ) bulan_berjalans,
+			IF(a.`date_invoice` < :start_date ,b.price-(b.price*(b.discount/100)) ,0 ) saldos,
+			i.*,
+			j.*,
+			l.nilai_retur_saldo, 
+			m.nilai_retur ,
+			m.tgl_retur
+				FROM `loccana_selling`.`selling_invoice` a 
+				JOIN `loccana_selling`.`selling_invoice_details` b ON a.`id`=b.`selling_invoice_id`
+				JOIN `loccana_selling`.`selling_details` c ON b.`selling_detail_id` = c.`id`
+				JOIN `loccana_selling`.`selling` d ON a.`selling_id`=d.`id`
+				JOIN `loccana_masterdata`.`partners` e ON d.`partner_id` = e.`id`
+				JOIN `loccana_masterdata`.`items` f ON c.`item_id`=f.`id`
+				JOIN `loccana_masterdata`.`item_qty` g ON f.`id`=g.`item_id`
+				JOIN `loccana_masterdata`.`uom` h ON f.`uom_id`=h.`id`
+			LEFT JOIN
+			(
+				SELECT a.`payment_date` AS tgl_bayar,b.`invoice_id` inv_bayar,
+				a.`payment_type`,
+				SUM(b.`ammount`) bayar, (a.`payment_status`) AS payment_status 
+				FROM `loccana_cashbank`.`payments` a
+				JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id` 
+				WHERE a.`payment_type` = 1 AND a.payment_status=1 AND a.`payment_date` BETWEEN :start_date AND :end_date
+				GROUP BY b.`invoice_id`
+			) i ON a.`id` = i.inv_bayar
+			LEFT JOIN
+			(
+				SELECT b.`invoice_id` inv_bayar_1,
+				SUM(b.`ammount`) bayar_giro,
+				GROUP_CONCAT(a.`due_date`,"/n") AS tgl_jatuh_tempo,
+				GROUP_CONCAT(FORMAT(b.`ammount`,2,"de_DE"),"/n") AS bayar_giro_concat
+				FROM `loccana_cashbank`.`payments` a
+				JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id`
+				WHERE a.`payment_type` = 1 AND a.`payment_category`=1 AND a.payment_status=0 AND a.`payment_date` <= :end_date
+				GROUP BY b.`invoice_id`
+			) j ON a.`id` = j.inv_bayar_1
+			LEFT JOIN
+				(
+				SELECT a.`payment_category` AS tgl_bayar_saldo,
+				b.`invoice_id` inv_saldo,
+				SUM(b.ammount) bayar_saldo 
+				FROM `loccana_cashbank`.`payments` a
+				JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id`
+				WHERE a.`payment_type` = 1 AND a.payment_status=1 AND a.`payment_date` < :start_date
+				GROUP BY b.`invoice_id`
+			) k ON k.inv_saldo = a.id
+			LEFT JOIN
+			(
+				SELECT d.`id` AS id_selling,
+				SUM(IF(b.`qty_return` IS NULL,0,b.`qty_return`) *IF(c.`unit_price` IS NULL,0,c.`unit_price`)) AS nilai_retur_saldo 
+				FROM `loccana_selling`.`selling_returns` a 
+				JOIN `loccana_selling`.`selling_return_details` b ON a.`id`=b.`selling_return_id`
+				JOIN `loccana_selling`.`selling_details` c ON b.`selling_detail_id`=c.`selling_id`
+				JOIN `loccana_selling`.`selling` d ON c.`selling_id` = d.`id`
+				WHERE a.`retur_date` < :start_date 
+				GROUP BY d.`id`
+			) l ON l.`id_selling` = a.`id`
+			LEFT JOIN
+			(
+				SELECT d.`id` AS id_selling,
+				SUM(IF(b.`qty_return` IS NULL,0,b.`qty_return`) *IF(c.`unit_price` IS NULL,0,c.`unit_price`)) AS nilai_retur , 
+				CONCAT(a.retur_date,"") AS tgl_retur
+				FROM `loccana_selling`.`selling_returns` a 
+				JOIN `loccana_selling`.`selling_return_details` b ON a.`id`=b.`selling_return_id`
+				JOIN `loccana_selling`.`selling_details` c ON b.`selling_detail_id`=c.`selling_id`
+				JOIN `loccana_selling`.`selling` d ON c.`selling_id` = d.`id`
+				WHERE a.`retur_date` BETWEEN :start_date AND :end_date
+				GROUP BY d.`id`
+			) m ON m.id_selling = a.`id`
+			WHERE 1=1   AND e.id= :id_eks 
+			) n
+			WHERE n.date_invoice <= :end_date
+			GROUP BY invoice_number
+			ORDER BY `date_invoice`,item_name
+			]]>
+		</sql>
+	    <param name="start_date" sqlType="STRING" paramType="SCALAR" />
+	    <param name="end_date" sqlType="STRING" paramType="SCALAR" />
+	    <param name="id_eks" sqlType="STRING" paramType="SCALAR" />
+	    <result outputType="json">{
+		  "data": {
+		    "list": [
+		    			{            
+		    			"no_selling" : "$no_selling", 
+					    "invoice_number" : "$invoice_number", 
+					    "date_invoice" : "$date_invoice", 
+					    "due_date" : "$due_date", 
+					    "item_code" : "$item_code", 
+					    "item_name" : "$item_name", 
+					    "base_qty" : "$base_qty", 
+					    "symbol" : "$symbol", 
+					    "items" : "$items", 
+					    "unit_price" : "$unit_price", 
+					    "qty" : "$qty", 
+					    "qty_box" : "$qty_box", 
+					    "qty_pcs" : "$qty_pcs", 
+					    "discount" : "$discount", 
+					    "price_fulls" : "$price_fulls", 
+					    "invoice_saldos" : "$invoice_saldos", 
+					    "dpps" : "$dpps", 
+					    "ppn" : "$ppn", 
+					    "topys" : "$topys", 
+					    "bayar_saldo" : "$bayar_saldo", 
+					    "umur" : "$umur", 
+					    "name" : "$name", 
+					    "bulan_berjalans" : "$bulan_berjalans", 
+					    "saldos" : "$saldos", 
+					    "tgl_bayar" : "$tgl_bayar", 
+					    "inv_bayar" : "$inv_bayar", 
+					    "payment_type" : "$payment_type", 
+					    "bayar" : "$bayar", 
+					    "payment_status" : "$payment_status", 
+					    "inv_bayar_1" : "$inv_bayar_1", 
+					    "bayar_giro" : "$bayar_giro", 
+					    "tgl_jatuh_tempo" : "$tgl_jatuh_tempo", 
+					    "bayar_giro_concat" : "$bayar_giro_concat", 
+					    "nilai_retur_saldo" : "$nilai_retur_saldo", 
+					    "nilai_retur" : "$nilai_retur", 
+					    "tgl_retur" : "$tgl_retur", 
+					    "items1" : "$items1", 
+					    "price_full" : "$price_full", 
+					    "invoice_saldo" : "$invoice_saldo", 
+					    "dpp" : "$dpp", 
+					    "bulan_berjalan" : "$bulan_berjalan", 
+					    "saldo" : "$saldo"
+		    			}	
+		    		]
+
+		  }
+		}</result>
+	  </query>
+<!-- 	  END QUERY REPORT UTANG NO_LIMIT -->
+ 
+<!-- BEGAN QUERY BUKU BESAR PEMbANTU -->
+	<query id="getBukuBesarPembantuQuery" useConfig="DataSourceCashBank">
+	    <sql>
+	    	SELECT 
+	a.id,
+	a.date,
+	b.coa_name,
+	a.coa_id,
+	a.notes,
+	IF(a.type_cash=0,(a.value_real),0) debit,
+	IF(a.type_cash=1,(a.value_real),0) kredit,
+	SUM(IF(a.type_cash=0,(a.value_real),0)) OVER (ORDER BY a.date DESC, a.id DESC) AS cumulative_debit,
+	SUM(IF(a.type_cash=1,(a.value_real),0)) OVER (ORDER BY a.date DESC, a.id DESC) AS cumulative_kredit,
+	SUM(IF(a.type_cash=0,(a.value_real),0)) OVER (ORDER BY a.date DESC, a.id DESC)
+	-SUM(IF(a.type_cash=1,(a.value_real),0)) OVER (ORDER BY a.date DESC, a.id DESC) AS cumulative
+	,c.description AS kr_note,
+	b.coa_code AS kr_coa,
+	a.type_cash,
+	a.notes AS uraian
+	FROM `loccana_cashbank`.`coa_values` a 
+	JOIN `loccana_masterdata`.`coa` b ON a.coa_id=b.id
+	JOIN `loccana_cashbank`.`coa_values` c ON  a.id_parent = c.id
+	JOIN `loccana_masterdata`.`coa` d ON c.coa_id = d.id
+	WHERE a.`date`BETWEEN :start_date AND :end_date
+	AND a.coa_id = :coa_id
+	
+	ORDER BY a.date DESC, a.id DESC
+		</sql>
+	    <param name="start_date" sqlType="STRING" paramType="SCALAR" />
+	    <param name="end_date" sqlType="STRING" paramType="SCALAR" />
+	    <param name="coa_id" sqlType="STRING" paramType="SCALAR" />
+	    <result outputType="json">{
+		  "data": {
+		    "list": [
+		    			{            
+		    			"id" : "$id", 
+		    			"date" : "$date", 
+		    			"coa_name" : "$coa_name", 
+		    			"coa_id" : "$coa_id", 
+		    			"notes" : "$notes", 
+		    			"debit" : "$debit", 
+		    			"kredit" : "$kredit", 
+		    			"cumulative_debit" : "$cumulative_debit", 
+		    			"cumulative_kredit" : "$cumulative_kredit", 
+		    			"cumulative" : "$cumulative", 
+		    			"kr_note" : "$kr_note", 
+		    			"kr_coa" : "$kr_coa", 
+		    			"type_cash" : "$type_cash", 
+		    			"uraian" : "$uraian"
+
+		    			}	
+		    		]
+
+		  }
+		}</result>
+	  </query>
+<!-- 	  END QUERY BUKU BESAR PEMBANTU -->
+
+<!-- BEGAN QUERY PAYABLE REPORT -->
+	 <query id="getPayAbleReportQuery" useConfig="DataSourceCashBank">
+	    <sql>
+	    	<![CDATA[
+				SELECT *, 
+					SUM(pricesa-retur_harga) prices,
+					SUM(saldoa) saldo, 
+					SUM(bulan_berjalana-retur_harga) bulan_berjalan, 
+					SUM(invoice_saldoa-retur_harga) invoice_saldo, 
+					SUM(min_30a) min_30, 
+					SUM(d30a) d30, 
+					SUM(d60a) d60, 
+					SUM(d90a) d90, 
+					SUM(d120a-retur_harga) d120, 
+					GROUP_CONCAT(items) AS items1, 
+					GROUP_CONCAT(DISTINCT(no_po)) AS no_pos  
+					FROM 
+					(
+					SELECT  
+					e.id,
+					g.`receipt_date`,
+					h.id AS id_invoice,
+					e.name,
+					a.`order_date` AS date_po,
+					CONCAT(c.`item_name`,' ',iq.base_qty,' ',d.`symbol`) items,
+					a.`code` AS no_po,
+					DATE_FORMAT(IF(DATE_ADD(h.`invoice_date`, INTERVAL a.`term_of_payment` DAY ) IS NULL,'0000-00-00 00:00:00',
+					DATE_ADD(h.`invoice_date`, INTERVAL a.`term_of_payment` DAY )), "%y-%m-%d") jatuh_tempo, 
+					DATEDIFF(NOW(),g.`receipt_date`) umur,
+					h.`invoice_number`,
+					k.id_payment,
+					a.`ppn`,
+					(IF(f.`qty_receipt` IS NULL,b.`qty`,f.`qty_receipt`)*b.unit_price) AS pricesa ,
+					(IF(j.`qty_return` IS NULL,0,j.`qty_return`)*b.unit_price) AS retur_harga ,
+					((IF(f.qty_receipt IS NULL,b.qty,f.qty_receipt))*b.unit_price) saldoa, 
+					((IF(f.qty_receipt IS NULL,b.qty,f.qty_receipt))*b.unit_price) bulan_berjalana,
+					c.`vat` AS pajak,
+					IF(i.`qty_receipt` IS NULL,b.`discount`,b.`discount`) diskons,
+					IF(k.bayar IS NULL,0,k.bayar) AS bayar,
+					(IF(f.qty_receipt IS NULL,b.qty,f.qty_receipt)*b.unit_price) AS bayars,
+					IF(l.bayar_saldo IS NULL,0,l.bayar_saldo) AS bayar_saldo,
+					DATE_FORMAT(IF(k.tgl_bayar IS NULL,'0000-00-00 00:00:00',k.tgl_bayar),"%y-%m-%d") AS tgl_bayar,
+					IF(h.`invoice_number` IS NULL,0,((IF(f.qty_receipt IS NULL,b.qty,f.qty_receipt))*b.unit_price)) AS invoice_saldoa,
+					IF(DATEDIFF(NOW(),g.`receipt_date`) <= 30,((IF(f.qty_receipt IS NULL,b.qty,f.qty_receipt))*b.unit_price),0 ) AS min_30a,
+					IF(DATEDIFF(NOW(),g.`receipt_date`) BETWEEN 31 AND 60,((IF(f.qty_receipt IS NULL,b.qty,f.qty_receipt))*b.unit_price),0 ) AS d30a,
+					IF(DATEDIFF(NOW(),g.`receipt_date`) BETWEEN 61 AND 90,((IF(f.qty_receipt IS NULL,b.qty,f.qty_receipt))*b.unit_price),0 ) AS d60a,
+					IF(DATEDIFF(NOW(),g.`receipt_date`) BETWEEN 91 AND 120,((IF(f.qty_receipt IS NULL,b.qty,f.qty_receipt))*b.unit_price),0 ) AS d90a,
+					g.`id` AS id_receipt,
+					b.id AS po_item_id,
+					IF(DATEDIFF(NOW(),g.`receipt_date`) > 120,((IF(f.qty_receipt IS NULL,b.qty,f.qty_receipt))*b.unit_price),0 ) AS d120a
+					
+					FROM `loccana_procurement`.`purchase_orders` a
+					JOIN `loccana_procurement`.`purchase_order_items` b ON a.`id`=b.`purchase_order_id`
+					JOIN `loccana_masterdata`.`items` c ON b.`item_id`=c.`id`
+					JOIN `loccana_masterdata`.`uom` d ON c.`uom_id`=d.`id`
+					JOIN `loccana_masterdata`.`partners` e ON a.`partner_id`=e.`id`
+					JOIN `loccana_procurement`.`items_receipt_details` f ON b.`id`=f.`po_item_id`
+					JOIN `loccana_procurement`.`item_receipt` g ON f.`item_receipt_id`= g.`id`
+					JOIN `loccana_masterdata`.`item_qty` iq ON c.`id`=iq.`item_id`
+					LEFT JOIN `loccana_procurement`.`purchase_order_invoices` h ON g.`id`=h.`item_receipt_id`
+					LEFT JOIN `loccana_procurement`.`purchase_order_item_invoices` i ON f.`id`=i.`item_receipt_detail_id`
+					LEFT JOIN (
+						SELECT b.`qty_return`,a.`retur_date`,a.id AS id_retur,b.`po_item_id`
+						FROM `loccana_procurement`.`purchase_order_returns` a
+						JOIN `loccana_procurement`.`purchase_order_item_returns` b ON a.`id`=b.`po_return_id`
+						where a.retur_date <= :end_date
+				)j ON j.po_item_id = b.`id`
+					LEFT JOIN
+					(
+						SELECT a.id AS id_payment,
+					a.payment_date AS tgl_bayar,
+					b.`invoice_id`,
+					SUM(b.`ammount`) bayar 
+					FROM `loccana_cashbank`.`payments` a
+					JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id` 
+					WHERE a.`payment_category` = 0	AND a.`payment_date` BETWEEN :start_date AND :end_date
+					GROUP BY b.`invoice_id`
+				) k ON h.id = k.invoice_id
+					LEFT JOIN
+					(
+					SELECT a.payment_date AS tgl_bayar_saldo,
+					b.invoice_id inv_saldo,
+					SUM(b.ammount) bayar_saldo 
+					FROM `loccana_cashbank`.`payments` a
+					JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id`
+					WHERE a.`payment_category` = 0 AND a.`payment_date` < :start_date
+					GROUP BY b.invoice_id
+				) l ON l.inv_saldo = h.id
+					WHERE 1 = 1   AND a.partner_id = :id_eks
+					AND g.`receipt_date` <= :end_date
+					ORDER BY g.`receipt_date`,a.`code`,h.`invoice_number`
+					
+					) A 
+					GROUP BY id_invoice,po_item_id
+					ORDER BY receipt_date,invoice_number
+			]]>
+		</sql>
+	    <param name="start_date" sqlType="STRING" paramType="SCALAR" />
+	    <param name="end_date" sqlType="STRING" paramType="SCALAR" />
+	    <param name="id_eks" sqlType="STRING" paramType="SCALAR" />
+	    <result outputType="json">{
+		  "data": {
+		    "list": [
+		    			{            
+		    			"id" : "$id", 
+		    			"receipt_date" : "$receipt_date", 
+		    			"id_invoice" : "$id_invoice", 
+		    			"name" : "$name", 
+		    			"date_po" : "$date_po", 
+		    			"items1" : "$items1", 
+		    			"no_po" : "$no_po", 
+		    			"jatuh_tempo" : "$jatuh_tempo",
+		    			"umur" : "$umur", 
+		    			"invoice_number" : "$invoice_number", 
+		    			"id_payment" : "$id_payment", 
+		    			"ppn" : "$ppn", 
+		    			"pricesa" : "$pricesa", 
+		    			"retur_harga" : "$retur_harga", 
+		    			"saldoa" : "$saldoa", 
+		    			"bulan_berjalana" : "$bulan_berjalana", 
+		    			"pajak" : "$pajak", 
+		    			"diskons" : "$diskons", 
+		    			"bayar" : "$bayar", 
+		    			"bayars" : "$bayars", 
+		    			"bayar_saldo" : "$bayar_saldo", 
+		    			"tgl_bayar" : "$tgl_bayar", 
+		    			"invoice_saldoa" : "$invoice_saldoa", 
+		    			"min_30a" : "$min_30a", 
+		    			"d30a" : "$d30a", 
+		    			"d60a" : "$d60a", 
+		    			"d90a" : "$d90a", 
+		    			"id_receipt" : "$id_receipt",  
+		    			"po_item_id" : "$po_item_id", 
+		    			"d120a" : "$d120a", 
+		    			"prices" : "$prices", 
+		    			"saldo" : "$saldo", 
+		    			"bulan_berjalan" : "$bulan_berjalan", 
+		    			"invoice_saldo" : "$invoice_saldo", 
+		    			"min_30" : "$min_30", 
+		    			"d30" : "$d30", 
+		    			"d60" : "$d60", 
+		    			"d90" : "$d90", 
+		    			"d120" : "$d120", 
+		    			"items" : "$items", 
+		    			"no_pos" : "$no_pos"
+
+		    			}	
+		    		]
+
+		  }
+		}</result>
+	  </query>
+<!-- END QUERY PAYABLE REPORT -->
+
+<!-- BEGAN QUERY FINANCE REPORT -->
+	 <query id="getReportCashSaldoQuery" useConfig="DataSourceCashBank">
+	    <sql>
+	    	<![CDATA[
+				SELECT (masuk-keluar) AS saldo_awal FROM (
+					SELECT IF(SUM(value_real) IS NULL,0,SUM(value_real)) AS masuk FROM `loccana_cashbank`.`coa_values` a
+					WHERE coa_id = :id_coa 
+					AND type_cash = 0
+					AND a.date < :date
+					) a,(
+					SELECT IF(SUM(value_real) IS NULL,0,SUM(value_real)) AS keluar FROM `loccana_cashbank`.`coa_values` a
+					WHERE coa_id = :id_coa 
+					AND type_cash = 1
+					AND a.date < :start_date
+				
+				) b
+			]]>
+		</sql>
+	    <param name="start_date" sqlType="STRING" paramType="SCALAR" />
+	    <param name="id_coa" sqlType="STRING" paramType="SCALAR" />
+	    <result outputType="json">{
+		  "data": {
+		    "list": [
+		    			{            
+		    			"saldo_awal" : "$saldo_awal"	    			
+
+		    			}	
+		    		]
+
+		  }
+		}</result>
+	  </query>
+	  <query id="getReportCashQuery" useConfig="DataSourceCashBank">
+	    <sql>
+	    	<![CDATA[
+				SELECT *,coa_name AS banks FROM (
+
+			    SELECT a.*,
+			    b.coa_code kr_coa,b.notes AS k_note,
+			    IF(b.coa_name IS NULL,a.coa_name,b.coa_name) kr_note,
+			    IF(b.value_real IS NULL,a.value_real,b.value_real) sum_amnt,
+			    c.`invoice_number` invoice_p, c.name users 
+			    FROM (
+				SELECT a.*,b.coa_code,b.`coa_name`
+				FROM `loccana_cashbank`.`coa_values` a 
+				JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+				WHERE a.type_cash=1 AND a.id_parent = 0  AND b.id= pin_id_coa
+			    )a LEFT JOIN (
+				SELECT a.*,b.coa_code,b.`coa_name`
+				FROM `loccana_cashbank`.`coa_values` a 
+				JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+				WHERE a.type_cash=0 AND a.id_parent <> 0
+			    )b ON a.id=b.id_parent
+			    LEFT JOIN (
+				SELECT a.`id`,
+				c.`invoice_number`,
+				f.`name` 
+				FROM `loccana_cashbank`.`payments` a
+				LEFT JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id`
+				LEFT JOIN `loccana_procurement`.`purchase_order_invoices` c ON b.`invoice_id` = c.`id`
+				LEFT JOIN `loccana_procurement`.`item_receipt` d ON c.`item_receipt_id` = d.`id`
+				LEFT JOIN `loccana_procurement`.`purchase_orders` e ON d.`po_id` = e.`id`
+				LEFT JOIN `loccana_masterdata`.`partners` f ON e.`partner_id` = f.`id`
+				WHERE a.`payment_type` = 0
+				GROUP BY a.`id`) c ON a.payment_id = c.`id`
+				WHERE a.date BETWEEN  :start_date AND :end_date
+				#AND b.coa_code IS NOT NULL
+		    ) a UNION ALL SELECT *,coa_name AS banks FROM (
+		
+		    SELECT a.*,
+		    b.coa_code kr_coa,b.notes AS k_note,
+		    IF(b.coa_name IS NULL,a.coa_name,b.coa_name) kr_note,
+		    IF(b.value_real IS NULL,a.value_real,b.value_real) sum_amnt,
+		    c.`invoice_number` invoice_p, c.name users 
+		    FROM (
+			SELECT a.*,b.coa_code,b.`coa_name`
+			FROM `loccana_cashbank`.`coa_values` a 
+			JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+			WHERE a.type_cash=1 AND a.id_parent <> 0  AND b.id= pin_id_coa
+		    )a LEFT JOIN (
+			SELECT a.*,b.coa_code,b.`coa_name`
+			FROM `loccana_cashbank`.`coa_values` a 
+			JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+			WHERE a.type_cash=0 AND a.id_parent = 0
+		    )b ON a.id=b.id_parent
+		    LEFT JOIN (
+			SELECT a.`id`,
+			c.`invoice_number`,
+			f.`name` 
+			FROM `loccana_cashbank`.`payments` a
+			LEFT JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id`
+			LEFT JOIN `loccana_procurement`.`purchase_order_invoices` c ON b.`invoice_id` = c.`id`
+			LEFT JOIN `loccana_procurement`.`item_receipt` d ON c.`item_receipt_id` = d.`id`
+			LEFT JOIN `loccana_procurement`.`purchase_orders` e ON d.`po_id` = e.`id`
+			LEFT JOIN `loccana_masterdata`.`partners` f ON e.`partner_id` = f.`id`
+			WHERE a.`payment_type` = 0
+			GROUP BY a.`id`) c ON a.payment_id = c.`id`
+			WHERE a.date BETWEEN  :start_date AND :end_date
+			#AND b.coa_code IS NOT NULL
+		    ) b UNION ALL SELECT *,coa_name AS banks FROM (
+		
+		    SELECT a.*,
+		    b.coa_code kr_coa,b.notes AS k_note,
+		    IF(b.coa_name IS NULL,a.coa_name,b.coa_name) kr_note,
+		    IF(b.value_real IS NULL,a.value_real,b.value_real) sum_amnt,
+		    c.`invoice_number` invoice_p, c.name users 
+		    FROM (
+			SELECT a.*,b.coa_code,b.`coa_name`
+			FROM `loccana_cashbank`.`coa_values` a 
+			JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+			WHERE a.type_cash=1 AND a.id_parent = 0  AND b.id= pin_id_coa
+		    )a LEFT JOIN (
+			SELECT a.*,b.coa_code,b.`coa_name`
+			FROM `loccana_cashbank`.`coa_values` a 
+			JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+			WHERE a.type_cash=0 AND a.id_parent <> 0
+		    )b ON a.id=b.id_parent
+		    LEFT JOIN (
+			      SELECT a.`id`,
+			      c.`invoice_number`,
+			      e.`name`
+			      FROM `loccana_cashbank`.`payments` a 
+		              LEFT JOIN `loccana_cashbank`.`payment_details` b ON a.`id` = b.`payment_id` 
+		              LEFT JOIN `loccana_selling`.`selling_invoice` c ON b.`invoice_id` = c.`id`
+		              LEFT JOIN `loccana_selling`.`selling` d ON c.`selling_id` = d.`id`
+		              LEFT JOIN `loccana_masterdata`.`partners` e ON d.`partner_id` = e.`id`
+		              WHERE a.`payment_type` = 1
+		              GROUP BY a.`id`) c ON a.payment_id = c.`id`
+			WHERE a.date BETWEEN  :start_date AND :end_date
+			#AND b.coa_code IS NOT NULL
+		    )c UNION ALL SELECT *,coa_name AS banks FROM  (
+		
+		    SELECT a.*,
+		    b.coa_code kr_coa,b.notes AS k_note,
+		    IF(b.coa_name IS NULL,a.coa_name,b.coa_name) kr_note,
+		    IF(b.value_real IS NULL,a.value_real,b.value_real) sum_amnt,
+		    c.`invoice_number` invoice_p, c.name users 
+		    FROM (
+			SELECT a.*,b.coa_code,b.`coa_name`
+			FROM `loccana_cashbank`.`coa_values` a 
+			JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+			WHERE a.type_cash=1 AND a.id_parent <> 0  AND b.id= pin_id_coa
+		    )a LEFT JOIN (
+			SELECT a.*,b.coa_code,b.`coa_name`
+			FROM `loccana_cashbank`.`coa_values` a 
+			JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+			WHERE a.type_cash=0 AND a.id_parent = 0
+		    )b ON a.id=b.id_parent
+		    LEFT JOIN (
+			      SELECT a.`id`,
+			      c.`invoice_number`,
+			      e.`name`
+			      FROM `loccana_cashbank`.`payments` a 
+		              LEFT JOIN `loccana_cashbank`.`payment_details` b ON a.`id` = b.`payment_id` 
+		              LEFT JOIN `loccana_selling`.`selling_invoice` c ON b.`invoice_id` = c.`id`
+		              LEFT JOIN `loccana_selling`.`selling` d ON c.`selling_id` = d.`id`
+		              LEFT JOIN `loccana_masterdata`.`partners` e ON d.`partner_id` = e.`id`
+		              WHERE a.`payment_type` = 1
+		              GROUP BY a.`id`) c ON a.payment_id = c.`id`
+			WHERE a.date BETWEEN  :start_date AND :end_date
+			#AND b.coa_code IS NOT NULL
+		    ) d UNION ALL SELECT *,coa_name AS banks FROM (
+		
+		    SELECT a.*,
+			    b.coa_code kr_coa,b.notes AS k_note,
+			    IF(b.coa_name IS NULL,a.coa_name,b.coa_name) kr_note,
+			    IF(b.value_real IS NULL,a.value_real,b.value_real) sum_amnt,
+			    c.`invoice_number` invoice_p, c.name users 
+			    FROM (
+				SELECT a.*,b.coa_code,b.`coa_name`
+				FROM `loccana_cashbank`.`coa_values` a 
+				JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+				WHERE a.type_cash=1 AND a.id_parent = 0  AND b.id= pin_id_coa
+			    )a LEFT JOIN (
+				SELECT a.*,b.coa_code,b.`coa_name`
+				FROM `loccana_cashbank`.`coa_values` a 
+				JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+				WHERE a.type_cash=0 AND a.id_parent <> 0
+			    )b ON a.id=b.id_parent
+			    LEFT JOIN (
+				SELECT a.`id`,
+				c.`invoice_number`,
+				f.`name` 
+				FROM `loccana_cashbank`.`payments` a
+				LEFT JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id`
+				LEFT JOIN `loccana_procurement`.`purchase_order_invoices` c ON b.`invoice_id` = c.`id`
+				LEFT JOIN `loccana_procurement`.`item_receipt` d ON c.`item_receipt_id` = d.`id`
+				LEFT JOIN `loccana_procurement`.`purchase_orders` e ON d.`po_id` = e.`id`
+				LEFT JOIN `loccana_masterdata`.`partners` f ON e.`partner_id` = f.`id`
+				WHERE a.`payment_type` = 0
+				GROUP BY a.`id`) c ON a.payment_id = c.`id`
+				WHERE a.date BETWEEN  :start_date AND :end_date
+				#AND b.coa_code IS NOT NULL
+		    ) e UNION ALL SELECT *,coa_name AS banks FROM (
+		
+		    SELECT a.*,
+			    b.coa_code kr_coa,b.notes AS k_note,
+			    IF(b.coa_name IS NULL,a.coa_name,b.coa_name) kr_note,
+			    IF(b.value_real IS NULL,a.value_real,b.value_real) sum_amnt,
+			    c.`invoice_number` invoice_p, c.name users 
+			    FROM (
+				SELECT a.*,b.coa_code,b.`coa_name`
+				FROM `loccana_cashbank`.`coa_values` a 
+				JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+				WHERE a.type_cash=1 AND a.id_parent = 0  AND b.id= pin_id_coa
+			    )a LEFT JOIN (
+				SELECT a.*,b.coa_code,b.`coa_name`
+				FROM `loccana_cashbank`.`coa_values` a 
+				JOIN `loccana_masterdata`.`coa` b ON a.`coa_id`=b.`id`
+				WHERE a.type_cash=0 AND a.id_parent <> 0
+			    )b ON a.id=b.id_parent
+			    LEFT JOIN (
+				SELECT a.`id`,
+				c.`invoice_number`,
+				f.`name` 
+				FROM `loccana_cashbank`.`payments` a
+				LEFT JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id`
+				LEFT JOIN `loccana_procurement`.`purchase_order_invoices` c ON b.`invoice_id` = c.`id`
+				LEFT JOIN `loccana_procurement`.`item_receipt` d ON c.`item_receipt_id` = d.`id`
+				LEFT JOIN `loccana_procurement`.`purchase_orders` e ON d.`po_id` = e.`id`
+				LEFT JOIN `loccana_masterdata`.`partners` f ON e.`partner_id` = f.`id`
+				WHERE a.`payment_type` = 0
+				GROUP BY a.`id`) c ON a.payment_id = c.`id`
+				WHERE a.date BETWEEN  :start_date AND :end_date
+				#AND b.coa_code IS NOT NULL
+		    ) f 
+		     ORDER BY date_insert,`date`
+			]]>
+		</sql>
+	    <param name="start_date" sqlType="STRING" paramType="SCALAR" />
+	    <param name="end_date" sqlType="STRING" paramType="SCALAR" />
+	    <param name="id_coa" sqlType="STRING" paramType="SCALAR" />
+	    <result outputType="json">{
+		  "data": {
+		    "list": [
+		    			{            
+		    			"saldo_awal" : "$saldo_awal"	    			
+
+		    			}	
+		    		]
+
+		  }
+		}</result>
+	  </query>
+<!-- END QUERY FINANCE REPORT -->
+
+<!-- BEGAN OPERATION REPORT UTANG NO_LIMIT -->
+	<operation name="getReportUtangNoLimitList">
+	    <call-query href="getReportUtangNoLimitListQuery">
+	      <with-param name="start_date" query-param="start_date" />
+	      <with-param name="end_date" query-param="end_date" />
+	      <with-param name="id_eks" query-param="id_eks" />
+	    </call-query>
+	  </operation>
+<!-- 	  END OPERATION REPORT UTANG NO LIMIT -->
+
+<!-- BEGAN OPERATION BUKU BESAR PEMBANTU -->
+	<operation name="getBukuBesarPembantu">
+	    <call-query href="getBukuBesarPembantuQuery">
+	      <with-param name="start_date" query-param="start_date" />
+	      <with-param name="end_date" query-param="end_date" />
+	      <with-param name="coa_id" query-param="coa_id" />
+	    </call-query>
+	  </operation>
+<!-- END OPERATION BUKU BESAR PEMBANTU -->
+
+<!-- BEGAN OPERATION PAYABLE REPORT -->
+	<operation name="getPayAbleReport">
+	    <call-query href="getPayAbleReportQuery">
+	      <with-param name="start_date" query-param="start_date" />
+	      <with-param name="end_date" query-param="end_date" />
+	      <with-param name="id_eks" query-param="id_eks" />
+	    </call-query>
+	  </operation>
+<!-- 	  END OPERATION PAYABLE OPERATION -->
+
+<!-- BEGAN OPERATION FINANCE REPORT -->
+	<operation name="getReportCashSaldo">
+	    <call-query href="getReportCashSaldoQuery">
+	      <with-param name="date" query-param="date" />
+	      <with-param name="id_coa" query-param="id_coa" />
+	    </call-query>
+	  </operation>
+<!-- 	  END OPERATION FINANCE OPERATION -->
+</data>
+
+
+

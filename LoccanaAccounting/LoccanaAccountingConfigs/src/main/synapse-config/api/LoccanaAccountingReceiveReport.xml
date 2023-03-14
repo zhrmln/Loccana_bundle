@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/accounting" name="LoccanaAccountingReceiveReport" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST">
+        <inSequence>
+            <!--             <validate cache-schema="true" source="json-eval($)"> -->
+            <!--                 <schema key="conf:schema/LoccanaMasterUomsUpsert.json"/> -->
+            <!--                 <on-fail> -->
+            <!--                     <property description="Error Message" expression="$ctx:ERROR_MESSAGE" name="message" scope="default" type="STRING"/> -->
+            <!--                     <sequence key="LoccanaSellingGetResponseError"/> -->
+            <!--                 </on-fail> -->
+            <!--             </validate> -->
+            <log description="Log start" level="custom">
+                <property name="Log Message" value="List Receive Report"/>
+            </log>
+            <propertyGroup description="Parameter Input">
+                <property expression="json-eval($.start_date)" name="start_date" scope="default" type="STRING"/>
+                <property expression="json-eval($.end_date)" name="end_date" scope="default" type="STRING"/>
+                <property expression="json-eval($.id_eks)" name="id_eks" scope="default" type="STRING"/>
+            </propertyGroup>
+            <dataServiceCall description="List report piutang no limit" serviceName="LoccanaAccounting">
+                <operations type="single">
+                    <operation name="getReportUtangNoLimitList">
+                        <param evaluator="xml" expression="get-property('start_date')" name="start_date"/>
+                        <param evaluator="xml" expression="get-property('end_date')" name="end_date"/>
+                        <param evaluator="xml" expression="get-property('id_eks')" name="id_eks"/>
+                    </operation>
+                </operations>
+                <source type="inline"/>
+                <target type="body"/>
+            </dataServiceCall>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <property description="Result" expression="json-eval($)" name="result" scope="default" type="STRING"/>
+            <filter regex="false" source="boolean(get-property('result'))">
+                <then>
+                    <property description="Error Message" name="message" scope="default" type="STRING" value="Receive Report Tidak ditemukan"/>
+                    <property description="Success data" expression="json-eval($.data.list)" name="data" scope="default" type="STRING"/>
+                    <sequence key="LoccanaAccountingGetResponseError"/>
+                </then>
+                <else>
+                    <property description="Success Message" name="message" scope="default" type="STRING" value="Receive Report ditemukan"/>
+                    <property description="Success data" expression="json-eval($.data.list)" name="data" scope="default" type="STRING"/>
+                    <sequence key="LoccanaAccountingGetResponseSuccess"/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <property description="ErrorMessage" expression="get-property('ERROR_MESSAGE')" name="message" scope="default" type="STRING"/>
+            <sequence key="LoccanaAccountingGetResponseError"/>
+        </faultSequence>
+    </resource>
+</api>

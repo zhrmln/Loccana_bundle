@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<esb:EsbDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb">
+  <server type="SEQUENCE">
+    <children xsi:type="esb:Sequences" name="GetDataForSellingHistory">
+      <commentsList> &lt;property expression=&quot;json-eval($.data.data_selling.sales_id)&quot; name=&quot;sales_id&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            
+            &lt;property expression=&quot;json-eval($.data.data_selling.item_id)&quot; name=&quot;item_id&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.unit_price)&quot; name=&quot;unit_price&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.qty)&quot; name=&quot;qty&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.qty_box)&quot; name=&quot;qty_box&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.qty_pcs)&quot; name=&quot;qty_pcs&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.box_amount)&quot; name=&quot;box_amount&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.price)&quot; name=&quot;price&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.notes)&quot; name=&quot;notes&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.mutation_id)&quot; name=&quot;mutation_id&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.approval_by)&quot; name=&quot;approval_by&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
+            &lt;property expression=&quot;json-eval($.data.data_selling.approval_date)&quot; name=&quot;approval_date&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/> </commentsList>
+      <outputConnector>
+        <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.0/@inputConnector"/>
+      </outputConnector>
+      <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.5/@outputConnector/@outgoingLink"/>
+      <mediatorFlow>
+        <children xsi:type="esb:DSSMediator" description="Get selling detail" serviceName="LoccanaSellingDataService" availableDataServices="LoccanaSellingDataService">
+          <operations operationName="getDataForSellingHistory">
+            <DSSPrperties propertyName="selling_id" propertyValueType="EXPRESSION">
+              <propertyExpression propertyName="selling_id" propertyValue="get-property('sellingsId')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+            </DSSPrperties>
+          </operations>
+          <inputConnector incomingLinks="//@server/@children.0/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.1/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:PropertyMediator" valueType="EXPRESSION" newPropertyName="resultData">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.2/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:LogMediator" description="Log start" logLevel="CUSTOM" logSeparator=", ">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.3/@inputConnector"/>
+          </outputConnector>
+          <properties propertyName="get data selling for Insert into selling history" propertyValueType="EXPRESSION" propertyValue="">
+            <propertyExpression propertyValue="get-property('resultData')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
+        </children>
+        <children xsi:type="esb:FilterMediator" regex="true">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.4/@inputConnector"/>
+          </outputConnector>
+          <passOutputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.3/@filterContainer/@passContainer/@mediatorFlow/@children.0/@inputConnector"/>
+          </passOutputConnector>
+          <failOutputConnector/>
+          <xpath prettyName="Filter Source XPath" propertyName="filterSourceXpath" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <source propertyValue="boolean(get-property('resultData'))" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <filterContainer>
+            <passContainer>
+              <mediatorFlow>
+                <children xsi:type="esb:PropertyMediator" valueType="EXPRESSION" newPropertyName="data">
+                  <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.3/@passOutputConnector/@outgoingLink"/>
+                  <outputConnector/>
+                  <valueExpression propertyValue="json-eval($.data)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                </children>
+              </mediatorFlow>
+            </passContainer>
+            <failContainer>
+              <mediatorFlow/>
+            </failContainer>
+          </filterContainer>
+        </children>
+        <children xsi:type="esb:PropertyMediator" valueType="EXPRESSION" newPropertyName="data">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.5/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($.data)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:PropertyMediator" valueType="EXPRESSION" newPropertyName="id_selling">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.4/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@inputConnector"/>
+            <commentMediators commentText=" &lt;property expression=&quot;json-eval($.data.data_selling.sales_id)&quot; name=&quot;sales_id&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.item_id)&quot; name=&quot;item_id&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.unit_price)&quot; name=&quot;unit_price&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.qty)&quot; name=&quot;qty&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.qty_box)&quot; name=&quot;qty_box&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.qty_pcs)&quot; name=&quot;qty_pcs&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.box_amount)&quot; name=&quot;box_amount&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.price)&quot; name=&quot;price&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.notes)&quot; name=&quot;notes&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.mutation_id)&quot; name=&quot;mutation_id&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.approval_by)&quot; name=&quot;approval_by&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>&#xA;            &lt;property expression=&quot;json-eval($.data.data_selling.approval_date)&quot; name=&quot;approval_date&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/> "/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($.data.data_selling.selling_id)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+      </mediatorFlow>
+      <onError prettyName="OnError sequence Key" keyName="OnError sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+    </children>
+  </server>
+</esb:EsbDiagram>

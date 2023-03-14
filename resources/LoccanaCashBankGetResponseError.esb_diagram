@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmi:id="_xvBFYLvFEe2NNbberYnivA" type="Esb" name="LoccanaCashBankGetResponseError" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_xwByALvFEe2NNbberYnivA" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_xwByBbvFEe2NNbberYnivA" type="7001">
+      <children xmi:type="notation:Node" xmi:id="_0P9YILvFEe2NNbberYnivA" type="3614">
+        <children xmi:type="notation:Node" xmi:id="_0P_0YLvFEe2NNbberYnivA" type="3615">
+          <children xmi:type="notation:DecorationNode" xmi:id="_0QAbcLvFEe2NNbberYnivA" type="7035">
+            <children xmi:type="notation:Node" xmi:id="_0QPsALvFEe2NNbberYnivA" type="3495">
+              <children xmi:type="notation:DecorationNode" xmi:id="_0QQTELvFEe2NNbberYnivA" type="5168"/>
+              <children xmi:type="notation:Node" xmi:id="_0QXn0LvFEe2NNbberYnivA" type="3018">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0QXn0bvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0QXn0rvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0QXn07vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:LogMediatorInputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.0/@inputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0QXn1LvFEe2NNbberYnivA" x="-6" y="-5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0QcgULvFEe2NNbberYnivA" type="3019">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0QcgUbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0QcgUrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0QcgU7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:LogMediatorOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.0/@outputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0QcgVLvFEe2NNbberYnivA" x="64" y="-9"/>
+              </children>
+              <styles xmi:type="notation:DescriptionStyle" xmi:id="_0QPsAbvFEe2NNbberYnivA"/>
+              <styles xmi:type="notation:FontStyle" xmi:id="_0QPsArvFEe2NNbberYnivA" fontName="Ubuntu"/>
+              <styles xmi:type="notation:LineStyle" xmi:id="_0QPsA7vFEe2NNbberYnivA"/>
+              <element xmi:type="esb:LogMediator" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.0"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0QPsBLvFEe2NNbberYnivA" x="25" y="89" width="84" height="115"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_0QuNILvFEe2NNbberYnivA" type="3494">
+              <children xmi:type="notation:DecorationNode" xmi:id="_0QuNJbvFEe2NNbberYnivA" type="5129"/>
+              <children xmi:type="notation:Node" xmi:id="_0QzssLvFEe2NNbberYnivA" type="3010">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0QzssbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0QzssrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0Qzss7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterMediatorInputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.1/@inputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0QzstLvFEe2NNbberYnivA" x="-6" y="-5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0Q0TwLvFEe2NNbberYnivA" type="3534">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0Q0TwbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0Q0TwrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0Q0Tw7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterMediatorOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.1/@outputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0Q0TxLvFEe2NNbberYnivA"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0Q0TxbvFEe2NNbberYnivA" type="3011">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0Q0TxrvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0Q0Tx7vFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0Q060LvFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterMediatorPassOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.1/@passOutputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0Q060bvFEe2NNbberYnivA" x="80" y="-29"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0Q060rvFEe2NNbberYnivA" type="3012">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0Q0607vFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0Q061LvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0Q061bvFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterMediatorFailOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.1/@failOutputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0Q061rvFEe2NNbberYnivA" x="80" y="11"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0Q1h4LvFEe2NNbberYnivA" type="3531">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0Q1h4bvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0Q1h4rvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0Q1h47vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterContainer" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.1/@filterContainer"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0Q1h5LvFEe2NNbberYnivA"/>
+              </children>
+              <styles xmi:type="notation:DescriptionStyle" xmi:id="_0QuNIbvFEe2NNbberYnivA"/>
+              <styles xmi:type="notation:FontStyle" xmi:id="_0QuNIrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+              <styles xmi:type="notation:LineStyle" xmi:id="_0QuNI7vFEe2NNbberYnivA"/>
+              <element xmi:type="esb:FilterMediator" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.1"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0QuNJLvFEe2NNbberYnivA" x="149" y="89" width="170" height="130"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_0R1AYLvFEe2NNbberYnivA" type="3494">
+              <children xmi:type="notation:DecorationNode" xmi:id="_0R1ncLvFEe2NNbberYnivA" type="5129"/>
+              <children xmi:type="notation:Node" xmi:id="_0R6f8LvFEe2NNbberYnivA" type="3010">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0R6f8bvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0R6f8rvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0R6f87vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterMediatorInputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.2/@inputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0R6f9LvFEe2NNbberYnivA" x="-6" y="-5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0R7HALvFEe2NNbberYnivA" type="3534">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0R7HAbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0R7HArvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0R7HA7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterMediatorOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.2/@outputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0R7HBLvFEe2NNbberYnivA"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0R7uELvFEe2NNbberYnivA" type="3011">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0R7uEbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0R7uErvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0R7uE7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterMediatorPassOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.2/@passOutputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0R7uFLvFEe2NNbberYnivA" x="80" y="-29"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0R8VILvFEe2NNbberYnivA" type="3012">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0R8VIbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0R8VIrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0R8VI7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterMediatorFailOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.2/@failOutputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0R8VJLvFEe2NNbberYnivA" x="80" y="11"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0R8VJbvFEe2NNbberYnivA" type="3531">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0R8VJrvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0R8VJ7vFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0R8VKLvFEe2NNbberYnivA"/>
+                <element xmi:type="esb:FilterContainer" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.2/@filterContainer"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0R8VKbvFEe2NNbberYnivA"/>
+              </children>
+              <styles xmi:type="notation:DescriptionStyle" xmi:id="_0R1AYbvFEe2NNbberYnivA"/>
+              <styles xmi:type="notation:FontStyle" xmi:id="_0R1AYrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+              <styles xmi:type="notation:LineStyle" xmi:id="_0R1AY7vFEe2NNbberYnivA"/>
+              <element xmi:type="esb:FilterMediator" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.2"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0R1AZLvFEe2NNbberYnivA" x="388" y="89" width="170" height="130"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_0S4JQLvFEe2NNbberYnivA" type="3597">
+              <children xmi:type="notation:DecorationNode" xmi:id="_0S4wULvFEe2NNbberYnivA" type="5191"/>
+              <children xmi:type="notation:Node" xmi:id="_0S9BwLvFEe2NNbberYnivA" type="3598">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0S9BwbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0S9BwrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0S9Bw7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:PayloadFactoryMediatorInputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.3/@inputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0S9BxLvFEe2NNbberYnivA" x="-6" y="-5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0S9o0LvFEe2NNbberYnivA" type="3599">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0S9o0bvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0S9o0rvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0S9o07vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:PayloadFactoryMediatorOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.3/@outputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0S9o1LvFEe2NNbberYnivA" x="64" y="-9"/>
+              </children>
+              <styles xmi:type="notation:DescriptionStyle" xmi:id="_0S4JQbvFEe2NNbberYnivA"/>
+              <styles xmi:type="notation:FontStyle" xmi:id="_0S4JQrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+              <styles xmi:type="notation:LineStyle" xmi:id="_0S4JQ7vFEe2NNbberYnivA"/>
+              <element xmi:type="esb:PayloadFactoryMediator" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.3"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0S4JRLvFEe2NNbberYnivA" x="627" y="89" width="84" height="115"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_0TPVoLvFEe2NNbberYnivA" type="3492">
+              <children xmi:type="notation:DecorationNode" xmi:id="_0TP8sLvFEe2NNbberYnivA" type="5167"/>
+              <children xmi:type="notation:Node" xmi:id="_0TUOILvFEe2NNbberYnivA" type="3033">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0TUOIbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0TUOIrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0TUOI7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:PropertyMediatorInputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.4/@inputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0TUOJLvFEe2NNbberYnivA" x="-6" y="-5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0TU1MLvFEe2NNbberYnivA" type="3034">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0TU1MbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0TU1MrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0TU1M7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:PropertyMediatorOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.4/@outputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0TU1NLvFEe2NNbberYnivA" x="64" y="-9"/>
+              </children>
+              <styles xmi:type="notation:DescriptionStyle" xmi:id="_0TPVobvFEe2NNbberYnivA"/>
+              <styles xmi:type="notation:FontStyle" xmi:id="_0TPVorvFEe2NNbberYnivA" fontName="Ubuntu"/>
+              <styles xmi:type="notation:LineStyle" xmi:id="_0TPVo7vFEe2NNbberYnivA"/>
+              <element xmi:type="esb:PropertyMediator" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.4"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0TPVpLvFEe2NNbberYnivA" x="751" y="89" width="84" height="115"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_0TmiALvFEe2NNbberYnivA" type="3739">
+              <children xmi:type="notation:DecorationNode" xmi:id="_0TnJELvFEe2NNbberYnivA" type="5209"/>
+              <children xmi:type="notation:Node" xmi:id="_0TqzcLvFEe2NNbberYnivA" type="3740">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0TqzcbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0TqzcrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0Tqzc7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:RespondMediatorInputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.5/@inputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0TqzdLvFEe2NNbberYnivA" x="-6" y="-5"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_0TragLvFEe2NNbberYnivA" type="3741">
+                <styles xmi:type="notation:DescriptionStyle" xmi:id="_0TragbvFEe2NNbberYnivA"/>
+                <styles xmi:type="notation:FontStyle" xmi:id="_0TragrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+                <styles xmi:type="notation:LineStyle" xmi:id="_0Trag7vFEe2NNbberYnivA"/>
+                <element xmi:type="esb:RespondMediatorOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.5/@outputConnector"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0TrahLvFEe2NNbberYnivA" x="64" y="-9"/>
+              </children>
+              <styles xmi:type="notation:DescriptionStyle" xmi:id="_0TmiAbvFEe2NNbberYnivA"/>
+              <styles xmi:type="notation:FontStyle" xmi:id="_0TmiArvFEe2NNbberYnivA" fontName="Ubuntu"/>
+              <styles xmi:type="notation:LineStyle" xmi:id="_0TmiA7vFEe2NNbberYnivA"/>
+              <element xmi:type="esb:RespondMediator" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.5"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0TmiBLvFEe2NNbberYnivA" x="875" y="89" width="84" height="115"/>
+            </children>
+            <styles xmi:type="notation:TitleStyle" xmi:id="_0QAbcbvFEe2NNbberYnivA" showTitle="true"/>
+          </children>
+          <styles xmi:type="notation:DescriptionStyle" xmi:id="_0P_0YbvFEe2NNbberYnivA"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_0P_0YrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+          <styles xmi:type="notation:LineStyle" xmi:id="_0P_0Y7vFEe2NNbberYnivA"/>
+          <element xmi:type="esb:MediatorFlow" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0P_0ZLvFEe2NNbberYnivA"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_0QAbcrvFEe2NNbberYnivA" type="3616">
+          <styles xmi:type="notation:DescriptionStyle" xmi:id="_0QAbc7vFEe2NNbberYnivA"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_0QAbdLvFEe2NNbberYnivA" fontName="Ubuntu"/>
+          <styles xmi:type="notation:LineStyle" xmi:id="_0QAbdbvFEe2NNbberYnivA"/>
+          <element xmi:type="esb:SequencesInputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@inputConnector"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0QAbdrvFEe2NNbberYnivA" x="-11" y="-9"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_0QBCgLvFEe2NNbberYnivA" type="3617">
+          <styles xmi:type="notation:DescriptionStyle" xmi:id="_0QBCgbvFEe2NNbberYnivA"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_0QBCgrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+          <styles xmi:type="notation:LineStyle" xmi:id="_0QBCg7vFEe2NNbberYnivA"/>
+          <element xmi:type="esb:SequencesOutputConnector" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@outputConnector"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0QBChLvFEe2NNbberYnivA" x="-11" y="-9"/>
+        </children>
+        <styles xmi:type="notation:DescriptionStyle" xmi:id="_0P9YIbvFEe2NNbberYnivA"/>
+        <styles xmi:type="notation:FontStyle" xmi:id="_0P9YIrvFEe2NNbberYnivA" fontName="Ubuntu"/>
+        <styles xmi:type="notation:LineStyle" xmi:id="_0P9YI7vFEe2NNbberYnivA"/>
+        <element xmi:type="esb:Sequences" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0P9YJLvFEe2NNbberYnivA" width="195" height="125"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_xwByAbvFEe2NNbberYnivA"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_xwByArvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_xwByA7vFEe2NNbberYnivA"/>
+    <element xmi:type="esb:EsbServer" href="LoccanaCashBankGetResponseError.esb#//@server"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_xwByBLvFEe2NNbberYnivA"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_xvBFYbvFEe2NNbberYnivA"/>
+  <element xmi:type="esb:EsbDiagram" href="LoccanaCashBankGetResponseError.esb#/"/>
+  <edges xmi:type="notation:Connector" xmi:id="_0UFDILvFEe2NNbberYnivA" type="4001" source="_0Q0TxbvFEe2NNbberYnivA" target="_0Rg3ULvFEe2NNbberYnivA" roundedBendpointsRadius="5" routing="Rectilinear">
+    <styles xmi:type="notation:FontStyle" xmi:id="_0UFDIbvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <element xmi:type="esb:EsbLink" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.1/@passOutputConnector/@outgoingLink"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0UFDIrvFEe2NNbberYnivA" points="[11, -8, -5, 3]$[10, -7, -6, 4]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_0UO0ILvFEe2NNbberYnivA" type="4001" source="_0R7uELvFEe2NNbberYnivA" target="_0Sl1YLvFEe2NNbberYnivA" roundedBendpointsRadius="5" routing="Rectilinear">
+    <styles xmi:type="notation:FontStyle" xmi:id="_0UO0IbvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <element xmi:type="esb:EsbLink" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.2/@passOutputConnector/@outgoingLink"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0UO0IrvFEe2NNbberYnivA" points="[11, -8, -5, 3]$[10, -7, -6, 4]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_0UX-ELvFEe2NNbberYnivA" type="4001" source="_0QBCgLvFEe2NNbberYnivA" target="_0QXn0LvFEe2NNbberYnivA" roundedBendpointsRadius="5" routing="Rectilinear">
+    <styles xmi:type="notation:FontStyle" xmi:id="_0UX-EbvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <element xmi:type="esb:EsbLink" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@outputConnector/@outgoingLink"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0UX-ErvFEe2NNbberYnivA" points="[6, 9, 0, -1]$[0, 5, -6, -5]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_0UfS0LvFEe2NNbberYnivA" type="4001" source="_0QcgULvFEe2NNbberYnivA" target="_0QzssLvFEe2NNbberYnivA" roundedBendpointsRadius="5" routing="Rectilinear">
+    <styles xmi:type="notation:FontStyle" xmi:id="_0Uf54LvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <element xmi:type="esb:EsbLink" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0Uf54bvFEe2NNbberYnivA" points="[-11, 0, 69, 0]$[-74, 0, 6, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_0UmnkLvFEe2NNbberYnivA" type="4001" source="_0Q0TwLvFEe2NNbberYnivA" target="_0R6f8LvFEe2NNbberYnivA" roundedBendpointsRadius="5" routing="Rectilinear">
+    <styles xmi:type="notation:FontStyle" xmi:id="_0UmnkbvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <element xmi:type="esb:EsbLink" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0UmnkrvFEe2NNbberYnivA" points="[-11, 0, 0, 0]$[-5, 0, 6, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_0UtVQLvFEe2NNbberYnivA" type="4001" source="_0R7HALvFEe2NNbberYnivA" target="_0S9BwLvFEe2NNbberYnivA" roundedBendpointsRadius="5" routing="Rectilinear">
+    <styles xmi:type="notation:FontStyle" xmi:id="_0UtVQbvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <element xmi:type="esb:EsbLink" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0UtVQrvFEe2NNbberYnivA" points="[-11, 0, 0, 0]$[-5, 0, 6, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_0U1RELvFEe2NNbberYnivA" type="4001" source="_0S9o0LvFEe2NNbberYnivA" target="_0TUOILvFEe2NNbberYnivA" roundedBendpointsRadius="5" routing="Rectilinear">
+    <styles xmi:type="notation:FontStyle" xmi:id="_0U1REbvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <element xmi:type="esb:EsbLink" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0U1RErvFEe2NNbberYnivA" points="[-11, 0, 69, 0]$[-74, 0, 6, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_0U8l0LvFEe2NNbberYnivA" type="4001" source="_0TU1MLvFEe2NNbberYnivA" target="_0TqzcLvFEe2NNbberYnivA" roundedBendpointsRadius="5" routing="Rectilinear">
+    <styles xmi:type="notation:FontStyle" xmi:id="_0U8l0bvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <element xmi:type="esb:EsbLink" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.4/@outputConnector/@outgoingLink"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0U8l0rvFEe2NNbberYnivA" points="[-11, 0, 69, 0]$[-74, 0, 6, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_0VD6kLvFEe2NNbberYnivA" type="4001" source="_0TragLvFEe2NNbberYnivA" target="_0QAbcrvFEe2NNbberYnivA" roundedBendpointsRadius="5" routing="Rectilinear">
+    <styles xmi:type="notation:FontStyle" xmi:id="_0VD6kbvFEe2NNbberYnivA" fontName="Ubuntu"/>
+    <element xmi:type="esb:EsbLink" href="LoccanaCashBankGetResponseError.esb#//@server/@children.0/@mediatorFlow/@children.5/@outputConnector/@outgoingLink"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_0VD6krvFEe2NNbberYnivA" points="[-11, -2, 65, 8]$[-65, -9, 11, 1]"/>
+  </edges>
+</notation:Diagram>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="GetInsertSellingMutation" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <enrich description="Deploy item untuk di olah">
+        <source clone="false" property="items" type="property"/>
+        <target type="body"/>
+    </enrich>
+    <foreach description="Foreach array item mutations" expression="json-eval($)" id="foreach-item-mutations">
+        <sequence>
+            <propertyGroup description="input items">
+                <property expression="json-eval($.item_id)" name="itemsId" scope="default" type="STRING"/>
+                <property expression="json-eval($.item_id)" name="item_id" scope="default" type="STRING"/>
+                <property expression="json-eval($.amount_mutation)" name="amount_mutation" scope="default" type="STRING"/>
+                <property expression="json-eval($.transaction_type_id)" name="transaction_type_id" scope="default" type="STRING"/>
+                <property expression="json-eval($.mutation_type)" name="mutation_type" scope="default" type="STRING"/>
+                <property expression="json-eval($.qty_receipt)" name="qty_receipt" scope="default" type="STRING"/>
+                <property expression="json-eval($.qty_bonus)" name="qty_bonus" scope="default" type="STRING"/>
+                <property expression="json-eval($.qty_discount)" name="qty_discount" scope="default" type="STRING"/>
+                <property expression="json-eval($.notes)" name="notes" scope="default" type="STRING"/>
+                <property expression="json-eval($.user_id)" name="user_id" scope="default" type="STRING"/>
+            </propertyGroup>
+            <payloadFactory media-type="json">
+                <format>        
+                    {
+			            "item_id": "$1",
+			            "amount_mutation": "$2",
+			            "transaction_type_id": "$3",
+			            "mutation_type": "$4",
+			            "user_id": "$5",
+			            "qty_receipt": "$6",
+			            "qty_bonus": "$7",
+			            "qty_discount": "$8",
+			            "notes": "$9",
+			            "date_mutation": "$10",
+			            "created_at": "$10",
+			            "updated_at": "$10"
+			        }
+		        </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('item_id')"/>
+                    <arg evaluator="xml" expression="get-property('amount_mutation')"/>
+                    <arg evaluator="xml" expression="get-property('transaction_type_id')"/>
+                    <arg evaluator="xml" expression="get-property('mutation_type')"/>
+                    <arg evaluator="xml" expression="get-property('user_id')"/>
+                    <arg evaluator="xml" expression="get-property('qty_receipt')"/>
+                    <arg evaluator="xml" expression="get-property('qty_bonus')"/>
+                    <arg evaluator="xml" expression="get-property('qty_discount')"/>
+                    <arg evaluator="xml" expression="get-property('notes')"/>
+                    <arg evaluator="xml" expression="get-property('currentDate')"/>
+                </args>
+            </payloadFactory>
+        </sequence>
+    </foreach>
+    <property description="Get result" expression="json-eval($)" name="resultForeachItemMutations" scope="default" type="STRING"/>
+    <payloadFactory media-type="json">
+        <format>
+      		{
+				"createMutationsBatch": {
+			    	"createMutations": $1
+			  	}
+			}
+		</format>
+        <args>
+            <arg evaluator="xml" expression="get-property('resultForeachItemMutations')"/>
+        </args>
+    </payloadFactory>
+    <property description="Data Items" expression="json-eval($)" name="dataItemMutations" scope="default" type="STRING"/>
+    <enrich>
+        <source clone="false" property="dataItemMutations" type="property"/>
+        <target type="body"/>
+    </enrich>
+    <dataServiceCall description="Batch update ke mutation" serviceName="LoccanaSellingDataService">
+        <source type="body"/>
+        <target type="body"/>
+    </dataServiceCall>
+    <property description="Result" expression="json-eval($)" name="resultMutations" scope="default" type="STRING"/>
+    <property description="Success id" expression="json-eval($.return.id)" name="mutationId" scope="default" type="STRING"/>
+    <property description="Success" expression="json-eval($.return)" name="data" scope="default" type="STRING"/>
+</sequence>

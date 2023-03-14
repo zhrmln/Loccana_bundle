@@ -1,0 +1,2645 @@
+<data transports="http https" serviceGroup="" serviceNamespace="" name="LoccanaSellingDataService">
+  <description />
+<!--   BEGIN CONNCETION DATABASE -->
+  <!-- <config id="DataSourceSelling">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://194.233.88.96:3306/loccana_selling</property>
+    <property name="username">dbase</property>
+    <property name="password">loccana</property>
+  </config>
+  <config id="DataSourceMasterData">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://194.233.88.96:3306/loccana_masterdata</property>
+    <property name="username">dbase</property>
+    <property name="password">loccana</property>
+  </config>
+  <config id="DataSourceInventory">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://194.233.88.96:3306/loccana_inventory</property>
+    <property name="username">dbase</property>
+    <property name="password">loccana</property>
+  </config> -->
+  <!--  END CONNECTION DATABASE -->
+  
+<!--   START CONNECTION TO SERVER WSO2 -->
+    <config id="DataSourceSelling">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://161.97.171.156:3306/loccana_selling</property>
+    <property name="username">admindb</property>
+    <property name="password">Sukaluyu2931!#</property>
+  </config>
+  <config id="DataSourceMasterData">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://161.97.171.156:3306/loccana_masterdata</property>
+    <property name="username">admindb</property>
+    <property name="password">Sukaluyu2931!#</property>
+  </config>
+  <config id="DataSourceInventory">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://161.97.171.156:3306/loccana_inventory</property>
+    <property name="username">admindb</property>
+    <property name="password">Sukaluyu2931!#</property>
+  </config>
+  <config id="DataSourceCashBank">
+    <property name="driverClassName">com.mysql.jdbc.Driver</property>
+    <property name="url">jdbc:mysql://161.97.171.156:3306/loccana_cashbank</property>
+    <property name="username">admindb</property>
+    <property name="password">Sukaluyu2931!#</property>
+  </config>
+<!-- END CONNECTION To SERVER WSO2 -->
+
+<!-- BEGAN QUERY COA_VALUES -->
+	<query id="createCoaValuesQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceMasterData">
+	   <sql>INSERT INTO 
+		   `loccana_cashbank`.`coa_values` 
+		   (`id_parent`,
+		   `coa_id`,
+		   payment_id,
+		   `date`,
+		   `date_insert`,
+		   `value`,
+		   `value_real`,
+		   `adjusment`,
+		   `type_cash`,
+		   `notes`,
+		   `rate`,
+		   `description`,
+		   `invoice_number`,
+		   `asset_id`,
+		   `created_at`,
+		   `updated_at`)
+		values 
+			(:id_parents,
+			:coa_id,
+			:payment_id,
+			:date,
+			:date_insert,
+			:value,
+			:value_real,
+			:adjusment,
+			:type_cash,
+			:notes,
+			:rate,
+			:description,
+			:invoice_number,
+			:asset_id,
+			:created_at,
+			:updated_at)
+<!-- 		SELECT LAST_INSERT_ID() AS id; -->
+	</sql>
+	  	<param name="id_parents" sqlType="STRING" />
+		<param name="coa_id" sqlType="STRING" />
+		<param name="payment_id" sqlType="STRING" />
+		<param name="date" sqlType="STRING" />
+		<param name="date_insert" sqlType="STRING" />
+		<param name="value" sqlType="STRING" />
+		<param name="value_real" sqlType="STRING" />
+		<param name="adjusment" sqlType="STRING" />
+		<param name="type_cash" sqlType="STRING" />
+		<param name="notes" sqlType="STRING" />
+		<param name="rate" sqlType="STRING" />
+		<param name="description" sqlType="STRING" />
+		<param name="invoice_number" sqlType="STRING" />
+		<param name="asset_id" sqlType="STRING" />
+		<param name="created_at" sqlType="STRING" />
+		<param name="updated_at" sqlType="STRING" />
+	   <result useColumnNumbers="true" element="return">
+	     <element name="id" xsdType="integer" column="1" />
+	     <element name="rate" xsdType="string" column="rate" />
+	   </result>
+	 </query>
+
+<!-- BEGAN QUERY UPDATE ORDERING -->
+  <query id="updateOrderingQuery" useConfig="DataSourceMasterData" returnUpdatedRowCount="true">
+	    <sql>
+	    	update loccana_masterdata.ordering
+			set seq_max =seq_max + 1 
+			where id = 3
+	    </sql>
+<!-- 	    <param name="id_ordering" sqlType="STRING" paramType="SCALAR" /> -->
+	    <result element="UpdatedRowCount" rowName="" useColumnNumbers="true" escapeNonPrintableChar="true" >
+			<element column="1" name="id" xsdType="INTEGER"/>
+		</result>
+	</query>
+<!-- END QUERY UPDATE ORDERING -->
+
+<!-- BEGAN QUERY INSERT TO MUTATION -->
+<query id="createMutationQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceMasterData">
+	   <sql>INSERT INTO 
+	   loccana_inventory.`mutations` 
+	   		(`item_id`,
+	   		`date_mutation`,
+	   		`amount_mutation`,
+	   		`transaction_type_id`,
+	   		`mutation_type`,
+	   		`user_id`,
+	   		`qty_receipt`,
+	   		`qty_bonus`,
+	   		`qty_discount`,
+	   		`notes`,
+	   		`created_at`,
+	   		`updated_at`)
+		values 
+			(:item_id,
+			:date_mutation,
+			:amount_mutation,
+			:transaction_type_id,
+			:mutation_type,
+			:user_id,
+			:qty_receipt,
+			:qty_bonus,
+			:qty_discount,
+			:notes,
+			:created_at,
+			:updated_at)
+	</sql>
+	   <param name="item_id" sqlType="STRING" />
+	   <param name="date_mutation" sqlType="STRING" />
+	   <param name="amount_mutation" sqlType="STRING" />
+	   <param name="transaction_type_id" sqlType="STRING" />
+	   <param name="mutation_type" sqlType="STRING" />
+	   <param name="user_id" sqlType="STRING" />
+	   <param name="qty_receipt" sqlType="STRING" />
+	   <param name="qty_bonus" sqlType="STRING" />
+	   <param name="qty_discount" sqlType="STRING" />
+	   <param name="notes" sqlType="STRING" />
+	   <param name="created_at" sqlType="STRING" />
+	   <param name="updated_at" sqlType="STRING" />
+	   <result useColumnNumbers="true" element="return">
+	     <element name="id" xsdType="integer" column="1" />
+	   </result>
+	 </query>
+<!-- END QUERY INSERT TO MUTATION -->
+
+<!-- BEGAN QUERY USER ACTIVITIES FOR MASTERDATA -->
+	<query id="createUserActivitiesQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceMasterData">
+	   <sql>INSERT INTO
+	  user_activities ( 
+	    id_user,
+	    menu,
+	    aktivitas,
+	    
+	    keterangan,
+	    created_at,
+	    updated_at
+	  )
+	VALUES
+	  (
+	    :id_user,
+	    :menu,
+	    :aktivitas,
+	    :keterangan,
+	    :created_at,
+	    :updated_at
+	  )
+	</sql>
+	   <param name="id_user" sqlType="STRING" />
+	   <param name="menu" sqlType="STRING" />
+	   <param name="aktivitas" sqlType="STRING" />
+	   <param name="keterangan" sqlType="STRING" />
+	   <param name="created_at" sqlType="STRING" />
+	   <param name="updated_at" sqlType="STRING" />
+	   <result useColumnNumbers="true" element="return">
+	     <element name="id" xsdType="integer" column="1" />
+	   </result>
+	 </query>
+	  <query id="getUserActivitiesDetailQuery" useConfig="DataSourceMasterData">
+	    <sql>SELECT
+		  id,
+		  menu,
+		  aktivitas,
+		  keterangan,
+		  created_at,
+		  updated_at
+		FROM
+		  user_activities
+		WHERE
+		  id = :id
+		</sql>
+	    <param name="id" sqlType="STRING" paramType="SCALAR" />
+	    <result outputType="json">{
+		  "data": {
+		    "id": "$id",
+		    "id_user": "$id_user",
+		    "menu": "$menu",
+		    "aktivitas": "$aktivitas",
+		    "keterangan": "$keterangan",
+		    "created_at": "$created_at",
+		    "updated_at": "$updated_at"
+		  }
+		}</result>
+	  </query>
+<!-- 	 END USER ACTIVITIES -->
+ 
+<!--  BEGIN QUERY LOCCANA SELLING -->  
+	  <query id="getPiutangSellingQuery" useConfig="DataSourceSelling">
+			<sql>SELECT z.*,
+				total_invoice - bayar AS sisa, RANK() OVER ( ORDER BY date_invoice,total_invoice DESC) AS Rangking 
+				FROM ( 
+				SELECT 
+				SUM(d.price) AS total_invoice,
+				a.id AS id_invoice,
+				a.invoice_number,
+				DATE_FORMAT(a.date_invoice, "%Y-%m-%d %H:%i:%s") AS date_invoice,
+				DATE_FORMAT(a.due_date, "%Y-%m-%d %H:%i:%s") AS due_date,
+				a.attention,
+				a.`tax_invoice`,
+				a.notes,
+				a.sign,
+				a.status AS status_invoice, 
+				c.name ,
+				IFNULL(e.invoice_id, " ") AS invoice_id,
+				IF(e.bayar IS NULL,0,e.bayar) AS bayar
+				FROM `loccana_selling`.`selling_invoice` a
+				JOIN loccana_selling.`selling` b ON a.`selling_id`=b.`id`
+				LEFT JOIN `loccana_masterdata`.`partners` c ON b.`partner_id`=c.`id`
+				LEFT JOIN loccana_selling.`selling_invoice_details` d ON a.`id`=d.`selling_invoice_id`
+				LEFT JOIN (
+					  SELECT b.`invoice_id`,SUM(b.`ammount`) AS bayar 
+					  FROM  `loccana_cashbank`.`payments` a
+					  JOIN `loccana_cashbank`.`payment_details` b ON a.`id`=b.`payment_id`
+					  WHERE a.payment_type = 1 GROUP BY b.`invoice_id`
+				) e ON a.id= e.invoice_id
+				WHERE 1 = 1  
+				GROUP BY e.invoice_id,a.id ORDER BY date_invoice DESC) z
+	  </sql>
+		<result outputType="json">{
+			
+		   "data":{
+		   "piutang": [{
+		   			"total_invoice":"$total_invoice",
+					"id_invoice":"$id_invoice",
+					"invoice_number":"$invoice_number",
+					"date_invoice":"$date_invoice",
+					"due_date":"$due_date",
+					"attention":"$attention",
+					"tax_invoice":"$tax_invoice",
+					"notes":"$notes",
+					"sign":"$sign",
+					"status_invoice":"$status_invoice",
+					"name":"$name",
+					"invoice_id":"$invoice_id",
+					"bayar":"$bayar",
+					"sisa":"$sisa",
+					"Rangking":"$Rangking"
+		   }]
+					
+		   }
+	  }
+	  </result>
+	  </query>
+<query id="getSellingListQuery" useConfig="DataSourceSelling">
+	<sql>
+	SELECT 
+		a.id AS id_penjualan, 
+		a.total_amount, 
+		a.`no_selling`,
+		c.`name`,
+		DATE_FORMAT(a.date_selling, "%Y-%m-%d %H:%i:%s") AS date_selling,
+		b.`price`,
+		a.`term_of_payment`,
+		d.`name` AS nama_sales,
+		IFNULL(a.status, " ") AS status,
+		DATE_FORMAT(a.delivery_date, "%Y-%m-%d %H:%i:%s") AS delivery_date
+	FROM `loccana_selling`.`selling` a
+		JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+		JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+		JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id` 
+	WHERE
+		month (a.date_selling) like CONCAT ('%', :month, '%')
+		OR year(a.date_selling) like CONCAT('%', :year, '%')
+		OR (
+			a.no_selling like CONCAT('%', :search, '%')
+			OR c.name like CONCAT('%', :search, '%')
+		)
+		GROUP BY a.`id` ,b.id
+		ORDER BY
+		a.`date_selling` desc
+		limit :limit
+		offset :offset
+	</sql>
+	<param name="month" sqlType="STRING" paramType="SCALAR" />
+	<param name="year" sqlType="STRING" paramType="SCALAR" />
+	<param name="search" paramType="SCALAR" sqlType="STRING" />
+	<param name="offset" paramType="SCALAR" sqlType="INTEGER" />
+	<param name="limit" paramType="SCALAR" sqlType="INTEGER" />
+	<result outputType="json">{
+	"data":{ 
+			"selling": 
+			[
+				{
+					"id_penjualan":"$id_penjualan",
+					"total_amount":"$total_amount",
+					"no_selling":"$no_selling",
+					"name":"$name",
+					"date_selling":"$date_selling",
+					"price":"$price",
+					"term_of_payment":"$term_of_payment",
+					"nama_sales":"$nama_sales",
+					"status":"$status",
+					"delivery_date":"$delivery_date"
+					}
+			]
+		}   
+			
+	}
+	</result>
+	</query>
+<query id="getSellingListNotFilteredQuery" useConfig="DataSourceSelling">
+	<sql>
+	SELECT 
+		a.id AS id_penjualan, 
+		a.total_amount, 
+		a.`no_selling`,
+		c.`name`,
+		DATE_FORMAT(a.date_selling, "%Y-%m-%d %H:%i:%s") AS date_selling,
+		b.`price`,
+		a.`term_of_payment`,
+		d.`name` AS nama_sales,
+		IFNULL(a.status, " ") AS status,
+		DATE_FORMAT(a.delivery_date, "%Y-%m-%d %H:%i:%s") AS delivery_date
+	FROM `loccana_selling`.`selling` a
+		JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+		JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+		JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id`
+		GROUP BY a.`id` ,b.id
+		ORDER BY
+		a.`date_selling` desc
+		limit :limit offset :offset
+	</sql>
+	<param name="offset" paramType="SCALAR" sqlType="INTEGER" />
+	<param name="limit" paramType="SCALAR" sqlType="INTEGER" />
+	<result outputType="json">
+	{
+	"data":{ 
+			"selling": 
+			[
+					{
+					"id_penjualan":"$id_penjualan",
+					"total_amount":"$total_amount",
+					"no_selling":"$no_selling",
+					"name":"$name",
+					"date_selling":"$date_selling",
+					"price":"$price",
+					"term_of_payment":"$term_of_payment",
+					"nama_sales":"$nama_sales",
+					"status":"$status",
+					"delivery_date":"$delivery_date"
+					}
+			]
+		}   
+			
+	}
+	</result>
+</query>
+<query id="getSellingListCountQuery" useConfig="DataSourceSelling">
+    <sql>
+		SELECT COUNT(*) AS countid
+			
+			FROM `loccana_selling`.`selling` a
+			JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+			JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+			JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id`
+			WHERE
+			month (a.date_selling) like CONCAT ('%' :month, '%')
+			  OR year(a.date_selling) like CONCAT('%', :year, '%')
+			  OR (
+			    a.no_selling like CONCAT('%', :search, '%')
+			    OR c.name like CONCAT('%', :search, '%')
+			  )    			
+  </sql>
+    <param name="search" paramType="SCALAR" sqlType="STRING" />
+	<param name="month" paramType="SCALAR" sqlType="STRING" />
+	<param name="year" paramType="SCALAR" sqlType="STRING" />
+    <result outputType="json">{
+       "data_filtered":{
+            "countid":"$countid"
+       }
+  }
+  </result>
+  </query>
+  <query id="getSellingListCountNotFilteredQuery" useConfig="DataSourceSelling">
+    <sql>
+		SELECT COUNT(*) AS countid
+			
+			FROM `loccana_selling`.`selling` a
+			JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+			JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+			JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id`
+  </sql>
+    <result outputType="json">{
+       "data_not_filtered":{
+            "countid":"$countid"
+       }
+  }
+  </result>
+  </query>
+  <query id="createSellingsQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceSelling">
+    <sql>INSERT INTO
+	     `selling` 
+		     (
+		     `sales_id`,
+		     `no_selling`,
+		     `date_selling`,
+		     `delivery_date`,
+		     `partner_id`,
+		     `term_of_payment`,
+		     `total_amount`,
+		     `coa_id`,
+		     `payment_coa`,
+		     `currency_id`,
+		     `rate`,
+		     `tax`,
+		     `seq_n`,
+		     `created_at`,
+		     `updated_at`
+		     )
+		values 
+			(
+			:sales_id,
+			:no_selling,
+			:date_selling,
+			:delivery_date,
+			:partner_id,
+			:term_of_payment,
+			:total_amount,
+			:coa_id,
+			:payment_coa,
+			:currency_id,
+			:rate,
+			:tax,
+			:seq_n,
+			:created_at,
+			:updated_at
+			)
+	</sql>
+    <param name="sales_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="no_selling" sqlType="STRING" paramType="SCALAR" />
+    <param name="date_selling" sqlType="STRING" paramType="SCALAR" />
+    <param name="delivery_date" sqlType="STRING" paramType="SCALAR" />
+    <param name="partner_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="term_of_payment" sqlType="STRING" paramType="SCALAR" />
+    <param name="total_amount" sqlType="STRING" paramType="SCALAR" />
+    <param name="coa_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="payment_coa" sqlType="STRING" paramType="SCALAR" />
+    <param name="currency_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="rate" sqlType="STRING" paramType="SCALAR" />
+    <param name="tax" sqlType="STRING" paramType="SCALAR" />
+    <param name="seq_n" sqlType="STRING" paramType="SCALAR" />
+    <param name="created_at" sqlType="STRING" paramType="SCALAR" />
+    <param name="updated_at" sqlType="STRING" paramType="SCALAR" />
+    <result element="return" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="getSellingsDetailQuery" useConfig="DataSourceSelling">
+    <sql>
+    select 
+	    a.id,
+	    a.sales_id,
+	    a.no_selling,
+	    b.item_id,
+	    DATE_FORMAT(a.date_selling, "%Y-%m-%d %H:%i:%s")  AS date_selling,
+	    DATE_FORMAT(a.delivery_date, "%Y-%m-%d %H:%i:%s") AS delivery_date,
+	    DATE_FORMAT(a.created_at, "%Y-%m-%d %H:%i:%s") AS created_at,
+	  	DATE_FORMAT(a.updated_at, "%Y-%m-%d %H:%i:%s") AS updated_at
+    from 
+    	loccana_selling.selling AS a
+    	join loccana_selling.selling_details As b ON b.selling_id = a.id
+    where a.id = :id</sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+    "data":{
+    	"selling" : 
+    	[{
+    		"id":"$id",
+            "sales_id":"$sales_id",
+            "item_id":"$item_id",
+            "no_selling":"$no_selling",
+            "date_selling":"$date_selling",
+            "delivery_date":"$delivery_date",
+            "created_at":"$created_at",
+            "updated_at":"$updated_at"
+    	}]
+            
+            }
+   }</result>
+  </query>
+  <query id="deleteSellingsQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>
+    	DELETE a,b,c
+		FROM `selling` a
+		LEFT JOIN `selling_details` b ON a.id = b.`selling_id`
+		LEFT JOIN `loccana_inventory`.`mutations` c ON b.`mutation_id`=c.`id`
+		WHERE a.id = :id</sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result element="UpdatedRowCount" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" requiredRoles="" />
+    </result>
+  </query>
+<!--   <query id="getSellingsListQuery" useConfig="DataSourceSelling"> -->
+<!--     <sql> -->
+<!--     	SELECT  -->
+<!-- 		    a.id AS id_penjualan,  -->
+<!-- 		    a.total_amount,  -->
+<!-- 		    a.`no_selling`, -->
+<!-- 		    c.`name`, -->
+<!-- 		    DATE_FORMAT(a.`date_selling`, "%Y-%m-%d %H:%i:%s") AS date_selling, -->
+<!-- 		    b.`price`, -->
+<!-- 		    a.`term_of_payment`, -->
+<!-- 		    d.`name` AS nama_sales, -->
+<!-- 		    IFNULL(a.status, " ") AS status, -->
+<!-- 		    DATE_FORMAT(a.delivery_date, "%Y-%m-%d %H:%i:%s") AS delivery_date -->
+<!-- 			FROM `loccana_selling`.`selling` a -->
+<!-- 			JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id` -->
+<!-- 			JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id` -->
+<!-- 			JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id`  -->
+<!-- 			GROUP BY a.`id` order by a.`date_selling` desc -->
+<!-- 	</sql> -->
+<!--     <result outputType="json">{ -->
+<!-- 	"data":{ -->
+<!-- 		"selling": [ -->
+<!-- 				{ -->
+<!-- 				"id_penjualan": "$id_penjualan",  -->
+<!-- 				"total_amount":"$total_amount",  -->
+<!-- 				"no_selling":"$no_selling",  -->
+<!-- 				"name": "$name",  -->
+<!-- 				"date_selling": "$date_selling",  -->
+<!-- 				"price": "$price",  -->
+<!-- 				"term_of_payment": "$term_of_payment",  -->
+<!-- 				"nama_sales": "$nama_sales",  -->
+<!-- 				"status": "$status",  -->
+<!-- 				"delivery_date": "$delivery_date" -->
+<!-- 				} -->
+<!-- 			] -->
+			
+<!-- 		} -->
+<!-- }</result> -->
+<!--   </query> -->
+  <query id="updateSellingsQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>
+    	UPDATE `loccana_selling`.`selling` 
+	LEFT JOIN `loccana_selling`.`selling_details` ON `loccana_selling`.`selling`.`id`=`loccana_selling`.`selling_details`.`selling_id`
+	JOIN `loccana_masterdata`.`items` ON `loccana_selling`.`selling_details`.`item_id`=`loccana_masterdata`.`items`.`id`
+	JOIN `loccana_masterdata`.`item_qty` ON `loccana_masterdata`.`items`.`id`=`loccana_masterdata`.`item_qty`.`item_id`
+	JOIN `loccana_inventory`.`mutations` ON `loccana_selling`.`selling_details`.`mutation_id`=`loccana_inventory`.`mutations`.`id`
+	SET 
+		`date_selling`=:date_selling,
+		`term_of_payment`=term_of_payment,
+		`delivery_date`=:delivery_date,
+		`total_amount`=:total_amount,
+		`unit_price`=:unit_price,
+		`loccana_selling`.`selling_details`.`item_id`=:item_idA,
+		qty=:qty,
+		qty_box=:qty_box,	
+		`qty_satuan`=:qty_satuan,
+		`box_amount`=:box_amount,
+		`price`=:price,
+		`discount`=:discount,
+		`loccana_selling`.`selling_details`.`notes`=:notes,
+		date_mutation=:date_mutation,
+		amount_mutation=:amount_mutation,
+		`loccana_inventory`.`mutations`.`item_id`=:item_id
+		 WHERE
+		 `loccana_selling`.`selling`.id=:id
+
+    </sql>
+    <param name="date_selling" sqlType="STRING" paramType="SCALAR" />
+    <param name="term_of_payment" sqlType="STRING" paramType="SCALAR" />
+    <param name="delivery_date" sqlType="STRING" paramType="SCALAR" />
+    <param name="total_amount" sqlType="STRING" paramType="SCALAR" />
+    <param name="unit_price" sqlType="STRING" paramType="SCALAR" />
+    <param name="item_idA" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty_box" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty_satuan" sqlType="STRING" paramType="SCALAR" />
+    <param name="box_amount" sqlType="STRING" paramType="SCALAR" />
+    <param name="price" sqlType="STRING" paramType="SCALAR" />
+    <param name="discount" sqlType="STRING" paramType="SCALAR" />
+    <param name="notes" sqlType="STRING" paramType="SCALAR" />
+    <param name="date_mutation" sqlType="STRING" paramType="SCALAR" />
+    <param name="amount_mutation" sqlType="STRING" paramType="SCALAR" />
+    <param name="item_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result element="UpdatedRowCount" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="getSellingsIdQuery" useConfig="DataSourceSelling">
+    <sql>
+		SELECT 
+	a.id AS id_penjualan,
+	a.`no_selling`,
+	DATE_FORMAT(a.`delivery_date`, "%Y-%m-%d %H:%i:%s") AS delivery_date,
+	DATE_FORMAT(a.`date_selling`, "%Y-%m-%d %H:%i:%s") AS date_selling,
+	b.`id` as selling_detail_id,
+	b.mutation_id,
+	c.`id` as cust_id,
+	c.`code`,
+	c.`name`,
+	c.`address`,
+	c.`phone`,
+	c.`email`,
+	c.`ship_address`,
+	c.`fax`,
+	a.`term_of_payment`,
+	IFNULL(a.`description`, " ") AS description,
+	f.`id` as item_id,
+	f.`item_code`,
+	f.`item_name`,
+	f.`vat`,
+	b.`qty`,
+	b.`qty_satuan`,
+	b.`qty_box`,
+	b.`price`,
+	b.`unit_price`,
+	g.`unit_box` as qty_per_box,
+	g.base_qty as stock
+
+	FROM `loccana_selling`.`selling` a
+	JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+	JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+	JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id` 
+	JOIN `loccana_masterdata`.`items` f ON b.`item_id`=f.id
+	JOIN `loccana_masterdata`.`item_qty` g ON f.`id`=g.`item_id`
+	where a.id= :id    
+    </sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+	"data":{
+		"selling": [
+				{
+						"id_penjualan":"$id_penjualan",
+						"no_selling":"$no_selling",
+						"delivery_date":"$delivery_date",
+						"date_selling":"$date_selling",
+						"selling_detail_id":"$selling_detail_id",
+						"mutation_id":"$mutation_id",
+						"cust_id":"$cust_id",
+						"code":"$code",
+						"name":"$name",
+						"address":"$address",
+						"phone":"$phone",
+						"email":"$email",
+						"ship_address":"$ship_address",
+						"fax":"$fax",
+						"term_of_payment":"$term_of_payment",
+						"description":"$description",
+						"item_id":"$item_id",
+						"item_code":"$item_code",
+						"item_name":"$item_name",
+						"vat":"$vat",
+						"qty":"$qty",
+						"qty_satuan":"$qty_satuan",
+						"qty_box":"$qty_box",
+						"price":"$price",
+						"unit_price":"$unit_price",
+						"qty_per_box":"$qty_per_box",
+						"stock":"$stock"
+				}
+			]
+			
+		}
+}</result>
+  </query>
+ 
+  <query id="approveSellingsQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>
+    	UPDATE `selling`
+	LEFT JOIN `selling_details` ON `selling`.`id`=`selling_details`.`selling_id`
+	SET 
+		`status`=:status,
+		`approval_date`=:approval_date ,
+		`approval_by`=:approved_by
+		 WHERE
+		 `selling`.id=:id
+    </sql>
+    <param name="status" sqlType="STRING" paramType="SCALAR" />
+    <param name="approval_date" sqlType="STRING" paramType="SCALAR" />
+    <param name="approved_by" sqlType="STRING" paramType="SCALAR" />
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result element="UpdatedRowCount" useColumnNumbers="true" rowName="">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="MTDSellingQuery" useConfig="DataSourceSelling">
+		<sql>
+			SELECT IFNULL(SUM(`total_amount`), " ") AS mtd_selling
+				FROM `loccana_selling`.`selling` 
+			WHERE 
+			month (date_selling) like CONCAT ('%' :month, '%') AND year(date_selling) like CONCAT ('%' :year, '%')
+	  </sql>
+	  <param name="month" paramType="SCALAR" sqlType="STRING" />
+	  <param name="year" paramType="SCALAR" sqlType="STRING" />
+		<result outputType="json">{
+			
+		   "data":{
+					"mtd_selling": "$mtd_selling"
+		   }
+	  }
+	  </result>
+	  </query>
+<!--   END QUERY LOCCANA SELLING -->
+
+<!-- BEGIN QUERY LOCCANA SELLING REPORT -->
+<query id="getSellingReportQuery" useConfig="DataSourceSelling">
+    <sql>
+		SELECT 
+		c.item_code AS Kode_produk, 
+		c.item_name AS Produk,
+		concat(name,"",base_qty) as Kemasan,
+		SUM(b.qty) AS Sum_of_pcs,
+		SUM(b.qty)*(d.base_qty/f.convertion) AS Sum_of_ltkg,
+		SUM(b.unit_price*b.qty)-(SUM(b.unit_price*b.qty)-(SUM(b.unit_price*b.qty)/a.tax)) AS Sum_of_total,
+		(b.unit_price*b.qty)/a.tax AS Sum_of_ppn,
+		(b.unit_price*b.qty) AS Sum_of_TotPPN,
+		g.`buy_price` AS Average_of_Harga_Pokok,
+		AVG(b.unit_price*b.qty)/b.qty AS Average_HargaKemasan,
+		AVG(b.unit_price*b.qty)/b.qty*(1000/d.base_qty)AS Average_Hargalt,
+		(b.unit_price*b.qty)-((b.unit_price*b.qty)/a.tax)-(SUM(b.unit_price*b.discount/100)) AS Sum_of_total_diskon,
+		AVG(b.unit_price*b.qty)/b.qty*(1000/d.base_qty)-(g.`buy_price`) AS laba_rugi,
+		((AVG(b.unit_price*b.qty)/b.qty*(1000/d.base_qty)-(g.`buy_price`))/g.`buy_price`)*100 AS persen,
+		(SUM(b.qty)*(d.base_qty/1000))*(AVG(b.unit_price*b.qty)/b.qty*(1000/d.base_qty)-(g.`buy_price`)) AS labarugi_produk,
+		DATE_FORMAT(a.date_selling, "%Y-%m-%d %H:%i:%s") AS date_selling
+		FROM loccana_selling.`selling`a
+		LEFT JOIN loccana_selling.`selling_details` b ON a.`id`=b.`selling_id`
+		LEFT JOIN loccana_masterdata.`items` c ON c.`id`=b.`item_id`
+		LEFT JOIN loccana_masterdata.`item_qty` d ON c.`id`=d.`item_id`
+		LEFT JOIN loccana_masterdata.`uom` e ON c.`uom_id`=e.`id`
+		LEFT JOIN loccana_masterdata.`uom_convert` f ON e.`id`=f.`uom_id`
+		LEFT JOIN loccana_masterdata.`item_price` g ON c.id=g.item_id
+        where it.status = 0 OR month (a.date_selling) like CONCAT ('%', :month, '%') OR year(a.date_selling) like CONCAT('%', :year, '%') OR c.item_name like CONCAT('%', :search, '%') order by g.buy_price DESC limit :limit offset :offset
+      </sql>
+	  <param name="month" sqlType="STRING" paramType="SCALAR" />
+      <param name="year" sqlType="STRING" paramType="SCALAR" />
+      <param name="search" paramType="SCALAR" sqlType="STRING" />
+      <param name="offset" paramType="SCALAR" sqlType="INTEGER" />
+      <param name="limit" paramType="SCALAR" sqlType="INTEGER" />
+      <result outputType="json">{
+       "data_report":{
+		"report": [
+				{
+						"Kode_produk":"$Kode_produk",
+						"Produk":"$Produk",
+						"Kemasan":"$Kemasan",
+						"Sum_of_pcs":"$Sum_of_pcs",
+						"Sum_of_ltkg":"$Sum_of_ltkg",
+						"Sum_of_total":"$Sum_of_total",
+						"Sum_of_ppn":"$Sum_of_ppn",
+						"Sum_of_TotPPN":"$Sum_of_TotPPN",
+						"Average_of_Harga_Pokok":"$Average_of_Harga_Pokok",
+						"Average_HargaKemasan":"$Average_HargaKemasan",
+						"Average_Hargalt":"$Average_Hargalt",
+						"Sum_of_total_diskon":"$Sum_of_total_diskon",
+						"laba_rugi":"$laba_rugi",
+						"persen":"$persen",
+						"labarugi_produk":"$labarugi_produk"
+				}
+			]
+			
+		}
+    }
+    </result>
+    </query>
+
+<query id="getSellingReportNotFilteredQuery" useConfig="DataSourceSelling">
+    <sql>SELECT 
+		c.item_code AS Kode_produk, 
+		c.item_name AS Produk,
+		concat(name,"",base_qty) as Kemasan,
+		SUM(b.qty) AS Sum_of_pcs,
+		SUM(b.qty)*(d.base_qty/f.convertion) AS Sum_of_ltkg,
+		SUM(b.unit_price*b.qty)-(SUM(b.unit_price*b.qty)-(SUM(b.unit_price*b.qty)/a.tax)) AS Sum_of_total,
+		(b.unit_price*b.qty)/a.tax AS Sum_of_ppn,
+		(b.unit_price*b.qty) AS Sum_of_TotPPN,
+		g.`buy_price` AS Average_of_Harga_Pokok,
+		AVG(b.unit_price*b.qty)/b.qty AS Average_HargaKemasan,
+		AVG(b.unit_price*b.qty)/b.qty*(1000/d.base_qty)AS Average_Hargalt,
+		(b.unit_price*b.qty)-((b.unit_price*b.qty)/a.tax)-(SUM(b.unit_price*b.discount/100)) AS Sum_of_total_diskon,
+		AVG(b.unit_price*b.qty)/b.qty*(1000/d.base_qty)-(g.`buy_price`) AS laba_rugi,
+		((AVG(b.unit_price*b.qty)/b.qty*(1000/d.base_qty)-(g.`buy_price`))/g.`buy_price`)*100 AS persen,
+		(SUM(b.qty)*(d.base_qty/1000))*(AVG(b.unit_price*b.qty)/b.qty*(1000/d.base_qty)-(g.`buy_price`)) AS labarugi_produk,
+		DATE_FORMAT(a.date_selling, "%Y-%m-%d %H:%i:%s") AS date_selling
+		FROM loccana_selling.`selling`a
+		LEFT JOIN loccana_selling.`selling_details` b ON a.`id`=b.`selling_id`
+		LEFT JOIN loccana_masterdata.`items` c ON c.`id`=b.`item_id`
+		LEFT JOIN loccana_masterdata.`item_qty` d ON c.`id`=d.`item_id`
+		LEFT JOIN loccana_masterdata.`uom` e ON c.`uom_id`=e.`id`
+		LEFT JOIN loccana_masterdata.`uom_convert` f ON e.`id`=f.`uom_id`
+		LEFT JOIN loccana_masterdata.`item_price` g ON c.id=g.item_id
+        limit :limit offset :offset
+      </sql>
+      <param name="offset" paramType="SCALAR" sqlType="INTEGER" />
+      <param name="limit" paramType="SCALAR" sqlType="INTEGER" />
+      <result outputType="json">{
+       "data_report":{
+           "report":[
+             {
+                  		"Kode_produk":"$Kode_produk",
+						"Produk":"$Produk",
+						"Kemasan":"$Kemasan",
+						"Sum_of_pcs":"$Sum_of_pcs",
+						"Sum_of_ltkg":"$Sum_of_ltkg",
+						"Sum_of_total":"$Sum_of_total",
+						"Sum_of_ppn":"$Sum_of_ppn",
+						"Sum_of_TotPPN":"$Sum_of_TotPPN",
+						"Average_of_Harga_Pokok":"$Average_of_Harga_Pokok",
+						"Average_HargaKemasan":"$Average_HargaKemasan",
+						"Average_Hargalt":"$Average_Hargalt",
+						"Sum_of_total_diskon":"$Sum_of_total_diskon",
+						"laba_rugi":"$laba_rugi",
+						"persen":"$persen",
+						"labarugi_produk":"$labarugi_produk"
+              }
+            ]
+       }
+    }
+    </result>
+    </query>
+	<query id="getSellingReportCountQuery" useConfig="DataSourceSelling">
+    <sql>SELECT COUNT(*) AS countid
+			FROM loccana_selling.`selling`a
+			LEFT JOIN loccana_selling.`selling_details` b ON a.`id`=b.`selling_id`
+			LEFT JOIN loccana_masterdata.`items` c ON c.`id`=b.`item_id`
+			LEFT JOIN loccana_masterdata.`item_qty` d ON c.`id`=d.`item_id`
+			LEFT JOIN loccana_masterdata.`uom` e ON c.`uom_id`=e.`id`
+			LEFT JOIN loccana_masterdata.`uom_convert` f ON e.`id`=f.`uom_id`
+			LEFT JOIN loccana_masterdata.`item_price` g ON c.id=g.item_id 
+      WHERE month (a.date_selling) like CONCAT ('%' :month, '%') OR year(a.date_selling) like CONCAT('%', :year, '%') OR c.item_name like CONCAT('%',:search,'%')
+  </sql>
+    <param name="search" paramType="SCALAR" sqlType="STRING" />
+    <param name="month" paramType="SCALAR" sqlType="STRING" />
+    <param name="year" paramType="SCALAR" sqlType="STRING" />
+    <result outputType="json">{
+       "data_filtered":{
+            "countid":"$countid"
+       }
+  }
+  </result>
+  </query>
+
+   <query id="getSellingReportCountNotFilteredQuery" useConfig="DataSourceSelling">
+    <sql>SELECT COUNT(*) AS countid
+			FROM loccana_selling.`selling`a
+			LEFT JOIN loccana_selling.`selling_details` b ON a.`id`=b.`selling_id`
+			LEFT JOIN loccana_masterdata.`items` c ON c.`id`=b.`item_id`
+			LEFT JOIN loccana_masterdata.`item_qty` d ON c.`id`=d.`item_id`
+			LEFT JOIN loccana_masterdata.`uom` e ON c.`uom_id`=e.`id`
+			LEFT JOIN loccana_masterdata.`uom_convert` f ON e.`id`=f.`uom_id`
+			LEFT JOIN loccana_masterdata.`item_price` g ON c.id=g.item_id 
+  </sql>
+    <result outputType="json">{
+       "data_not_filtered":{
+            "countid":"$countid"
+       }
+  }
+  </result>
+  </query>
+<!--   END QUERY LOCCANA SELLING REPORT -->
+
+<!-- BEGIN QUERY LOCCANA SELING DETAILS -->
+  <query id="createSellingDetailsQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceSelling">
+    <sql>INSERT INTO selling_details (selling_id,item_id,unit_price,qty,qty_box,qty_satuan,box_amount,price,discount,notes,mutation_id,created_at,updated_at)
+	values (:selling_id,:item_id,:unit_price,:qty,:qty_box,:qty_satuan,:box_amount,:price,:discount,:notes,:mutation_id,:created_at,:updated_at)</sql>
+    <param name="selling_id" sqlType="STRING" />
+    <param name="item_id" sqlType="STRING" />
+    <param name="unit_price" sqlType="STRING" />
+    <param name="qty" sqlType="STRING" />
+    <param name="qty_box" sqlType="STRING" />
+    <param name="qty_satuan" sqlType="STRING" />
+    <param name="box_amount" sqlType="STRING" />
+    <param name="price" sqlType="STRING" />
+    <param name="discount" sqlType="STRING" />
+    <param name="notes" sqlType="STRING" />
+    <param name="mutation_id" sqlType="STRING" />
+    <param name="created_at" sqlType="STRING" />
+    <param name="updated_at" sqlType="STRING" />
+    <result element="return" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="getSellingDetailsDetailQuery" useConfig="DataSourceSelling">
+    <sql>
+    SELECT 
+   		id, 
+   		selling_id, 
+   		item_id, 
+   		unit_price, 
+   		qty, 
+   		qty_box, 
+   		qty_satuan, 
+   		box_amount, 
+   		price, 
+   		discount, 
+   		notes, 
+   		mutation_id, 
+   		DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") AS created_at,
+	  DATE_FORMAT(updated_at, "%Y-%m-%d %H:%i:%s") AS updated_at
+   	from selling_details
+   	where id =:id
+   	</sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+   "data":{
+            "id":"$id",
+            "selling_id":"$selling_id", 
+	   		"item_id":"$item_id", 
+	   		"unit_price":"$unit_price", 
+	   		"qty":"$qty", 
+	   		"qty_box":"$qty_box", 
+	   		"qty_satuan":"$qty_satuan", 
+	   		"box_amount":"$box_amount", 
+	   		"price":"$price", 
+	   		"discount":"$discount", 
+	   		"notes":"$notes", 
+	   		"mutation_id":"$mutation_id", 
+	   		"created_at":"$created_at", 
+	   		"updated_at":"$updated_at"
+   }
+}</result>
+  </query>
+  <query id="getSellingIDforUpdateItemQuery" useConfig="DataSourceSelling">
+    <sql>
+     SELECT 
+   		c.id AS selling_id, a.id as item_id, c.no_selling   		
+   	from loccana_selling.selling_details AS b
+   	join loccana_selling.selling AS c on c.id = b.selling_id
+   	join loccana_masterdata.items AS a on a.id = b.item_id
+   	where c.id = :selling_id AND a.id = :item_id
+   	</sql>
+    <param name="selling_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="item_id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+   "data":{
+            "selling_id":"$selling_id",
+            "item_id":"$item_id",
+            "no_selling":"$no_selling"	   		
+   }
+}</result>
+  </query>
+  <query id="updateItemQtyQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>
+    	UPDATE loccana_masterdata.items
+  JOIN loccana_masterdata.item_qty ON  loccana_masterdata.items.id=loccana_masterdata.item_qty.item_id
+  JOIN loccana_masterdata.item_price ON loccana_masterdata.items.id=loccana_masterdata.item_price.item_id
+  JOIN loccana_selling.selling_details ON loccana_masterdata.items.id=loccana_selling.selling_details.item_id
+  SET 
+  loccana_masterdata.item_qty.base_qty = loccana_masterdata.item_qty.base_qty - loccana_selling.selling_details.qty
+
+  WHERE loccana_selling.selling_details.selling_id= :selling_id AND loccana_masterdata.items.id  = :item_id
+    </sql>
+<!--     <param name="base_qty" sqlType="STRING" paramType="SCALAR" /> -->
+<!--     <param name="qty" sqlType="STRING" paramType="SCALAR" /> -->
+    <param name="selling_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="item_id" sqlType="STRING" paramType="SCALAR" />
+    <result element="UpdatedRowCount" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+<!--   END QUERY LOCCANA SELLING DETAILS -->
+  
+  <!-- BEGIN QUERY LOCCANA SELLING HISTORY -->
+  <query id="createSellingHistoryQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceSelling">
+    <sql>INSERT INTO `selling_history` (`selling_id`,`sales_id`,`item_id`,`unit_price`,`qty`,`qty_box`,`qty_pcs`,`box_amount`,`price`,`notes`,`mutation_id`,`approval_by`,`approval_date`,`created_at`,`updated_at`)
+	values (:selling_id,:sales_id,:item_id,:unit_price,:qty,:qty_box,:qty_pcs,:box_amount,:price,:notes,:mutation_id,:approval_by,:approval_date,:created_at,:updated_at)
+	</sql>
+    <param name="selling_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="sales_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="item_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="unit_price" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty_box" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty_pcs" sqlType="STRING" paramType="SCALAR" />
+    <param name="box_amount" sqlType="STRING" paramType="SCALAR" />
+    <param name="price" sqlType="STRING" paramType="SCALAR" />
+    <param name="notes" sqlType="STRING" paramType="SCALAR" />
+    <param name="mutation_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="approval_by" sqlType="STRING" paramType="SCALAR" />
+    <param name="approval_date" sqlType="STRING" paramType="SCALAR" />
+    <param name="created_at" sqlType="STRING" paramType="SCALAR" />
+    <param name="updated_at" sqlType="STRING" paramType="SCALAR" />
+    <result element="return" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+</query>
+  <!--   <query id="getSellingHistoryDetailQuery" useConfig="DataSourceSelling">
+    <sql>
+    SELECT 
+	    `selling_id`,
+	    `sales_id`,
+	    `item_id`,
+	    `unit_price`,
+	    `qty`,
+	    `qty_box`,
+	    `qty_pcs`,
+	    `box_amount`,
+	    `price`,
+	    `notes`,
+	    `mutation_id`,
+	    `approval_by`,
+	    DATE_FORMAT(approval_date, "%Y-%m-%d %H:%i:%s") AS approval_date,
+	    DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") AS created_at,
+	  	DATE_FORMAT(updated_at, "%Y-%m-%d %H:%i:%s") AS updated_at 
+	    FROM 
+	    selling_history 
+    WHERE 
+    	id = :id</sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+   "data":{
+            "selling_id":"$selling_id",
+            "sales_id":"$sales_id",
+            "item_id":"$item_id",
+            "unit_price":"$unit_price",
+            "qty":"$qty",
+            "qty_box":"$qty_box",
+            "qty_pcs":"$qty_pcs",
+            "box_amount":"$box_amount",
+            "price":"$price",
+            "notes":"$notes",
+            "mutation_id":"$mutation_id",
+            "approval_by":"$approval_by",
+            "approval_date":"$approval_date",
+            "created_at":"$created_at",
+            "updated_at":"$updated_at"
+   }
+}</result>
+  </query>
+  <query id="deleteSellingHistoryQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>DELETE FROM selling_history where id = :id</sql>
+    <result element="UpdatedRowCount" useColumnNumbers="true" rowName="">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+    <param name="id" sqlType="STRING" />
+  </query>
+  <query id="getDataForSellingHistoryQuery" useConfig="DataSourceSelling">
+    <sql>
+		select 
+	a.id AS selling_id,
+	a.`status`,
+    a.sales_id,
+    f.id AS item_id,
+    b.unit_price,
+    b.qty,
+    b.qty_box,  
+    g.qty_pcs,
+    b.box_amount,
+    b.price,
+    b.notes,
+    h.id As mutation_id,
+    a.approval_by,
+    a.approval_date
+    from loccana_selling.selling AS a
+    Join loccana_selling.selling_details AS b on a.id = b.selling_id
+    join loccana_masterdata.items AS f on f.id = b.item_id
+    join loccana_masterdata.item_qty AS g on f.id = g.item_id
+    join loccana_inventory.mutations AS h on h.id = b.mutation_id
+    where selling_id = :selling_id
+      </sql>
+	  <param name="selling_id" sqlType="STRING" paramType="SCALAR" />
+      <result outputType="json">{
+       "data":{
+		"data_selling": [
+				{
+					"selling_id": "$selling_id", 
+					"sales_id": "$sales_id", 
+					"item_id": "$item_id", 
+					"unit_price":"$unit_price", 
+					"qty": "$qty", 
+					"qty_box": "$qty_box", 
+					"qty_pcs": "$qty_pcs", 
+					"box_amount": "$box_amount", 
+					"price": "$price", 
+					"notes": "$notes", 
+					"mutation_id": "$mutation_id", 
+					"approval_by": "$approval_by", 
+					"approval_date": "$approval_date"					
+				}
+			]
+			
+		}
+    }
+    </result>
+    </query> -->
+<!--   END QUERY LOCCANA SELLING HISTORY -->
+
+<!-- BEGIN QUERY LOCCANA SELLING INVOICE   -->
+<query id="getSellingInvoiceListQuery" useConfig="DataSourceSelling">
+    <sql>
+		SELECT 
+			h.`id` AS id_invoice,
+			DATE_FORMAT(h.`date_invoice`, "%Y-%m-%d %H:%i:%s") AS date_invoice,
+			DATE_FORMAT(h.`due_date`, "%Y-%m-%d %H:%i:%s") AS due_date,
+			h.`invoice_number`,
+			h.`notes`,
+			h.`sign`,
+			h.`tax_invoice`,
+			h.notes AS description,
+			c.name,
+			c.address,
+			c.phone,
+			c.email,
+			h.status,
+			i.`qty`,
+			i.`qty_box`,
+			i.`qty_pcs`,
+			i.`discount`,
+			i.`price`,
+			i.`unit_price`,
+			a.no_selling,
+			DATE_FORMAT(a.date_selling, "%Y-%m-%d %H:%i:%s") AS date_selling
+			FROM `loccana_selling`.`selling` a
+			JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+			JOIN `loccana_selling`.`selling_invoice` e ON a.`id`=e.`selling_id`
+			JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+			JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id` 
+			JOIN `loccana_masterdata`.`items` f ON b.`item_id`=f.id
+			JOIN `loccana_masterdata`.`item_qty` g ON f.`id`=g.`item_id`
+			JOIN `loccana_selling`.`selling_invoice` h ON a.id=h.selling_id
+			JOIN `loccana_selling`.`selling_invoice_details` i ON b.`id`=i.`selling_detail_id`
+        where h.status = :status OR month (h.date_invoice) like CONCAT ('%', :month, '%') OR year(h.date_invoice) like CONCAT('%', :year, '%') OR h.invoice_number like CONCAT('%', :search, '%') 
+		GROUP BY a.`id` ,b.id,h.id,i.id,e.id
+		ORDER BY e.`date_invoice` DESC 
+		limit :limit offset :offset
+      </sql>
+	  <param name="month" sqlType="STRING" paramType="SCALAR" />
+      <param name="year" sqlType="STRING" paramType="SCALAR" />
+      <param name="search" paramType="SCALAR" sqlType="STRING" />
+      <param name="offset" paramType="SCALAR" sqlType="INTEGER" />
+      <param name="limit" paramType="SCALAR" sqlType="INTEGER" />
+      <param name="status" paramType="SCALAR" sqlType="INTEGER" />
+      <result outputType="json">{
+       "data":{
+		"invoice": [
+				{
+					"id_invoice": "$id_invoice", 
+					"date_invoice": "$date_invoice", 
+					"due_date": "$due_date", 
+					"invoice_number":"$invoice_number", 
+					"notes": "$notes", 
+					"sign": "$sign", 
+					"tax_invoice": "$tax_invoice", 
+					"description": "$description", 
+					"name": "$name", 
+					"address": "$address", 
+					"phone": "$phone", 
+					"email": "$email", 
+					"status": "$status", 
+					"qty": "$qty", 
+					"qty_box": "$qty_box", 
+					"qty_pcs": "$qty_pcs", 
+					"discount": "$discount", 
+					"price": "$price", 
+					"unit_price": "$unit_price", 
+					"no_selling": "$no_selling", 
+					"date_selling": "$date_selling"
+				}
+			]
+			
+		}
+    }
+    </result>
+    </query>
+
+<query id="getSellingInvoiceNotFilteredQuery" useConfig="DataSourceSelling">
+    <sql>
+		SELECT 
+			h.`id` AS id_invoice,
+			DATE_FORMAT(h.`date_invoice`, "%Y-%m-%d %H:%i:%s") AS date_invoice,
+			DATE_FORMAT(h.`due_date`, "%Y-%m-%d %H:%i:%s") AS due_date,
+			h.`invoice_number`,
+			h.`notes`,
+			h.`sign`,
+			h.`tax_invoice`,
+			h.notes AS description,
+			c.name,
+			c.address,
+			c.phone,
+			c.email,
+			h.status,
+			i.`qty`,
+			i.`qty_box`,
+			i.`qty_pcs`,
+			i.`discount`,
+			i.`price`,
+			i.`unit_price`,
+			a.no_selling,
+			DATE_FORMAT(a.date_selling, "%Y-%m-%d %H:%i:%s") AS date_selling
+			FROM `loccana_selling`.`selling` a
+			JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+			JOIN `loccana_selling`.`selling_invoice` e ON a.`id`=e.`selling_id`
+			JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+			JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id` 
+			JOIN `loccana_masterdata`.`items` f ON b.`item_id`=f.id
+			JOIN `loccana_masterdata`.`item_qty` g ON f.`id`=g.`item_id`
+			JOIN `loccana_selling`.`selling_invoice` h ON a.id=h.selling_id
+			JOIN `loccana_selling`.`selling_invoice_details` i ON b.`id`=i.`selling_detail_id`
+		GROUP BY a.`id` ,b.id,h.id,i.id,e.id
+		ORDER BY e.`date_invoice` DESC 
+        limit :limit offset :offset
+      </sql>
+      <param name="offset" paramType="SCALAR" sqlType="INTEGER" />
+      <param name="limit" paramType="SCALAR" sqlType="INTEGER" />
+      <result outputType="json">{
+       "data":{
+           "invoice":[
+             {
+                  "id_invoice": "$id_invoice", 
+					"date_invoice": "$date_invoice", 
+					"due_date": "$due_date", 
+					"invoice_number":"$invoice_number", 
+					"notes": "$notes", 
+					"sign": "$sign", 
+					"tax_invoice": "$tax_invoice", 
+					"description": "$description", 
+					"name": "$name", 
+					"address": "$address", 
+					"phone": "$phone", 
+					"email": "$email", 
+					"status": "$status", 
+					"qty": "$qty", 
+					"qty_box": "$qty_box", 
+					"qty_pcs": "$qty_pcs", 
+					"discount": "$discount", 
+					"price": "$price", 
+					"unit_price": "$unit_price", 
+					"no_selling": "$no_selling", 
+					"date_selling": "$date_selling"
+              }
+            ]
+       }
+    }
+    </result>
+    </query>
+
+
+<query id="getSellingInvoiceCountQuery" useConfig="DataSourceSelling">
+<sql>SELECT COUNT(*) AS countid
+	FROM `loccana_selling`.`selling` a
+	JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+	JOIN `loccana_selling`.`selling_invoice` e ON a.`id`=e.`selling_id`
+	JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+	JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id` 
+	JOIN `loccana_masterdata`.`items` f ON b.`item_id`=f.id
+	JOIN `loccana_masterdata`.`item_qty` g ON f.`id`=g.`item_id`
+	JOIN `loccana_selling`.`selling_invoice` h ON a.id=h.selling_id
+	JOIN `loccana_selling`.`selling_invoice_details` i ON b.`id`=i.`selling_detail_id`
+WHERE month (h.date_invoice) like CONCAT ('%' :month, '%') OR year(h.date_invoice) like CONCAT('%', :year, '%') OR h.invoice_number like CONCAT('%',:search,'%')
+</sql>
+<param name="search" paramType="SCALAR" sqlType="STRING" />
+<param name="month" paramType="SCALAR" sqlType="STRING" />
+<param name="year" paramType="SCALAR" sqlType="STRING" />
+<result outputType="json">{
+"data_filtered":{
+	"countid":"$countid"
+}
+}
+</result>
+</query>
+
+   <query id="getSellingInvoiceCountNotFilteredQuery" useConfig="DataSourceSelling">
+    <sql>SELECT COUNT(*) AS countid
+	FROM `loccana_selling`.`selling` a
+	JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+	JOIN `loccana_selling`.`selling_invoice` e ON a.`id`=e.`selling_id`
+	JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+	JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id` 
+	JOIN `loccana_masterdata`.`items` f ON b.`item_id`=f.id
+	JOIN `loccana_masterdata`.`item_qty` g ON f.`id`=g.`item_id`
+	JOIN `loccana_selling`.`selling_invoice` h ON a.id=h.selling_id
+	JOIN `loccana_selling`.`selling_invoice_details` i ON b.`id`=i.`selling_detail_id`
+  </sql>
+    <result outputType="json">{
+       "data_not_filtered":{
+            "countid":"$countid"
+       }
+  }
+  </result>
+  </query>
+  <query id="createSellingInvoicesQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceSelling">
+    <sql>INSERT INTO selling_invoice 
+    (selling_id,invoice_number,date_invoice,due_date,attention,notes,sign,tax_invoice,status,created_at,updated_at)
+	VALUES 
+	(:selling_id,:invoice_number,:date_invoice,:due_date,:attention,:notes,:sign,:tax_invoice,:status,:created_at,:updated_at)</sql>
+    <param name="selling_id" sqlType="STRING" />
+    <param name="invoice_number" sqlType="STRING" />
+    <param name="date_invoice" sqlType="STRING" />
+    <param name="due_date" sqlType="STRING" />
+    <param name="attention" sqlType="STRING" />
+    <param name="notes" sqlType="STRING" />
+    <param name="sign" sqlType="STRING" />
+    <param name="tax_invoice" sqlType="STRING" />
+    <param name="status" sqlType="STRING" />
+    <param name="created_at" sqlType="STRING" />
+    <param name="updated_at" sqlType="STRING" />
+    <result element="return" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+      <element name="invoice_number" column="invoice_number" xsdType="string" />
+      <element name="date_invoice" column="date_invoice" xsdType="string" />
+    </result>
+  </query>
+<!--   <query id="getSellingInvoicesListQuery" useConfig="DataSourceSelling"> -->
+<!--     <sql> -->
+<!--     	SELECT  -->
+<!-- 	h.`id` AS id_invoice, -->
+<!-- 	DATE_FORMAT(h.`date_invoice`, "%Y-%m-%d %H:%i:%s") AS date_invoice, -->
+<!-- 	DATE_FORMAT(h.`due_date`, "%Y-%m-%d %H:%i:%s") AS due_date, -->
+<!-- 	h.`invoice_number`, -->
+<!-- 	h.`notes`, -->
+<!-- 	h.`sign`, -->
+<!-- 	h.`tax_invoice`, -->
+<!-- 	h.notes as description, -->
+<!-- 	c.name, -->
+<!-- 	c.address, -->
+<!-- 	c.phone, -->
+<!-- 	c.email, -->
+<!-- 	h.status, -->
+<!-- 	i.`qty`, -->
+<!-- 	i.`qty_box`, -->
+<!-- 	i.`qty_pcs`, -->
+<!-- 	i.`discount`, -->
+<!-- 	i.`price`, -->
+<!-- 	i.`unit_price`, -->
+<!-- 	a.no_selling, -->
+<!-- 	DATE_FORMAT(a.date_selling, "%Y-%m-%d %H:%i:%s") As date_selling -->
+<!-- 	FROM `loccana_selling`.`selling` a -->
+<!-- 	JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id` -->
+<!-- 	JOIN `loccana_selling`.`selling_invoice` e ON a.`id`=e.`selling_id` -->
+<!-- 	JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id` -->
+<!-- 	JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id`  -->
+<!-- 	JOIN `loccana_masterdata`.`items` f ON b.`item_id`=f.id -->
+<!-- 	JOIN `loccana_masterdata`.`item_qty` g ON f.`id`=g.`item_id` -->
+<!-- 	JOIN `loccana_selling`.`selling_invoice` h ON a.id=h.selling_id -->
+<!-- 	JOIN `loccana_selling`.`selling_invoice_details` i ON b.`id`=i.`selling_detail_id`  -->
+<!-- 	GROUP BY h.`id` order by h.date_invoice desc -->
+<!--     </sql> -->
+<!--     <result outputType="json">{ -->
+<!-- 	"data":{ -->
+<!-- 		"selling_inovice": [ -->
+<!-- 				{ -->
+<!-- 						"id_invoice":"$id_invoice", -->
+<!-- 						"date_invoice":"$date_invoice", -->
+<!-- 						"due_date":"$due_date", -->
+<!-- 						"invoice_number":"$invoice_number", -->
+<!-- 						"notes":"$notes", -->
+<!-- 						"sign":"$sign", -->
+<!-- 						"tax_invoice":"$tax_invoice", -->
+<!-- 						"description":"$description", -->
+<!-- 						"name":"$name", -->
+<!-- 						"address":"$address", -->
+<!-- 						"phone":"$phone", -->
+<!-- 						"email":"$email", -->
+<!-- 						"status":"$status", -->
+<!-- 						"qty":"$qty", -->
+<!-- 						"qty_box":"$qty_box", -->
+<!-- 						"qty_pcs":"$qty_pcs", -->
+<!-- 						"discount":"$discount", -->
+<!-- 						"price":"$price", -->
+<!-- 						"unit_price":"$unit_price", -->
+<!-- 						"no_selling":"$no_selling", -->
+<!-- 						"date_selling":"$date_selling" -->
+<!-- 				} -->
+<!-- 			] -->
+			
+<!-- 		} -->
+<!-- }</result> -->
+<!--   </query> -->
+  <query id="getSellingInvoicesDetailQuery" useConfig="DataSourceSelling">
+    <sql>SELECT 
+    id,
+    selling_id, 
+	invoice_number, 
+	DATE_FORMAT(date_invoice, "%Y-%m-%d %H:%i:%s") AS date_invoice, 
+	DATE_FORMAT(due_date, "%Y-%m-%d %H:%i:%s") AS due_date,  
+	attention, 
+	notes, 
+	sign, 
+	tax_invoice, 
+	status, 
+    DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") AS created_at,
+	DATE_FORMAT(updated_at, "%Y-%m-%d %H:%i:%s") AS updated_at
+    FROM selling_invoice WHERE id = :id</sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+   "data":{
+            "id":"$id",
+            "selling_id":"$selling_id",
+            "invoice_number":"$invoice_number",
+            "date_invoice":"$date_invoice",
+            "due_date":"$due_date",
+            "attention":"$attention",
+            "notes":"$notes",
+            "sign":"$sign",
+            "tax_invoice":"$tax_invoice",
+            "status":"$status",
+            "created_at":"$created_at",
+            "updated_at":"$updated_at"
+   }
+}</result>
+  </query>
+  <query id="updateSellingInvoicesQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>
+    	UPDATE `loccana_selling`.`selling` 
+	LEFT JOIN `loccana_selling`.`selling_details` ON `loccana_selling`.`selling`.`id`=`loccana_selling`.`selling_details`.`selling_id`
+	JOIN `loccana_masterdata`.`items` ON `loccana_selling`.`selling_details`.`item_id`=`loccana_masterdata`.`items`.`id`
+	JOIN `loccana_masterdata`.`item_qty` ON `loccana_masterdata`.`items`.`id`=`loccana_masterdata`.`item_qty`.`item_id`
+	JOIN `loccana_inventory`.`mutations` ON `loccana_selling`.`selling_details`.`mutation_id`=`loccana_inventory`.`mutations`.id
+	LEFT JOIN `loccana_selling`.`selling_invoice` ON `loccana_selling`.`selling`.`id`=`loccana_selling`.`selling_invoice`.`selling_id`
+	LEFT JOIN `loccana_selling`.`selling_invoice_details` ON `loccana_selling`.`selling_details`.`id`=`loccana_selling`.`selling_invoice_details`.`selling_detail_id`
+	SET 
+		invoice_number=:invoice_number,
+		date_invoice=:date_invoice,
+		due_date=:due_date,
+		attention=:attention,
+		sign=:sign,
+		tax_invoice=:tax_invoice,
+		loccana_selling.selling_invoice_details.unit_price=:unit_price,
+		loccana_selling.selling_invoice_details.qty=:qty,
+		loccana_selling.selling_invoice_details.qty_box=:qty_box,	
+		loccana_selling.selling_invoice_details.qty_pcs=:qty_satuan,
+		loccana_selling.selling_invoice_details.box_amount=:box_amount,
+		loccana_selling.selling_invoice_details.price=:price,
+		loccana_selling.selling_invoice_details.discount=:discount,
+		loccana_selling.selling_invoice_details.notes=:notes,
+		date_mutation=:date_mutation,
+		amount_mutation=:amount_mutation,
+		loccana_inventory.mutations.item_id=:item_id
+		 WHERE
+		 loccana_selling.selling_invoice.id=:id
+    </sql>
+    <param name="invoice_number" sqlType="STRING" paramType="SCALAR" />
+    <param name="date_invoice" sqlType="STRING" paramType="SCALAR" />
+    <param name="due_date" sqlType="STRING" paramType="SCALAR" />
+    <param name="attention" sqlType="STRING" paramType="SCALAR" />
+    <param name="sign" sqlType="STRING" paramType="SCALAR" />
+    <param name="tax_invoice" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty_box" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty_satuan" sqlType="STRING" paramType="SCALAR" />
+    <param name="box_amount" sqlType="STRING" paramType="SCALAR" />
+    <param name="unit_price" sqlType="STRING" paramType="SCALAR" />
+    <param name="price" sqlType="STRING" paramType="SCALAR" />
+    <param name="discount" sqlType="STRING" paramType="SCALAR" />
+    <param name="notes" sqlType="STRING" paramType="SCALAR" />
+    <param name="date_mutation" sqlType="STRING" paramType="SCALAR" />
+    <param name="amount_mutation" sqlType="STRING" paramType="SCALAR" />
+    <param name="item_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result element="UpdatedRowCount" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="deleteSellingInvoicesQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>
+    DELETE c,d,f
+		FROM  `loccana_selling`.`selling_invoice` c
+		LEFT JOIN `loccana_selling`.`selling_invoice_details` d ON c.id=d.`selling_invoice_id`
+		LEFT JOIN `loccana_selling`.selling_details e ON d.`selling_detail_id`=e.`id`
+		LEFT JOIN `loccana_inventory`.`mutations` f ON e.`mutation_id`=f.`id`
+		WHERE c.id = :id
+    
+    </sql>
+    <param name="id" sqlType="STRING" />
+    <result element="UpdatedRowCount" useColumnNumbers="true" rowName="">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="getSellingInvoicesIDQuery" useConfig="DataSourceSelling">
+    <sql>
+    SELECT 
+	    id, 
+	    selling_id, 
+	    invoice_number, 
+	    DATE_FORMAT(date_invoice, "%Y-%m-%d %H:%i:%s") AS date_invoice, 
+	    DATE_FORMAT(due_date, "%Y-%m-%d %H:%i:%s") AS due_date, 
+	    attention, 
+	    notes, 
+	    sign, 
+	    tax_invoice, 
+	    DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") AS created_at,
+	  	DATE_FORMAT(updated_at, "%Y-%m-%d %H:%i:%s") AS updated_at 
+    FROM 
+    selling_invoice WHERE status = 0 AND id = :id
+    </sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+   "data":{
+            "id":"$id",
+            "selling_id": "$selling_id",
+            "invoice_number":"$invoice_number",
+            "date_invoice": "$date_invoice",
+            "due_date": "$due_date",
+            "attention": "$attention",
+            "notes": "$notes",
+            "sign": "$sign",
+            "tax_invoice": "$tax_invoice",
+            
+            "created_at":"$created_at",
+            "updated_at":"$updated_at"
+   }
+}</result>
+  </query>
+  <query id="getSellingInvoicesSearchIDQuery" useConfig="DataSourceSelling">
+    <sql>
+    SELECT 
+	a.id as selling_id,
+	a.`no_selling`,
+	DATE_FORMAT(a.`date_selling`, "%Y-%m-%d %H:%i:%s") AS date_selling,
+	a.term_of_payment,
+	b.id as selling_detail_id,
+	c.`name`,
+	c.`address`,
+	c.`phone`,
+	c.`email`,
+	c.`ship_address`,
+	c.`fax`,
+	a.`term_of_payment` AS term_of_payment1,
+	IFNULL(a.`description`, " ") AS `description`,
+	f.`item_code`,
+	f.`item_name`,
+	f.id AS item_id,
+	f.vat,
+	h.`invoice_number`,
+	DATE_FORMAT(h.date_invoice, "%Y-%m-%d %H:%i:%s") AS date_invoice,
+	DATE_FORMAT(h.due_date, "%Y-%m-%d %H:%i:%s") AS due_date,
+	h.`id` AS id_invoice,
+	h.`attention`,
+	h.`notes` AS description1,
+	h.`sign`,
+	h.`tax_invoice`,
+	i.id AS selling_invoice_detail_id,
+	i.`box_amount`,
+	i.`discount`,
+	i.`qty`,
+	i.qty_pcs AS qty_satuan,
+	i.`qty_box`,
+	i.`price`,
+	i.`unit_price`,
+	i.notes,
+	g.`unit_box` AS qty_per_box,
+	g.base_qty AS stock
+	FROM `loccana_selling`.`selling` a
+	JOIN `loccana_selling`.`selling_details` b ON a.`id`=b.`selling_id`
+	JOIN `loccana_masterdata`.`partners` c ON a.`partner_id`=c.`id`
+	JOIN `loccana_masterdata`.`users` d ON a.`sales_id`=d.`id` 
+	JOIN `loccana_masterdata`.`items` f ON b.`item_id`=f.id
+	JOIN `loccana_masterdata`.`item_qty` g ON f.`id`=g.`item_id`
+	JOIN `loccana_selling`.`selling_invoice_details` i ON b.`id`=i.`selling_detail_id`
+	JOIN `loccana_selling`.`selling_invoice` h ON i.`selling_invoice_id`=h.`id`
+	WHERE  h.id= :id
+    </sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+	"data":{
+		"selling_inovice": [
+				{
+					"selling_id":"$selling_id",
+					"no_selling":"$no_selling",
+					"date_selling":"$date_selling",
+					"term_of_payment":"$term_of_payment",
+					"selling_detail_id":"$selling_detail_id",
+					"name":"$name",
+					"address":"$address",
+					"phone":"$phone",
+					"email":"$email",
+					"ship_address":"$ship_address",
+					"fax":"$fax",
+					"term_of_payment1":"$term_of_payment1",
+					"description":"$description",
+					"item_code":"$item_code",
+					"item_name":"$item_name",
+					"item_id":"$item_id",
+					"vat":"$vat",
+					"invoice_number":"$invoice_number",
+					"date_invoice":"$date_invoice",
+					"due_date":"$due_date",
+					"id_invoice":"$id_invoice",
+					"attention":"$attention",
+					"description1":"$description1",
+					"sign":"$sign",
+					"tax_invoice":"$tax_invoice",
+					"selling_invoice_detail_id":"$selling_invoice_detail_id",
+					"box_amount":"$box_amount",
+					"discount":"$discount",
+					"qty":"$qty",
+					"qty_satuan":"$qty_satuan",
+					"qty_box":"$qty_box",
+					"price":"$price",
+					"unit_price":"$unit_price",
+					"notes":"$notes",
+					"qty_per_box":"$qty_per_box",
+					"stock":"$stock"
+				}
+			]
+			
+		}
+}</result>
+  </query>
+<query id="getSellingInvoicesListSelectQuery" useConfig="DataSourceSelling">
+    <sql>SELECT 
+	a.id AS id_selling,
+	a.`no_selling`,
+	DATE_FORMAT(a.`date_selling`, "%Y-%m-%d %H:%i:%s") AS date_selling,
+	a.`total_amount`,
+	b.`name`
+	from
+	    `loccana_selling`.`selling` a 
+	    JOIN `loccana_masterdata`.`partners` b ON a.`partner_id`=b.`id`
+	    LEFT JOIN `loccana_selling`.`selling_invoice` d ON a.id=d.`selling_id`
+	    WHERE d.`invoice_number` IS NULL
+    </sql>
+    <result outputType="json">{
+   "data":{ 
+		"select": [
+	   			{
+	            "id_selling":"$id_selling",
+	            "no_selling":"$no_selling",
+	            "date_selling":"$date_selling",
+	            "total_amount":"$total_amount",
+	            "name":"$name"
+	   			}
+	   		   ]
+   		  }
+}</result>
+  </query>
+  <query id="MTDSellingInvoiceQuery" useConfig="DataSourceSelling">
+		<sql>SELECT IFNULL(SUM(d.`price`), " ") AS mtd_inv_sell
+			FROM `loccana_selling`.`selling` a
+			join `loccana_selling`.`selling_details` b on a.id=b.selling_id
+			join `loccana_selling`.`selling_invoice` c on a.id=c.selling_id
+			join `loccana_selling`.`selling_invoice_details` d on c.id=d.`selling_invoice_id`
+			where
+			month (c.date_invoice) like CONCAT ('%' :month, '%') AND year(c.date_invoice) like CONCAT ('%' :year, '%')
+	  </sql>
+	  <param name="month" paramType="SCALAR" sqlType="STRING" />
+	  <param name="year" paramType="SCALAR" sqlType="STRING" />
+		<result outputType="json">{
+			
+		   "data":{
+					"mtd_inv_sell": "$mtd_inv_sell"
+		   }
+	  }
+	  </result>
+	  </query>
+<!--   END QUERY LOCCANA SELLING INVOICE -->
+
+<!-- BEGIN QUERY LOCCANA SELLING INVOICE DETAILS -->
+  <query id="createSellingInvoiceDetailsQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceSelling">
+    <sql>INSERT INTO selling_invoice_details 
+    (selling_invoice_id,selling_detail_id,unit_price,qty,
+    qty_box,qty_pcs,box_amount,price,discount,notes,created_at,updated_at)
+	values 
+	(:selling_invoice_id,:selling_detail_id,:unit_price,:qty,
+	:qty_box,:qty_pcs,:box_amount,:price,:discount,:notes,:created_at,:updated_at)
+	</sql>
+    <param name="selling_invoice_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="selling_detail_id" sqlType="STRING" paramType="SCALAR" />
+    <param name="unit_price" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty_box" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty_pcs" sqlType="STRING" paramType="SCALAR" />
+    <param name="box_amount" sqlType="STRING" paramType="SCALAR" />
+    <param name="price" sqlType="STRING" paramType="SCALAR" />
+    <param name="discount" sqlType="STRING" paramType="SCALAR" />
+    <param name="notes" sqlType="STRING" paramType="SCALAR" />
+    <param name="created_at" sqlType="STRING" paramType="SCALAR" />
+    <param name="updated_at" sqlType="STRING" paramType="SCALAR" />
+    <result element="returnDetail" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+      <element name="price" column="price" xsdType="integer" />
+      <element name="notes" column="notes" xsdType="integer" />
+    </result>
+  </query>
+<!--   END QUERY LOCCANA SELLING INVOICE DETAIL -->
+
+<!-- BEGIN QUERY LOCCANA SELLING RETURN -->
+<query id="getSellingReturnListQuery" useConfig="DataSourceSelling">
+    <sql>
+		SELECT 
+		a.`id`,
+		a.`invoice_number`,
+		DATE_FORMAT(a.`date_invoice`, "%Y-%m-%d %H:%i:%s") AS date_invoice,
+		DATE_FORMAT(a.`due_date`, "%Y-%m-%d %H:%i:%s") AS due_date,
+		a.`sign`,
+		a.`tax_invoice`,
+		a.`notes`,
+		b.`qty`,
+		b.`unit_price`,
+		b.`price`,
+		f.`name`,
+		c.`id` AS id_return,
+		DATE_FORMAT(c.`retur_date`, "%Y-%m-%d %H:%i:%s") AS retur_date,
+		c.`status`,		
+		DATE_FORMAT(e.`date_selling`, "%Y-%m-%d %H:%i:%s") AS date_selling,
+		e.`no_selling`,
+		d.`qty_return` 
+		FROM `loccana_selling`.`selling_invoice` a
+		JOIN `loccana_selling`.`selling_invoice_details` b ON a.`id`=b.`selling_invoice_id`
+		JOIN `loccana_selling`.`selling_returns` c ON a.`id`=c.`selling_invoice_id`
+		JOIN `loccana_selling`.`selling_return_details` d ON c.`id`=d.`selling_return_id`
+		JOIN `loccana_selling`.`selling` e ON a.`selling_id`=e.`id`
+		JOIN `loccana_masterdata`.`partners` f ON e.`partner_id`=f.`id`
+        where month (c.retur_date) like CONCAT ('%', :month, '%') OR year(c.retur_date) like CONCAT('%', :year, '%') OR e.no_selling like CONCAT('%', :search, '%') 
+		GROUP BY c.`id` ,b.id,d.id,e.id,f.id
+		ORDER BY a.`date_invoice` DESC
+		limit :limit offset :offset
+      </sql>
+	  <param name="month" sqlType="STRING" paramType="SCALAR" />
+      <param name="year" sqlType="STRING" paramType="SCALAR" />
+      <param name="search" paramType="SCALAR" sqlType="STRING" />
+      <param name="offset" paramType="SCALAR" sqlType="INTEGER" />
+      <param name="limit" paramType="SCALAR" sqlType="INTEGER" />
+      <result outputType="json">{
+	"data": {
+		"return": [{
+			"id": "$id",
+			"invoice_number": "$invoice_number",
+			"date_invoice": "$date_invoice",
+			"due_date": "$due_date",
+			"sign": "$sign",
+			"tax_invoice": "$tax_invoice",
+			"notes": "$notes",
+			"qty": "$qty",
+			"unit_price": "$unit_price",
+			"price": "$price",
+			"name": "$name",
+			"id_return": "$id_return",
+			"retur_date": "$retur_date",
+			"status": "$status",
+			"date_selling": "$date_selling",
+			"no_selling": "$no_selling",
+			"qty_return": "$qty_return"
+		}]
+
+	}
+}
+    </result>
+    </query>
+
+<query id="getSellingReturnNotFilteredQuery" useConfig="DataSourceSelling">
+    <sql>SELECT 
+		a.`id`,
+		a.`invoice_number`,
+		DATE_FORMAT(a.`date_invoice`, "%Y-%m-%d %H:%i:%s") AS date_invoice,
+		DATE_FORMAT(a.`due_date`, "%Y-%m-%d %H:%i:%s") AS due_date,
+		a.`sign`,
+		a.`tax_invoice`,
+		a.`notes`,
+		b.`qty`,
+		b.`unit_price`,
+		b.`price`,
+		f.`name`,
+		c.`id` AS id_return,
+		DATE_FORMAT(c.`retur_date`, "%Y-%m-%d %H:%i:%s") AS retur_date,
+		c.`status`,		
+		DATE_FORMAT(e.`date_selling`, "%Y-%m-%d %H:%i:%s") AS date_selling,
+		e.`no_selling`,
+		d.`qty_return` 
+		FROM `loccana_selling`.`selling_invoice` a
+		JOIN `loccana_selling`.`selling_invoice_details` b ON a.`id`=b.`selling_invoice_id`
+		JOIN `loccana_selling`.`selling_returns` c ON a.`id`=c.`selling_invoice_id`
+		JOIN `loccana_selling`.`selling_return_details` d ON c.`id`=d.`selling_return_id`
+		JOIN `loccana_selling`.`selling` e ON a.`selling_id`=e.`id`
+		JOIN `loccana_masterdata`.`partners` f ON e.`partner_id`=f.`id`
+		GROUP BY c.`id` ,b.id,d.id,e.id,f.id
+		ORDER BY a.`date_invoice` DESC
+        limit :limit offset :offset
+      </sql>
+      <param name="offset" paramType="SCALAR" sqlType="INTEGER" />
+      <param name="limit" paramType="SCALAR" sqlType="INTEGER" />
+      <result outputType="json">{
+	"data": {
+		"return": [{
+			"id": "$id",
+			"invoice_number": "$invoice_number",
+			"date_invoice": "$date_invoice",
+			"due_date": "$due_date",
+			"sign": "$sign",
+			"tax_invoice": "$tax_invoice",
+			"notes": "$notes",
+			"qty": "$qty",
+			"unit_price": "$unit_price",
+			"price": "$price",
+			"name": "$name",
+			"id_return": "$id_return",
+			"retur_date": "$retur_date",
+			"status": "$status",
+			"date_selling": "$date_selling",
+			"no_selling": "$no_selling",
+			"qty_return": "$qty_return"
+		}]
+
+	}
+}
+    </result>
+    </query>
+
+
+<query id="getSellingReturnCountQuery" useConfig="DataSourceSelling">
+<sql>SELECT COUNT(*)
+			FROM `loccana_selling`.`selling_invoice` a
+		JOIN `loccana_selling`.`selling_invoice_details` b ON a.`id`=b.`selling_invoice_id`
+		JOIN `loccana_selling`.`selling_returns` c ON a.`id`=c.`selling_invoice_id`
+		JOIN `loccana_selling`.`selling_return_details` d ON c.`id`=d.`selling_return_id`
+		JOIN `loccana_selling`.`selling` e ON a.`selling_id`=e.`id`
+		JOIN `loccana_masterdata`.`partners` f ON e.`partner_id`=f.`id`
+WHERE month (c.retur_date) like CONCAT ('%' :month, '%') OR year(c.retur_date) like CONCAT('%', :year, '%') OR e.no_selling like CONCAT('%',:search,'%')
+</sql>
+<param name="search" paramType="SCALAR" sqlType="STRING" />
+<param name="month" paramType="SCALAR" sqlType="STRING" />
+<param name="year" paramType="SCALAR" sqlType="STRING" />
+<result outputType="json">{
+"data_filtered":{
+	"countid":"$countid"
+}
+}
+</result>
+</query>
+
+   <query id="getSellingReturnCountNotFilteredQuery" useConfig="DataSourceSelling">
+    <sql>SELECT COUNT(*)
+			FROM `loccana_selling`.`selling_invoice` a
+		JOIN `loccana_selling`.`selling_invoice_details` b ON a.`id`=b.`selling_invoice_id`
+		JOIN `loccana_selling`.`selling_returns` c ON a.`id`=c.`selling_invoice_id`
+		JOIN `loccana_selling`.`selling_return_details` d ON c.`id`=d.`selling_return_id`
+		JOIN `loccana_selling`.`selling` e ON a.`selling_id`=e.`id`
+		JOIN `loccana_masterdata`.`partners` f ON e.`partner_id`=f.`id`
+  </sql>
+    <result outputType="json">{
+       "data_not_filtered":{
+            "countid":"$countid"
+       }
+  }
+  </result>
+  </query>
+  <query id="createSellingReturnQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceSelling">
+    <sql>
+    insert into selling_returns (selling_invoice_id, selling_id, retur_date, notes, approved_by, created_at, updated_at)
+			values (:selling_invoice_id,:selling_id,:retur_date,:notes,:approved_by,:created_at,:updated_at)
+			</sql>
+    <param name="selling_invoice_id" sqlType="STRING" />
+    <param name="selling_id" sqlType="STRING" />
+    <param name="retur_date" sqlType="STRING" />
+    <param name="notes" sqlType="STRING" />
+    <param name="approved_by" sqlType="STRING" />
+    <param name="created_at" sqlType="STRING" />
+    <param name="updated_at" sqlType="STRING" />
+    <result element="return" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="getSellingReturnDetailQuery" useConfig="DataSourceSelling">
+    <sql>
+    SELECT 
+		a.id AS id_return, 
+		b.`no_selling`,  
+		DATE_FORMAT(b.`date_selling`, "%Y-%m-%d %H:%i:%s") AS sales_date, 
+		c.`name`, 
+		c.`address`,
+		c.`phone`, 
+		c.`email`, 
+		DATE_FORMAT(a.`retur_date`, "%Y-%m-%d %H:%i:%s") AS retur_date, 
+		a.`notes`,
+        IFNULL(b.`description`, " ") AS keterangan_beli, 
+        b.`term_of_payment`, 
+        f.`item_code`, 
+        f.`item_name`, 
+        d.`qty_return` AS qty_return, 
+        g.`unit_box`, 
+        e.`qty` AS qty_order, 
+        e.`id` AS selling_detail_id, 
+        f.`id` AS item_id, 
+        e.`unit_price`, 
+        d.`id` AS selling_return_detail_id
+       FROM selling_returns AS a JOIN selling AS b ON a.selling_id = b.id
+               JOIN loccana_masterdata.partners AS c ON b.partner_id = c.id
+                       JOIN selling_return_details AS d ON a.id = d.`selling_return_id`
+                       JOIN selling_details AS e ON d.`selling_detail_id` = e.`id`
+                       JOIN loccana_masterdata.`items` AS f ON e.`item_id` = f.`id`
+                       JOIN loccana_masterdata.`item_qty` AS g ON f.`id` = g.`item_id`
+                       WHERE a.id = :id
+    </sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+   "data":{
+            "id_return":"$id_return",
+            "no_selling":"$no_selling",
+            "sales_date":"$sales_date",
+            "name":"$name",
+            "address":"$address",
+            "phone":"$phone",
+            "email":"$email",
+            "retur_date":"$retur_date",
+            "notes":"$notes",
+            "keterangan_beli":"$keterangan_beli",
+            "term_of_payment":"$term_of_payment",
+            "item_code":"$item_code",
+            "item_name":"$item_name",
+            "qty_return":"$qty_return",
+            "unit_box":"$unit_box",
+            "qty_order":"$qty_order",
+            "selling_detail_id":"$selling_detail_id",
+            "item_id":"$item_id",
+            "unit_price":"$unit_price",
+            "selling_return_detail_id":"$selling_return_detail_id"
+   }
+}
+</result>
+  </query>
+<!--   <query id="getListSellingReturnQuery" useConfig="DataSourceSelling"> -->
+<!--     <sql> -->
+<!-- 	SELECT  -->
+<!-- 		a.`id`, -->
+<!-- 		a.`invoice_number`, -->
+<!-- 		DATE_FORMAT(a.`date_invoice`, "%Y-%m-%d %H:%i:%s") AS date_invoice, -->
+<!-- 		DAtE_FORMAT(a.`due_date`, "%Y-%m-%d %H:%i:%s") AS due_date, -->
+<!-- 		a.`sign`, -->
+<!-- 		a.`tax_invoice`, -->
+<!-- 		a.`notes`, -->
+<!-- 		b.`qty`, -->
+<!-- 		b.`unit_price`, -->
+<!-- 		b.`price`, -->
+<!-- 		f.`name`, -->
+<!-- 		c.`id` AS id_return, -->
+<!-- 		c.`retur_date`, -->
+<!-- 		c.`status`,		 -->
+<!-- 		DATE_FORMAT(e.`date_selling`, "%Y-%m-%d %H:%i:%s") AS date_selling, -->
+<!-- 		e.`no_selling`, -->
+<!-- 		d.`qty_return`  -->
+<!-- 	FROM `loccana_selling`.`selling_invoice` a -->
+<!-- 	JOIN `loccana_selling`.`selling_invoice_details` b ON a.`id`=b.`selling_invoice_id` -->
+<!-- 	JOIN `loccana_selling`.`selling_returns` c ON a.`id`=c.`selling_invoice_id` -->
+<!-- 	JOIN `loccana_selling`.`selling_return_details` d ON c.`id`=d.`selling_return_id` -->
+<!-- 	JOIN `loccana_selling`.`selling` e ON a.`selling_id`=e.`id` -->
+<!-- 	JOIN `loccana_masterdata`.`partners` f ON e.`partner_id`=f.`id` -->
+<!-- 	GROUP BY c.`id` ORDER BY a.`date_invoice` DESC -->
+<!--     </sql> -->
+<!--     <result outputType="json">{ -->
+<!--    "data":{ -->
+<!--    		"data": [ -->
+<!-- 		   		{ -->
+<!-- 		   			"id": "$id",  -->
+<!-- 		   			"invoice_number" : "$invoice_number",  -->
+<!-- 		   			"date_invoice" : "$date_invoice",  -->
+<!-- 		   			"due_date" : "$due_date",  -->
+<!-- 		   			"sign" : "$sign",  -->
+<!-- 		   			"tax_invoice" : "$tax_invoice",  -->
+<!-- 		   			"notes" : "$notes",  -->
+<!-- 		   			"qty" : "$qty",  -->
+<!-- 		   			"unit_price" : "$unit_price",  -->
+<!-- 		   			"price" : "$price",  -->
+<!-- 		   			"name" : "$name",  -->
+<!-- 		   			"id_return" : "$id_return",  -->
+<!-- 		   			"retur_date" : "$retur_date",  -->
+<!-- 		   			"status" : "$status",  -->
+<!-- 		   			"date_selling": "$date_selling",  -->
+<!-- 		   			"no_selling" : "$no_selling",  -->
+<!-- 		   			"qty_return" : "$qty_return" -->
+<!-- 		   		} -->
+<!--    		 ] -->
+<!--    } -->
+<!-- } -->
+<!-- </result> -->
+<!--   </query> -->
+  <query id="deleteSellingReturnQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>DELETE a,b
+		FROM `loccana_selling`.`selling_returns` a
+		JOIN `loccana_selling`.`selling_return_details` b ON a.`id`=b.`selling_return_id`
+		WHERE a.id= :id</sql>
+    <result element="UpdatedRowCount" useColumnNumbers="true" rowName="">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+    <param name="updated_at" sqlType="STRING" />
+    <param name="id" sqlType="STRING" />
+  </query>
+  <query id="ApproveSellingRetunQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>
+	    UPDATE
+		  selling_returns
+		  LEFT JOIN selling_return_details ON selling_returns.id = selling_return_details.selling_return_id
+		SET
+		  status = :status,
+		  approved_by = :approved_by
+		WHERE
+		  selling_returns.id = :id
+    </sql>
+    <param name="status" sqlType="STRING" paramType="SCALAR" />
+    <param name="approved_by" sqlType="STRING" paramType="SCALAR" />
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result element="UpdatedRowCount" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="updateSellingRetunQuery" useConfig="DataSourceSelling" returnUpdatedRowCount="true">
+    <sql>UPDATE `selling_returns`
+	LEFT JOIN `selling_return_details` ON `selling_returns`.id = `selling_return_details`.`selling_return_id`
+	SET 
+		retur_date= :retur_date,
+		notes= :notes,
+		qty_return= :qty_return
+		 WHERE
+		 `selling_return_details`.id= :id
+    </sql>
+    <param name="retur_date" sqlType="STRING" paramType="SCALAR" />
+    <param name="notes" sqlType="STRING" paramType="SCALAR" />
+    <param name="qty_return" sqlType="STRING" paramType="SCALAR" />
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result element="UpdatedRowCount" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="getSellingReturnListSelectQuery" useConfig="DataSourceSelling">
+    <sql>SELECT 
+	d.`id` AS id_invoice,
+	d.invoice_number,
+	b.name
+	FROM
+	    `loccana_selling`.`selling` a 
+	    JOIN `loccana_masterdata`.`partners` b ON a.`partner_id`=b.`id`
+	     JOIN `loccana_selling`.`selling_invoice` d ON a.id=d.`selling_id`
+	    LEFT JOIN `loccana_selling`.`selling_returns` c ON c.`selling_invoice_id`=d.id
+	    WHERE c.`retur_date` IS NULL
+    </sql>
+    <result outputType="json">{
+   "data":{ 
+		"select": [
+	   			{
+	            "id_invoice":"$id_invoice",
+	            "invoice_number":"$invoice_number",
+	            "name":"$name"
+	   			}
+	   		   ]
+   		  }
+}</result>
+  </query>
+  <query id="MTDSellingReturnQuery" useConfig="DataSourceSelling">
+		<sql>
+			SELECT IFNULL(SUM(f.`qty_return`*d.unit_price), " ") AS mtd_retur_sell
+				FROM `loccana_selling`.`selling` a
+				join `loccana_selling`.`selling_details` b on a.id=b.selling_id
+				join `loccana_selling`.`selling_invoice` c on a.id=c.selling_id
+				join `loccana_selling`.`selling_invoice_details` d on c.id=d.`selling_invoice_id`
+				join `loccana_selling`.`selling_returns` e on c.id=e.`selling_invoice_id`
+				join `loccana_selling`.`selling_return_details` f on e.id=`selling_return_id`
+			WHERE 
+			month (e.retur_date) like CONCAT ('%' :month, '%') AND year(e.retur_date) like CONCAT ('%' :year, '%')
+	  </sql>
+	  <param name="month" paramType="SCALAR" sqlType="STRING" />
+	  <param name="year" paramType="SCALAR" sqlType="STRING" />
+		<result outputType="json">{
+			
+		   "data":{
+					"mtd_retur_sell": "$mtd_retur_sell"
+		   }
+	  }
+	  </result>
+	  </query>
+<!--   END QUERY LOCCANA SELLING RETURN -->
+
+<!-- BEGIN QUERY LOCCANA SELLING RETURN DETAIL -->
+  <query id="createSellingReturnDetailsQuery" keyColumns="id" returnGeneratedKeys="true" useConfig="DataSourceSelling">
+    <sql>
+    INSERT INTO
+    selling_return_details (
+	    selling_return_id,
+	    selling_detail_id,
+	    qty_return,  
+	    created_at,
+		updated_at
+	)
+     VALUES (
+	     :selling_return_id,
+	     :selling_detail_id,
+	     :qty_return,
+	     :created_at,
+	     :updated_at
+     )</sql>
+    <param name="selling_return_id" sqlType="STRING" />
+    <param name="selling_detail_id" sqlType="STRING" />
+    <param name="qty_return" sqlType="STRING" />
+    <param name="created_at" sqlType="STRING" />
+    <param name="updated_at" sqlType="STRING" />
+    <result element="return" useColumnNumbers="true">
+      <element name="id" column="1" xsdType="integer" />
+    </result>
+  </query>
+  <query id="getSellingReturnDetailsDetailQuery" useConfig="DataSourceSelling">
+    <sql>SELECT 
+	    id,
+	    selling_return_id,
+	    selling_detail_id,
+	    qty_return,
+	    DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") AS created_at,
+		DATE_FORMAT(updated_at, "%Y-%m-%d %H:%i:%s") AS updated_at 
+	FROM
+		selling_return_details 
+	WHERE 
+		id = :id
+	</sql>
+    <param name="id" sqlType="STRING" paramType="SCALAR" />
+    <result outputType="json">{
+   "data":{
+            "id":"$id",
+            "selling_return_id":"$selling_return_id",
+            "selling_detail_id":"$selling_detail_id",
+            "qty_return":"$qty_return",
+            "created_at":"$created_at",
+            "updated_at":"$updated_at"
+   }
+}</result>
+  </query>
+<!--   END QUERY LOCCANA SELLING RETURN DETAIL -->
+
+<!-- BEGAN OPERATION COA_VALUES -->
+	<operation name="createCoaValues">
+	    <call-query href="createCoaValuesQuery">
+	      <with-param name="id_parents" query-param="id_parents" />
+	      <with-param name="coa_id" query-param="coa_id" />
+	      <with-param name="payment_id" query-param="payment_id" />
+	      <with-param name="date" query-param="date" />
+	      <with-param name="date_insert" query-param="date_insert" />
+	      <with-param name="value" query-param="value" />
+          <with-param name="value_real" query-param="value_real" />
+	      <with-param name="adjusment" query-param="adjusment" />
+	      <with-param name="type_cash" query-param="type_cash" />
+	      <with-param name="notes" query-param="notes" />
+	      <with-param name="rate" query-param="rate" />
+	      <with-param name="description" query-param="description" />
+          <with-param name="invoice_number" query-param="invoice_number" />
+	      <with-param name="asset_id" query-param="asset_id" />
+	      <with-param name="created_at" query-param="created_at" />
+	      <with-param name="updated_at" query-param="updated_at" />
+	    </call-query>
+	  </operation>
+<!-- END OPERATION COA_VALUES -->
+
+<!-- BEGAN OPEATION UPDATE ORDERING -->
+	  <operation name="updateOrdering">
+	    <call-query href="updateOrderingQuery">
+<!-- 	      <with-param name="id_ordering" query-param="id_ordering" /> -->
+	    </call-query>
+	  </operation>
+<!-- END OPERATION UPDATE ORDERING -->
+
+<!-- BEGAN OPERATION INSERT TO MUTATION -->
+	<operation name="createMutationsBatch">
+	    <call-query href="createMutationQuery">
+	      <with-param name="item_id" query-param="item_id" />
+	      <with-param name="date_mutation" query-param="date_mutation" />
+	      <with-param name="amount_mutation" query-param="amount_mutation" />
+	      <with-param name="transaction_type_id" query-param="transaction_type_id" />
+	      <with-param name="mutation_type" query-param="mutation_type" />
+	      <with-param name="user_id" query-param="user_id" />
+          <with-param name="qty_receipt" query-param="qty_receipt" />
+	      <with-param name="qty_bonus" query-param="qty_bonus" />
+	      <with-param name="qty_discount" query-param="qty_discount" />
+	      <with-param name="notes" query-param="notes" />
+	      <with-param name="created_at" query-param="created_at" />
+	      <with-param name="updated_at" query-param="updated_at" />
+	    </call-query>
+	  </operation>
+<!-- 	  END OPERATION INSERT TO MUTATTION -->
+
+<!-- BEGAN OPERATION USER ACTIVITIES FOR MASTERDATA -->
+	<operation name="createUserActivities">
+	    <call-query href="createUserActivitiesQuery">
+	      <with-param name="id_user" query-param="id_user" />
+	      <with-param name="menu" query-param="menu" />
+	      <with-param name="aktivitas" query-param="aktivitas" />
+	      <with-param name="keterangan" query-param="keterangan" />
+	      <with-param name="created_at" query-param="created_at" />
+	      <with-param name="updated_at" query-param="updated_at" />
+	    </call-query>
+	  </operation>
+	  <operation name="getUserActivitiesDetail">
+	    <call-query href="getUserActivitiesDetailQuery">
+	      <with-param name="id" query-param="id" />
+	    </call-query>
+	  </operation>
+<!-- 	  END OPERATION USER ACTIVITIES -->
+
+<!-- BEGIN OPERATION LOCCANA SELLING -->
+  <operation name="getPiutangSelling">
+    <call-query href="getPiutangSellingQuery">
+    </call-query>
+  </operation>  
+  <operation name="getSellingList">
+    <call-query href="getSellingListQuery">
+      <with-param name="search" query-param="search" />
+      <with-param name="limit" query-param="limit" />
+      <with-param name="offset" query-param="offset" />
+	  <with-param name="month" query-param="month" />
+	  <with-param name="year" query-param="year" />
+    </call-query>
+  </operation>
+  <operation name="getSellingListNotFiltered">
+    <call-query href="getSellingListNotFilteredQuery">
+      <with-param name="limit" query-param="limit" />
+      <with-param name="offset" query-param="offset" />
+    </call-query>
+  </operation>
+  <operation name="getSellingListCount">
+    <call-query href="getSellingListCountQuery">
+      <with-param name="search" query-param="search" />
+	  <with-param name="month" query-param="month" />
+	  <with-param name="year" query-param="year" />	  
+    </call-query>
+  </operation>
+  <operation name="getSellingListCountNotFiltered">
+    <call-query href="getSellingListCountNotFilteredQuery">
+    </call-query>
+  </operation>
+  <operation name="createSellings">
+    <call-query href="createSellingsQuery">
+      <with-param name="sales_id" query-param="sales_id" />
+      <with-param name="no_selling" query-param="no_selling" />
+      <with-param name="date_selling" query-param="date_selling" />
+      <with-param name="delivery_date" query-param="delivery_date" />
+      <with-param name="partner_id" query-param="partner_id" />
+      <with-param name="term_of_payment" query-param="term_of_payment" />
+      <with-param name="total_amount" query-param="total_amount" />
+      <with-param name="coa_id" query-param="coa_id" />
+      <with-param name="payment_coa" query-param="payment_coa" />
+      <with-param name="currency_id" query-param="currency_id" />
+      <with-param name="rate" query-param="rate" />
+      <with-param name="tax" query-param="tax" />
+      <with-param name="seq_n" query-param="seq_n" />
+      <with-param name="created_at" query-param="created_at" />
+      <with-param name="updated_at" query-param="updated_at" />
+    </call-query>
+  </operation>
+  <operation name="getSellingsDetail">
+    <call-query href="getSellingsDetailQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="deleteSellings">
+    <call-query href="deleteSellingsQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+<!--   <operation name="getSellingsList"> -->
+<!--     <call-query href="getSellingsListQuery" /> -->
+<!--   </operation> -->
+  <operation name="updateSellings">
+    <call-query href="updateSellingsQuery">
+      <with-param name="date_selling" query-param="date_selling" />
+      <with-param name="term_of_payment" query-param="term_of_payment" />
+      <with-param name="delivery_date" query-param="delivery_date" />
+      <with-param name="total_amount" query-param="total_amount" />
+      <with-param name="unit_price" query-param="unit_price" />
+      <with-param name="item_idA" query-param="item_idA" />
+      <with-param name="qty" query-param="qty" />
+      <with-param name="qty_box" query-param="qty_box" />
+      <with-param name="qty_satuan" query-param="qty_satuan" />
+      <with-param name="box_amount" query-param="box_amount" />
+      <with-param name="price" query-param="price" />
+      <with-param name="discount" query-param="discount" />
+      <with-param name="notes" query-param="notes" />
+      <with-param name="date_mutation" query-param="date_mutation" />
+      <with-param name="amount_mutation" query-param="amount_mutation" />
+      <with-param name="item_id" query-param="item_id" />
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="getSellingsId">
+    <call-query href="getSellingsIdQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="approveSellings">
+    <call-query href="approveSellingsQuery">
+      <with-param name="status" query-param="status" />
+      <with-param name="approval_date" query-param="approval_date" />
+      <with-param name="approved_by" query-param="approved_by" />
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="MTDSelling">
+	<call-query href="MTDSellingQuery">
+	  <with-param name="year" query-param="year" />
+	  <with-param name="month" query-param="month" />
+	</call-query>
+  </operation>
+<!--   END OPERATION LOCCANA SELLING -->
+
+<!-- BEGIN OPERATION LOCCANA SELLING REPORT -->
+<operation name="getSellingReport">
+    <call-query href="getSellingReportQuery">
+      <with-param name="search" query-param="search" />
+      <with-param name="limit" query-param="limit" />
+      <with-param name="offset" query-param="offset" />
+	  <with-param name="month" query-param="month" />
+	  <with-param name="year" query-param="year" />
+    </call-query>
+  </operation>
+  <operation name="getSellingReportNotFiltered">
+    <call-query href="getSellingReportNotFilteredQuery">
+      <with-param name="limit" query-param="limit" />
+      <with-param name="offset" query-param="offset" />
+    </call-query>
+  </operation>
+  <operation name="getSellingReportCount">
+    <call-query href="getSellingReportCountQuery">
+      <with-param name="search" query-param="search" />
+	  <with-param name="month" query-param="month" />
+	  <with-param name="year" query-param="year" />	  
+    </call-query>
+  </operation>
+  <operation name="getSellingReportCountNotFiltered">
+    <call-query href="getSellingReportCountNotFilteredQuery">
+    </call-query>
+  </operation>
+<!-- END OPERATION LOCCANA SELLING REPORT -->
+
+<!-- BEGIN OPERATION LOCCANA SELLING DETAIL -->
+  <operation name="getSellingIDforUpdateItem">
+    <call-query href="getSellingIDforUpdateItemQuery">
+      <with-param name="selling_id" query-param="selling_id" />
+      <with-param name="item_id" query-param="item_id" />
+    </call-query>
+  </operation>
+  <operation name="updateItemQty">
+    <call-query href="updateItemQtyQuery">
+<!--       <with-param name="base_qty" query-param="base_qty" /> -->
+<!--       <with-param name="qty" query-param="qty" /> -->
+      <with-param name="selling_id" query-param="selling_id" />
+      <with-param name="item_id" query-param="item_id" />
+    </call-query>
+  </operation>
+  <operation name="createSellingDetail_batch_req">
+    <call-query href="createSellingDetailsQuery">
+      <with-param name="selling_id" query-param="selling_id" />
+      <with-param name="item_id" query-param="item_id" />
+      <with-param name="unit_price" query-param="unit_price" />
+      <with-param name="qty" query-param="qty" />
+      <with-param name="qty_box" query-param="qty_box" />
+      <with-param name="qty_satuan" query-param="qty_satuan" />
+      <with-param name="box_amount" query-param="box_amount" />
+      <with-param name="price" query-param="price" />
+      <with-param name="discount" query-param="discount" />
+      <with-param name="notes" query-param="notes" />
+      <with-param name="mutation_id" query-param="mutation_id" />
+      <with-param name="created_at" query-param="created_at" />
+      <with-param name="updated_at" query-param="updated_at" />
+    </call-query>
+  </operation>
+  <operation name="getSellingDetailsDetail">
+    <call-query href="getSellingDetailsDetailQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+<!--   END OPERATION LOCCANA SELLING DETAIL -->
+
+<!-- BEGIN OPERATION LOCCANA SELLING HISTORY -->
+ <!--  <operation name="getSellingHistoryDetail">
+    <call-query href="getSellingHistoryDetailQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="deleteSellingHistory">
+    <call-query href="deleteSellingHistoryQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation> -->
+  <operation name="createSellingHistoryBatch">
+    <call-query href="createSellingHistoryQuery">
+      <with-param name="selling_id" query-param="selling_id" />
+      <with-param name="sales_id" query-param="sales_id" />
+      <with-param name="item_id" query-param="item_id" />
+      <with-param name="unit_price" query-param="unit_price" />
+      <with-param name="qty" query-param="qty" />
+      <with-param name="qty_box" query-param="qty_box" />
+      <with-param name="qty_pcs" query-param="qty_pcs" />
+      <with-param name="box_amount" query-param="box_amount" />
+      <with-param name="price" query-param="price" />
+      <with-param name="notes" query-param="notes" />
+      <with-param name="mutation_id" query-param="mutation_id" />
+      <with-param name="approval_by" query-param="approval_by" />
+      <with-param name="approval_date" query-param="approval_date" />
+      <with-param name="created_at" query-param="created_at" />
+      <with-param name="updated_at" query-param="updated_at" />
+    </call-query>
+</operation>
+  <!--   <operation name="getDataForSellingHistory">
+    <call-query href="getDataForSellingHistoryQuery">
+      <with-param name="selling_id" query-param="selling_id" />
+    </call-query>
+  </operation> -->
+<!--   END OPERATION LOCCANA SELLING HISTORY -->
+
+<!-- BEGIN OPERATION LOCCANA SELLING INVOICE -->
+  <operation name="getSellingInvoiceList">
+    <call-query href="getSellingInvoiceListQuery">
+      <with-param name="search" query-param="search" />
+      <with-param name="limit" query-param="limit" />
+      <with-param name="offset" query-param="offset" />
+	  <with-param name="month" query-param="month" />
+	  <with-param name="year" query-param="year" />
+	  <with-param name="status" query-param="status" />
+    </call-query>
+  </operation>
+  <operation name="getSellingInvoiceNotFiltered">
+    <call-query href="getSellingInvoiceNotFilteredQuery">
+      <with-param name="limit" query-param="limit" />
+      <with-param name="offset" query-param="offset" />
+    </call-query>
+  </operation>
+  <operation name="getSellingInvoiceCount">
+    <call-query href="getSellingInvoiceCountQuery">
+      <with-param name="search" query-param="search" />
+	  <with-param name="month" query-param="month" />
+	  <with-param name="year" query-param="year" />	  
+    </call-query>
+  </operation>
+  <operation name="getSellingInvoiceCountNotFiltered">
+    <call-query href="getSellingInvoiceCountNotFilteredQuery">
+    </call-query>
+  </operation>
+  <operation name="createSellingInvoices">
+    <call-query href="createSellingInvoicesQuery">
+      <with-param name="selling_id" query-param="selling_id" />
+      <with-param name="invoice_number" query-param="invoice_number" />
+      <with-param name="date_invoice" query-param="date_invoice" />
+      <with-param name="due_date" query-param="due_date" />
+      <with-param name="attention" query-param="attention" />
+      <with-param name="notes" query-param="notes" />
+      <with-param name="sign" query-param="sign" />
+      <with-param name="tax_invoice" query-param="tax_invoice" />
+      <with-param name="status" query-param="status" />
+      <with-param name="created_at" query-param="created_at" />
+      <with-param name="updated_at" query-param="updated_at" />
+    </call-query>
+  </operation>
+<!--   <operation name="getSellingInvoicesList"> -->
+<!--     <call-query href="getSellingInvoicesListQuery" /> -->
+<!--   </operation> -->
+  <operation name="getSellingInvoicesDetail">
+    <call-query href="getSellingInvoicesDetailQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="updateSellingInvoices">
+    <call-query href="updateSellingInvoicesQuery">
+      <with-param name="invoice_number" query-param="invoice_number" />
+      <with-param name="date_invoice" query-param="date_invoice" />
+      <with-param name="due_date" query-param="due_date" />
+      <with-param name="attention" query-param="attention" />
+      <with-param name="sign" query-param="sign" />
+      <with-param name="tax_invoice" query-param="tax_invoice" />
+      <with-param name="qty" query-param="qty" />
+      <with-param name="qty_box" query-param="qty_box" />
+      <with-param name="qty_satuan" query-param="qty_satuan" />
+      <with-param name="box_amount" query-param="box_amount" />
+      <with-param name="unit_price" query-param="unit_price" />
+      <with-param name="price" query-param="price" />
+      <with-param name="discount" query-param="discount" />
+      <with-param name="notes" query-param="notes" />
+      <with-param name="date_mutation" query-param="date_mutation" />
+      <with-param name="amount_mutation" query-param="amount_mutation" />
+      <with-param name="item_id" query-param="item_id" />
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="deleteSellingInvoices">
+    <call-query href="deleteSellingInvoicesQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="getSellingInvoicesID">
+    <call-query href="getSellingInvoicesIDQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="getSellingInvoicesSearchID">
+    <call-query href="getSellingInvoicesSearchIDQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="getSellingInvoicesListSelect">
+    <call-query href="getSellingInvoicesListSelectQuery">
+    </call-query>
+  </operation>
+  <operation name="MTDSellingInvoice">
+	<call-query href="MTDSellingInvoiceQuery">
+	  <with-param name="year" query-param="year" />
+	  <with-param name="month" query-param="month" />
+	</call-query>
+  </operation>
+<!--   END OPERATION LOCCANA SELLING INVOICE -->
+
+<!-- BEGIN OPERATION LOCCANA SELLING INVOICE DETAIL -->
+  <operation name="createSellingInvoiceDetail_batch_req">
+    <call-query href="createSellingInvoiceDetailsQuery">
+      <with-param name="selling_invoice_id" query-param="selling_invoice_id" />
+      <with-param name="selling_detail_id" query-param="selling_detail_id" />
+      <with-param name="unit_price" query-param="unit_price" />
+      <with-param name="qty" query-param="qty" />
+      <with-param name="qty_box" query-param="qty_box" />
+      <with-param name="qty_pcs" query-param="qty_pcs" />
+      <with-param name="box_amount" query-param="box_amount" />
+      <with-param name="price" query-param="price" />
+      <with-param name="discount" query-param="discount" />
+      <with-param name="notes" query-param="notes" />
+      <with-param name="created_at" query-param="created_at" />
+      <with-param name="updated_at" query-param="updated_at" />
+    </call-query>
+  </operation>
+<!--   END OPERATION LOCCANA SELLING INVOICE DETAIL  -->
+
+<!-- BEGIN OPERATION LOCCANA SELLING RETURN -->
+ <operation name="getSellingReturnList">
+    <call-query href="getSellingReturnListQuery">
+      <with-param name="search" query-param="search" />
+      <with-param name="limit" query-param="limit" />
+      <with-param name="offset" query-param="offset" />
+	  <with-param name="month" query-param="month" />
+	  <with-param name="year" query-param="year" />
+    </call-query>
+  </operation>
+  <operation name="getSellingReturnNotFiltered">
+    <call-query href="getSellingReturnNotFilteredQuery">
+      <with-param name="limit" query-param="limit" />
+      <with-param name="offset" query-param="offset" />
+    </call-query>
+  </operation>
+  <operation name="getSellingReturnCount">
+    <call-query href="getSellingReturnCountQuery">
+      <with-param name="search" query-param="search" />
+	  <with-param name="month" query-param="month" />
+	  <with-param name="year" query-param="year" />	  
+    </call-query>
+  </operation>
+  <operation name="getSellingReturnCountNotFiltered">
+    <call-query href="getSellingReturnCountNotFilteredQuery">
+    </call-query>
+  </operation>
+  <operation name="createSellingReturn">
+    <call-query href="createSellingReturnQuery">
+      <with-param name="selling_invoice_id" query-param="selling_invoice_id" />
+      <with-param name="selling_id" query-param="selling_id" />
+      <with-param name="retur_date" query-param="retur_date" />
+      <with-param name="notes" query-param="notes" />
+      <with-param name="approved_by" query-param="approved_by" />
+      <with-param name="created_at" query-param="created_at" />
+      <with-param name="updated_at" query-param="updated_at" />
+    </call-query>
+  </operation>
+  <operation name="getSellingReturnDetail">
+    <call-query href="getSellingReturnDetailQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="deleteSellingReturn">
+    <call-query href="deleteSellingReturnQuery">
+      <with-param name="updated_at" query-param="updated_at" />
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="ApproveSellingReturn">
+    <call-query href="ApproveSellingRetunQuery">
+      <with-param name="status" query-param="status" />
+      <with-param name="approved_by" query-param="approved_by" />
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+<!--   <operation name="getListSellingReturn"> -->
+<!--     <call-query href="getListSellingReturnQuery" /> -->
+<!--   </operation> -->
+  <operation name="updateSellingReturn">
+    <call-query href="updateSellingRetunQuery">
+      <with-param name="retur_date" query-param="retur_date" />
+      <with-param name="notes" query-param="notes" />
+      <with-param name="qty_return" query-param="qty_return" />
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+  <operation name="getSellingReturnListSelect">
+    <call-query href="getSellingReturnListSelectQuery">
+    </call-query>
+  </operation>
+  <operation name="MTDSellingReturn">
+	<call-query href="MTDSellingReturnQuery">
+	  <with-param name="year" query-param="year" />
+	  <with-param name="month" query-param="month" />
+	</call-query>
+   </operation>
+<!--   END OPERATION LOCCANA SELLING RETURN -->
+  
+<!--   BEGIN OPERATION LOCCANA SELLING RETURN DETAIL -->
+  <operation name="createSellingReturnDetail_batch_req">
+    <call-query href="createSellingReturnDetailsQuery">
+      <with-param name="selling_return_id" query-param="selling_return_id" />
+      <with-param name="selling_detail_id" query-param="selling_detail_id" />
+      <with-param name="qty_return" query-param="qty_return" />
+      <with-param name="created_at" query-param="created_at" />
+      <with-param name="updated_at" query-param="updated_at" />
+    </call-query>
+  </operation>
+  <operation name="getSellingReturnDetailsDetail">
+    <call-query href="getSellingReturnDetailsDetailQuery">
+      <with-param name="id" query-param="id" />
+    </call-query>
+  </operation>
+<!--   END OPERATION LOCCANA SELLING RETURN DETAIL -->
+</data>

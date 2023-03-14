@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="LoccanaSellingIDForUpdateItemQTY" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <dataServiceCall description="Get selling  ID for update item" serviceName="LoccanaSellingDataService">
+        <operations type="single">
+            <operation name="getSellingIDforUpdateItem">
+                <param evaluator="xml" expression="get-property('uri.var.selling_id')" name="selling_id"/>
+                <param evaluator="xml" expression="get-property('uri.var.item_id')" name="item_id"/>
+            </operation>
+        </operations>
+        <source type="inline"/>
+        <target type="body"/>
+    </dataServiceCall>
+    <property expression="json-eval($)" name="resultData" scope="default" type="STRING"/>
+    <!-- <log description="Log start" level="custom">
+        <property expression="get-property('resultData')" name="Selling ID For Update Item QTY"/>
+    </log> -->
+    <filter regex="true" source="boolean(get-property('resultData'))">
+        <then>
+            <property expression="json-eval($.data)" name="data" scope="default" type="STRING"/>
+        </then>
+        <else/>
+    </filter>
+    <property expression="json-eval($.data.no_selling)" name="NoSelling" scope="default" type="STRING"/>
+    <log description="Log start" level="custom">
+        <property expression="get-property('NoSelling')" name="test get data No_selling"/>
+    </log>
+</sequence>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmi:id="_AxjQcLvGEe2NNbberYnivA" type="Esb" name="LoccanaCashBank" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_AyVTkLvGEe2NNbberYnivA" type="2001">
+    <children xmi:type="notation:DecorationNode" xmi:id="_AyVTlbvGEe2NNbberYnivA" type="7001">
+      <children xmi:type="notation:Shape" xmi:id="_A5r4wLvGEe2NNbberYnivA" type="3668" fontName="Ubuntu">
+        <children xmi:type="notation:BasicCompartment" xmi:id="_A5r4wrvGEe2NNbberYnivA" type="7044">
+          <children xmi:type="notation:Node" xmi:id="_A54GALvGEe2NNbberYnivA" type="3669">
+            <styles xmi:type="notation:DescriptionStyle" xmi:id="_A54GAbvGEe2NNbberYnivA"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_A54GArvGEe2NNbberYnivA" fontName="Ubuntu"/>
+            <styles xmi:type="notation:LineStyle" xmi:id="_A54GA7vGEe2NNbberYnivA"/>
+            <element xmi:type="esb:APIResource" href="LoccanaCashBank.esb#//@server/@children.0/@resources.0"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_A54GBLvGEe2NNbberYnivA" width="300" height="400"/>
+          </children>
+        </children>
+        <element xmi:type="esb:SynapseAPI" href="LoccanaCashBank.esb#//@server/@children.0"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_A5r4wbvGEe2NNbberYnivA" width="640" height="500"/>
+      </children>
+    </children>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_AyVTkbvGEe2NNbberYnivA"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_AyVTkrvGEe2NNbberYnivA" fontName="Ubuntu"/>
+    <styles xmi:type="notation:LineStyle" xmi:id="_AyVTk7vGEe2NNbberYnivA"/>
+    <element xmi:type="esb:EsbServer" href="LoccanaCashBank.esb#//@server"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AyVTlLvGEe2NNbberYnivA"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_AxjQcbvGEe2NNbberYnivA"/>
+  <element xmi:type="esb:EsbDiagram" href="LoccanaCashBank.esb#/"/>
+</notation:Diagram>

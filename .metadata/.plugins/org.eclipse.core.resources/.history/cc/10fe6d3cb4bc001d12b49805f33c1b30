@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="LoccanaSellingsGetDetail" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <dataServiceCall description="Get selling detail" serviceName="LoccanaSellingDataService">
+        <operations type="single">
+            <operation name="getSellingsDetail">
+                <param evaluator="xml" expression="get-property('sellingsId')" name="id"/>
+            </operation>
+        </operations>
+        <source type="inline"/>
+        <target type="body"/>
+    </dataServiceCall>
+    <property expression="json-eval($)" name="resultData" scope="default" type="STRING"/>
+    <!-- <log description="Log start" level="custom">
+        <property expression="get-property('resultData')" name="selling id"/>
+    </log> -->
+    <filter regex="true" source="boolean(get-property('resultData'))">
+        <then>
+            <property expression="json-eval($.data)" name="data" scope="default" type="STRING"/>
+            <log description="Log start" level="custom">
+                <property expression="get-property('data')" name="data"/>
+            </log>
+            <property expression="json-eval($.data.selling_data.no_selling)" name="no_selling" scope="default" type="STRING"/>
+            <log description="Log start" level="custom">
+                <property expression="get-property('no_selling')" name="no_selling"/>
+            </log>
+            <property expression="json-eval($.data.selling_data.id)" name="id_selling" scope="default" type="STRING"/>
+            <log description="Log start" level="custom">
+                <property expression="get-property('id_selling')" name="id_selling"/>
+            </log>
+        </then>
+        <else/>
+    </filter>
+</sequence>

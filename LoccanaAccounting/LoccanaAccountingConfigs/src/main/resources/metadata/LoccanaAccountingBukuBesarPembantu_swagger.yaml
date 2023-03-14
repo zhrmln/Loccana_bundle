@@ -1,0 +1,13 @@
+openapi: 3.0.1
+info:
+  title: LoccanaAccountingBukuBesarPembantu
+  description: API Definition of LoccanaAccountingBukuBesarPembantu
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/buku-besar-pembantu
+paths:
+  /:
+    post:
+      responses:
+        default:
+          description: Default response

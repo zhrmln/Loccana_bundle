@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+    <item>
+        <file>ListSelling.json</file>
+        <path>/_system/config/schema</path>
+        <mediaType>application/json</mediaType>
+        <properties/>
+    </item>
+</resources>

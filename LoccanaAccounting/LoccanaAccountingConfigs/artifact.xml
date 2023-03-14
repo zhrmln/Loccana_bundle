@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="LoccanaAccountingGetResponseError" groupId="com.loccana.accounting.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/LoccanaAccountingGetResponseError.xml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingGetResponseSuccess" groupId="com.loccana.accounting.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/LoccanaAccountingGetResponseSuccess.xml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingReceiveReport" groupId="com.loccana.accounting.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/LoccanaAccountingReceiveReport.xml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingReceiveReport_swagger" groupId="com.loccana.accounting.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/LoccanaAccountingReceiveReport_swagger.yaml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingReceiveReport_metadata" groupId="com.loccana.accounting.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/LoccanaAccountingReceiveReport_metadata.yaml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingBukuBesarPembantu" groupId="com.loccana.accounting.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/LoccanaAccountingBukuBesarPembantu.xml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingBukuBesarPembantu_swagger" groupId="com.loccana.accounting.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/LoccanaAccountingBukuBesarPembantu_swagger.yaml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingBukuBesarPembantu_metadata" groupId="com.loccana.accounting.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/LoccanaAccountingBukuBesarPembantu_metadata.yaml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingPayAbleReport" groupId="com.loccana.accounting.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/LoccanaAccountingPayAbleReport.xml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingPayAbleReport_swagger" groupId="com.loccana.accounting.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/LoccanaAccountingPayAbleReport_swagger.yaml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingPayAbleReport_metadata" groupId="com.loccana.accounting.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/LoccanaAccountingPayAbleReport_metadata.yaml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingFinanceReport" groupId="com.loccana.accounting.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/LoccanaAccountingFinanceReport.xml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingFinanceReport_swagger" groupId="com.loccana.accounting.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/LoccanaAccountingFinanceReport_swagger.yaml</file>
+    </artifact>
+    <artifact name="LoccanaAccountingFinanceReport_metadata" groupId="com.loccana.accounting.metadata" version="1.0.0" type="synapse/metadata" serverRole="EnterpriseServiceBus">
+        <file>src/main/resources/metadata/LoccanaAccountingFinanceReport_metadata.yaml</file>
+    </artifact>
+</artifacts>

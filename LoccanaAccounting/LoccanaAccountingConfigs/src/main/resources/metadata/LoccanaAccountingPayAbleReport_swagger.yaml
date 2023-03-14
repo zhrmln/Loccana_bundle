@@ -1,0 +1,13 @@
+openapi: 3.0.1
+info:
+  title: LoccanaAccountingPayAbleReport
+  description: API Definition of LoccanaAccountingPayAbleReport
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/payabel-report
+paths:
+  /:
+    post:
+      responses:
+        default:
+          description: Default response

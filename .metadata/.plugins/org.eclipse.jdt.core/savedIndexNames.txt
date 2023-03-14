@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+/home/azhar/Documents/Loccana_Selling/.metadata/.plugins/org.eclipse.jdt.core
+1865797976.index
+3035873493.index
+1027716350.index
+2370875436.index

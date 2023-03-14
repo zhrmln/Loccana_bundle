@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="GetInsertSellingDetails" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <enrich description="Deploy item untuk di olah di selling detail">
+        <source clone="false" property="items" type="property"/>
+        <target type="body"/>
+    </enrich>
+    <foreach description="Foreach array item di selling details" expression="json-eval($)" id="foreach-seling-details">
+        <sequence>
+            <propertyGroup description="input selling detail">
+                <property expression="json-eval($.item_id)" name="item_id" scope="default" type="STRING"/>
+                <property expression="json-eval($.unit_price)" name="unit_price" scope="default" type="STRING"/>
+                <property expression="json-eval($.qty)" name="qty" scope="default" type="STRING"/>
+                <property expression="json-eval($.qty_box)" name="qty_box" scope="default" type="STRING"/>
+                <property expression="json-eval($.qty_satuan)" name="qty_satuan" scope="default" type="STRING"/>
+                <property expression="json-eval($.box_amount)" name="box_amount" scope="default" type="STRING"/>
+                <property expression="json-eval($.price)" name="price" scope="default" type="STRING"/>
+                <property expression="json-eval($.discount)" name="discount" scope="default" type="STRING"/>
+                <property expression="json-eval($.notes)" name="notes" scope="default" type="STRING"/>
+                <property expression="json-eval($.mutation_id)" name="mutation_id" scope="default" type="STRING"/>
+            </propertyGroup>
+            <payloadFactory media-type="json">
+                <format>        
+                        	{
+                          		"selling_id": "$1",
+  					            "item_id": "$2",
+  					            "unit_price": "$3",
+  					            "qty": "$4",
+  					            "qty_box": $5,
+  					            "qty_satuan": "$6",
+  					            "box_amount": "$7",
+  					            "price": "$8",
+  					            "discount": "$9",
+  					            "notes": "$10",
+  					            "mutation_id": "$11",
+  					            "created_at": "$12",
+  					            "updated_at": "$12"
+  					        }
+     				    </format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('selling_id')"/>
+                    <arg evaluator="xml" expression="get-property('item_id')"/>
+                    <arg evaluator="xml" expression="get-property('unit_price')"/>
+                    <arg evaluator="xml" expression="get-property('qty')"/>
+                    <arg evaluator="xml" expression="get-property('qty_box')"/>
+                    <arg evaluator="xml" expression="get-property('qty_satuan')"/>
+                    <arg evaluator="xml" expression="get-property('box_amount')"/>
+                    <arg evaluator="xml" expression="get-property('price')"/>
+                    <arg evaluator="xml" expression="get-property('discount')"/>
+                    <arg evaluator="xml" expression="get-property('notes')"/>
+                    <arg evaluator="xml" expression="get-property('mutationId')"/>
+                    <arg evaluator="xml" expression="get-property('currentDate')"/>
+                </args>
+            </payloadFactory>
+        </sequence>
+    </foreach>
+    <property description="Get result" expression="json-eval($)" name="resultKalkulasiSelling" scope="default" type="STRING"/>
+    <!--             <log description="get log" level="custom"> -->
+    <!--                 <property expression="json-eval($)" name="resultKalkulasiSelling"/> -->
+    <!--             </log> -->
+    <payloadFactory media-type="json">
+        <format>
+   	                {
+   						"createSellingDetail_batch_req": {
+   							"createSellingDetail": $1
+   						}
+   					}
+   				</format>
+        <args>
+            <arg evaluator="xml" expression="get-property('resultKalkulasiSelling')"/>
+        </args>
+    </payloadFactory>
+    <property description="Data Items Selling Details" expression="json-eval($)" name="resultKalkulasiSelling" scope="default" type="STRING"/>
+    <enrich>
+        <source clone="false" property="resultKalkulasiSelling" type="property"/>
+        <target type="body"/>
+    </enrich>
+    <dataServiceCall description="Batch update ke item receipt detail" serviceName="LoccanaSellingDataService">
+        <source type="body"/>
+        <target type="body"/>
+    </dataServiceCall>
+    <property description="result" expression="json-eval($)" name="resultSellingDetails" scope="default" type="STRING"/>
+</sequence>

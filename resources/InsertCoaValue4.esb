@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<esb:EsbDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb">
+  <server type="SEQUENCE">
+    <children xsi:type="esb:Sequences" name="InsertCoaValue4">
+      <commentsList>     &lt;log description=&quot;Log start&quot; level=&quot;custom&quot;> </commentsList>
+      <commentsList>         &lt;property expression=&quot;get-property('rate')&quot; name=&quot;test get rate&quot;/> </commentsList>
+      <commentsList>     &lt;/log> </commentsList>
+      <outputConnector>
+        <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.0/@inputConnector"/>
+      </outputConnector>
+      <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.7/@outputConnector/@outgoingLink"/>
+      <mediatorFlow>
+        <children xsi:type="esb:PropertyGroupMediator" description="Parameter Input">
+          <inputConnector incomingLinks="//@server/@children.0/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.1/@inputConnector"/>
+            <commentMediators commentText="     &lt;log description=&quot;Log start&quot; level=&quot;custom&quot;> "/>
+            <commentMediators commentText="         &lt;property expression=&quot;get-property('rate')&quot; name=&quot;test get rate&quot;/> "/>
+            <commentMediators commentText="     &lt;/log> "/>
+          </outputConnector>
+          <properties value="0" newPropertyName="id_parents">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties value="33" newPropertyName="coa_id">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties value="0" newPropertyName="payment_id">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties value="0" newPropertyName="adjusment">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties value="1" newPropertyName="type_cash">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties value="Invoice Penjualan" newPropertyName="notes_invoice">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties value="0" newPropertyName="asset_id">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+          <properties valueType="EXPRESSION" newPropertyName="currentDate">
+            <inputConnector/>
+            <outputConnector/>
+            <valueExpression propertyValue="get-property('SYSTEM_DATE', 'yyyy-MM-dd HH:mm:ss')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+          </properties>
+        </children>
+        <children xsi:type="esb:PayloadFactoryMediator" payload="        &#xA;                    { &#xA;&#x9;&#x9;&#x9;            &quot;id_parents&quot; : &quot;$1&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;coa_id&quot; : &quot;$2&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;payment_id&quot; : &quot;$3&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;date&quot; : &quot;$4&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;date_insert&quot; : &quot;$13&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;value&quot; : &quot;$5&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;value_real&quot; : &quot;$5&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;adjusment&quot; : &quot;$6&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;type_cash&quot; : &quot;$7&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;notes&quot; : &quot;$8&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;rate&quot; : &quot;$9&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;description&quot; : &quot;$10&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;invoice_number&quot; : &quot;$11&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;asset_id&quot; : &quot;$12&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;created_at&quot; : &quot;$13&quot;,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&quot;updated_at&quot; : &quot;$13&quot;&#xA;&#x9;&#x9;&#x9;            &#xA;&#x9;&#x9;&#x9;        }&#xA;&#x9;&#x9;        " mediaType="json">
+          <payloadKey prettyName="Sequence Key" keyName="Sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('id_parents')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('coa_id')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('payment_id')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('date_invoice')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('price')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('adjusment')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('type_cash')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('notes_invoice')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('rate')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('notes')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('invoice_number')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('asset_id')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('currentDate')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.2/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:PropertyMediator" description="Get result" valueType="EXPRESSION" newPropertyName="resultCoaValue">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.3/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:PayloadFactoryMediator" payload="&#xA;      &#x9;&#x9;{&#xA;&#x9;&#x9;&#x9;&#x9;&quot;createCoaValues&quot;: {&#xA;&#x9;&#x9;&#x9;    &#x9;&quot;createCoaValue&quot;: $1&#xA;&#x9;&#x9;&#x9;  &#x9;}&#xA;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;" mediaType="json">
+          <payloadKey prettyName="Sequence Key" keyName="Sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          <args argumentType="Expression">
+            <argumentExpression propertyValue="get-property('resultCoaValue')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </args>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.4/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:PropertyMediator" propertyName="messageType" propertyScope="axis2" value="application/json">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.5/@inputConnector"/>
+          </outputConnector>
+          <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:PropertyMediator" description="Data Items" valueType="EXPRESSION" newPropertyName="dataCoaValue">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.4/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.6/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($.return)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:DSSMediator" description="Batch insert ke coa value" serviceName="LoccanaSellingDataService" sourceType="BODY" availableDataServices="LoccanaSellingDataService">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.5/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.7/@inputConnector"/>
+          </outputConnector>
+        </children>
+        <children xsi:type="esb:PropertyMediator" description="Result" valueType="EXPRESSION" newPropertyName="rate">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.6/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($.return.rate)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+      </mediatorFlow>
+      <onError prettyName="OnError sequence Key" keyName="OnError sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+    </children>
+  </server>
+</esb:EsbDiagram>

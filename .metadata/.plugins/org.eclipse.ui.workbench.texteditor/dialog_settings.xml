@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="getReportCashSaldoQuery"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="true"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="getReportCashSaldoQuery"/>
+			<item value="pin_id_coa"/>
+			<item value="pin_coa_id"/>
+			<item value="pin_end_date"/>
+			<item value="pin_start_date"/>
+			<item value=";"/>
+			<item value="jumlah tabel approve selling"/>
+			<item value="jumlah tabel approve selling "/>
+			<item value="test insert data selling history"/>
+			<item value="test get data array item id ke 2 "/>
+			<item value="updateItemQty"/>
+			<item value="createSellingHistoryQuery"/>
+			<item value="createSellingHistoryBatch"/>
+			<item value="selling_id"/>
+			<item value="getSellingsDetail"/>
+		</list>
+		<list key="replacehistory">
+			<item value=":id_coa"/>
+			<item value=""/>
+			<item value=":end_date"/>
+			<item value=":start_date"/>
+			<item value=":id_eks"/>
+			<item value="getSellingInvoiceCount"/>
+			<item value="getSellingInvoiceCountQuery"/>
+			<item value="Invoice"/>
+			<item value="List selling Report"/>
+			<item value="LoccanaSellingGetResponseSuccess"/>
+			<item value="LoccanaSellingGetResponseError"/>
+			<item value="LoccanaMasterItemsGetResponseError"/>
+			<item value="LoccanaSellingDataService"/>
+			<item value="DataSourceSelling"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="0"/>
+		<item key="DIALOG_Y_ORIGIN" value="299"/>
+		<item key="DIALOG_WIDTH" value="460"/>
+		<item key="DIALOG_HEIGHT" value="405"/>
+		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>
+	</section>
+</section>
