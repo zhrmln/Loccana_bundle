@@ -107,11 +107,6 @@ paths:
       responses:
         default:
           description: Default response
-  /piutang:
-    get:
-      responses:
-        default:
-          description: Default response
   /mtd:
     post:
       requestBody:

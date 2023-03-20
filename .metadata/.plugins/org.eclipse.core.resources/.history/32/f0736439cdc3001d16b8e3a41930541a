@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/loccana/selling/invoice" name="LoccanaSellingInvoices" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="PUT" uri-template="/{id}">
+        <inSequence>
+            <property description="get selling invoice" expression="get-property('uri.var.id')" name="sellinginvoiceId" scope="default" type="STRING"/>
+            <propertyGroup description="Parameter Update">
+                <property expression="get-property('uri.var.id')" name="sellinginvoiceId" scope="default" type="STRING"/>
+                <property expression="json-eval($.invoice_number)" name="invoice_number" scope="default" type="STRING"/>
+                <property expression="json-eval($.date_invoice)" name="date_invoice" scope="default" type="STRING"/>
+                <property expression="json-eval($.due_date)" name="due_date" scope="default" type="STRING"/>
+                <property expression="json-eval($.attention)" name="attention" scope="default" type="STRING"/>
+                <property expression="json-eval($.sign)" name="sign" scope="default" type="STRING"/>
+                <property expression="json-eval($.tax_invoice)" name="tax_invoice" scope="default" type="STRING"/>
+                <property expression="json-eval($.unit_price)" name="unit_price" scope="default" type="STRING"/>
+                <property expression="json-eval($.qty)" name="qty" scope="default" type="STRING"/>
+                <property expression="json-eval($.qty_box)" name="qty_box" scope="default" type="STRING"/>
+                <property expression="json-eval($.qty_satuan)" name="qty_satuan" scope="default" type="STRING"/>
+                <property expression="json-eval($.box_amount)" name="box_amount" scope="default" type="STRING"/>
+                <property expression="json-eval($.price)" name="price" scope="default" type="STRING"/>
+                <property expression="json-eval($.discount)" name="discount" scope="default" type="STRING"/>
+                <property expression="json-eval($.notes)" name="notes" scope="default" type="STRING"/>
+                <property expression="json-eval($.date_mutation)" name="date_mutation" scope="default" type="STRING"/>
+                <property expression="json-eval($.amount_mutation)" name="amount_mutation" scope="default" type="STRING"/>
+                <property expression="get-property('SYSTEM_DATE', 'yyyy-MM-dd HH:mm:ss')" name="currentDate" scope="default" type="STRING"/>
+                <property expression="json-eval($.item_id)" name="item_id" scope="default" type="STRING"/>
+                <property expression="json-eval($.id_user)" name="id_user" scope="default" type="STRING"/>
+                <property name="menu" scope="default" type="STRING" value="Invoice Penjualan"/>
+                <property name="aktivitas" scope="default" type="STRING" value="Update"/>
+            </propertyGroup>
+            <!--             <log description="Log start" level="custom"> -->
+            <!--                 <property expression="get-property('sellinginvoiceId')" name="Update selling invoice id"/> -->
+            <!--             </log> -->
+            <sequence key="LoccanaSellingInvoicesDetail"/>
+            <filter regex="false" source="boolean(get-property('data'))">
+                <then>
+                    <property description="Error Message" name="message" scope="default" type="STRING" value="selling invoice tidak ditemukan."/>
+                    <sequence key="LoccanaSellingGetResponseError"/>
+                </then>
+                <else>
+                    <property description="Result" expression="json-eval($.data.invoice_number)" name="invoice_number" scope="default" type="STRING"/>
+                    <property action="remove" name="data" scope="default"/>
+                </else>
+            </filter>
+            <dataServiceCall description="Update selling invoice" serviceName="LoccanaSellingDataService">
+                <operations type="single">
+                    <operation name="updateSellingInvoices">
+                        <param evaluator="xml" expression="get-property('invoice_number')" name="invoice_number"/>
+                        <param evaluator="xml" expression="get-property('date_invoice')" name="date_invoice"/>
+                        <param evaluator="xml" expression="get-property('due_date')" name="due_date"/>
+                        <param evaluator="xml" expression="get-property('attention')" name="attention"/>
+                        <param evaluator="xml" expression="get-property('sign')" name="sign"/>
+                        <param evaluator="xml" expression="get-property('tax_invoice')" name="tax_invoice"/>
+                        <param evaluator="xml" expression="get-property('unit_price')" name="unit_price"/>
+                        <param evaluator="xml" expression="get-property('qty')" name="qty"/>
+                        <param evaluator="xml" expression="get-property('qty_box')" name="qty_box"/>
+                        <param evaluator="xml" expression="get-property('qty_satuan')" name="qty_satuan"/>
+                        <param evaluator="xml" expression="get-property('box_amount')" name="box_amount"/>
+                        <param evaluator="xml" expression="get-property('price')" name="price"/>
+                        <param evaluator="xml" expression="get-property('discount')" name="discount"/>
+                        <param evaluator="xml" expression="get-property('notes')" name="notes"/>
+                        <param evaluator="xml" expression="get-property('date_mutation')" name="date_mutation"/>
+                        <param evaluator="xml" expression="get-property('amount_mutation')" name="amount_mutation"/>
+                        <param evaluator="xml" expression="get-property('item_id')" name="item_id"/>
+                        <param evaluator="xml" expression="get-property('sellinginvoiceId')" name="id"/>
+                    </operation>
+                </operations>
+                <source type="inline"/>
+                <target type="body"/>
+            </dataServiceCall>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <property description="Get update status" expression="json-eval($.UpdatedRowCount.id)" name="result" scope="default" type="STRING"/>
+            <!--             <log description="Log start" level="custom"> -->
+            <!--                 <property expression="get-property('result')" name="total column yang terupdate"/> -->
+            <!--             </log> -->
+            <filter regex="true" source="boolean(get-property('result'))">
+                <then>
+                    <property description="Success Message" expression="concat('Berhasil mengupdate Invoice Penjualan Dengan No Invoice ',get-property('invoice_number'))" name="message" scope="default" type="STRING"/>
+                    <property description="Success data" expression="get-property('sellinginvoiceId')" name="data" scope="default" type="STRING"/>
+                    <sequence key="SellingUserActivities"/>
+                    <sequence key="LoccanaSellingGetResponseSuccess"/>
+                </then>
+                <else>
+                    <property description="Error Message" expression="concat('Gagal mengupdate Invoice Penjualan Dengan No Invoice ',get-property('invoice_number'))" name="message" scope="default" type="STRING"/>
+                    <sequence key="SellingUserActivities"/>
+                    <sequence key="LoccanaSellingGetResponseError"/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <property description="ErrorMessage" expression="get-property('ERROR_MESSAGE')" name="message" scope="default" type="STRING"/>
+            <sequence key="LoccanaSellingGetResponseError"/>
+        </faultSequence>
+    </resource>
+    <resource methods="DELETE" uri-template="/{id}">
+        <inSequence>
+            <propertyGroup description="Parameter Update">
+                <property expression="get-property('uri.var.id')" name="sellinginvoiceId" scope="default" type="STRING"/>
+                <property expression="get-property('SYSTEM_DATE', 'yyyy-MM-dd HH:mm:ss')" name="currentDate" scope="default" type="STRING"/>
+                <property expression="json-eval($.id_user)" name="id_user" scope="default" type="STRING"/>
+                <property name="menu" scope="default" type="STRING" value="Invoice Penjualan"/>
+                <property name="aktivitas" scope="default" type="STRING" value="Delete"/>
+            </propertyGroup>
+            <!--             <log description="Log start" level="custom"> -->
+            <!--                 <property expression="get-property('sellinginvoiceId')" name="Delete selling invoice id"/> -->
+            <!--             </log> -->
+            <sequence key="LoccanaSellingInvoicesDetail"/>
+            <filter regex="false" source="boolean(get-property('data'))">
+                <then>
+                    <property description="Error Message" name="message" scope="default" type="STRING" value="selling invoice tidak ditemukan."/>
+                    <sequence key="LoccanaSellingGetResponseError"/>
+                </then>
+                <else>
+                    <property description="Result" expression="json-eval($.data.invoice_number)" name="invoice_number" scope="default" type="STRING"/>
+                    <property action="remove" name="data" scope="default"/>
+                </else>
+            </filter>
+            <dataServiceCall description="Delete selling invoice" serviceName="LoccanaSellingDataService">
+                <operations type="single">
+                    <operation name="deleteSellingInvoices">
+                        <param evaluator="xml" expression="get-property('sellinginvoiceId')" name="id"/>
+                    </operation>
+                </operations>
+                <source type="inline"/>
+                <target type="body"/>
+            </dataServiceCall>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <property description="Get update status" expression="json-eval($.UpdatedRowCount.id)" name="result" scope="default" type="STRING"/>
+            <filter regex="true" source="boolean(get-property('result'))">
+                <then>
+                    <property description="Success Message" expression="concat('No Invoice ',get-property('invoice_number'), ' telah dihapus')" name="message" scope="default" type="STRING"/>
+                    <property description="Success data" expression="get-property('sellinginvoiceId')" name="data" scope="default" type="STRING"/>
+                    <sequence key="SellingUserActivities"/>
+                    <sequence key="LoccanaSellingGetResponseSuccess"/>
+                </then>
+                <else>
+                    <property description="Error Message" expression="concat('No Invoice ',get-property('invoice_number'), ' gagal dihapus')" name="message" scope="default" type="STRING"/>
+                    <sequence key="SellingUserActivities"/>
+                    <sequence key="LoccanaSellingGetResponseError"/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <property description="ErrorMessage" expression="get-property('ERROR_MESSAGE')" name="message" scope="default" type="STRING"/>
+            <sequence key="LoccanaSellingGetResponseError"/>
+        </faultSequence>
+    </resource>
+    <resource methods="GET" uri-template="/search/{id}">
+        <inSequence>
+            <property description="selling invoice Id" expression="get-property('uri.var.id')" name="sellinginvoiceId" scope="default" type="STRING"/>
+            <log description="Log start" level="custom">
+                <property expression="get-property('sellinginvoiceId')" name="Get detail selling invoice id"/>
+            </log>
+            <sequence key="LoccanaSellingInvoiceSearchID"/>
+            <filter regex="false" source="boolean(get-property('data'))">
+                <then>
+                    <property description="Error Message" name="message" scope="default" type="STRING" value="selling invoice tidak ditemukan."/>
+                    <sequence key="LoccanaSellingGetResponseError"/>
+                </then>
+                <else>
+                    <property description="Success Message" name="message" scope="default" type="STRING" value="selling invoice ditemukan."/>
+                    <sequence key="LoccanaSellingGetResponseSuccess"/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <property description="ErrorMessage" expression="get-property('ERROR_MESSAGE')" name="message" scope="default" type="STRING"/>
+            <sequence key="LoccanaSellingGetResponseError"/>
+        </faultSequence>
+    </resource>
+    <resource methods="POST" uri-template="/lists">
+        <inSequence>
+            <!--         <validate cache-schema="true" source="json-eval($)"> -->
+            <!--             <schema key="conf:schema/ListSelling.json"/> -->
+            <!--             <on-fail> -->
+            <!--                 <property description="Error Message" expression="$ctx:ERROR_MESSAGE" name="message" scope="default" type="STRING"/> -->
+            <!--                 <sequence key="LoccanaSellingGetResponseError"/> -->
+            <!--             </on-fail> -->
+            <!--         </validate> -->
+            <log description="Log start get list" level="custom">
+                <property name="Log Message" value="List selling Invoice"/>
+            </log>
+            <propertyGroup description="Parameter Input">
+                <property expression="json-eval($.search)" name="search" scope="default" type="STRING"/>
+                <property expression="json-eval($.limit)" name="limit" scope="default" type="STRING"/>
+                <property expression="json-eval($.offset)" name="offset" scope="default" type="STRING"/>
+                <property expression="json-eval($.month)" name="month" scope="default" type="STRING"/>
+                <property expression="json-eval($.year)" name="year" scope="default" type="STRING"/>
+                <property expression="json-eval($.status)" name="status" scope="default" type="STRING"/>
+            </propertyGroup>
+            <switch source="boolean(get-property('search'))">
+                <case regex="true">
+                    <dataServiceCall description="List selling" serviceName="LoccanaSellingDataService">
+                        <operations type="single">
+                            <operation name="getSellingInvoiceList">
+                                <param evaluator="xml" expression="get-property('status')" name="status"/>
+                                <param evaluator="xml" expression="get-property('search')" name="search"/>
+                                <param evaluator="xml" expression="get-property('limit')" name="limit"/>
+                                <param evaluator="xml" expression="get-property('offset')" name="offset"/>
+                                <param evaluator="xml" expression="get-property('month')" name="month"/>
+                                <param evaluator="xml" expression="get-property('year')" name="year"/>
+                            </operation>
+                        </operations>
+                        <source type="inline"/>
+                        <target type="body"/>
+                    </dataServiceCall>
+                </case>
+                <case regex="false">
+                    <dataServiceCall description="List selling Invoice" serviceName="LoccanaSellingDataService">
+                        <operations type="single">
+                            <operation name="getSellingInvoiceNotFiltered">
+                                <param evaluator="xml" expression="get-property('limit')" name="limit"/>
+                                <param evaluator="xml" expression="get-property('offset')" name="offset"/>
+                            </operation>
+                        </operations>
+                        <source type="inline"/>
+                        <target type="body"/>
+                    </dataServiceCall>
+                </case>
+                <default/>
+            </switch>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <property description="Result" expression="json-eval($)" name="resultlist" scope="default" type="STRING"/>
+            <!--             <log description="Log Items" level="custom"> -->
+            <!--                 <property expression="get-property('resultlist')" name="check resultlist"/> -->
+            <!--             </log> -->
+            <filter regex="false" source="boolean(get-property('resultlist'))">
+                <then>
+                    <property description="Success data" name="datalist" scope="default" type="STRING" value="[]"/>
+                </then>
+                <else>
+                    <property description="Success data" expression="json-eval($.data.invoice)" name="datalist" scope="default" type="STRING"/>
+                </else>
+            </filter>
+            <dataServiceCall description="Count item" serviceName="LoccanaSellingDataService">
+                <operations type="single">
+                    <operation name="getSellingInvoiceCount">
+                        <param evaluator="xml" expression="get-property('search')" name="search"/>
+                        <param evaluator="xml" expression="get-property('month')" name="month"/>
+                        <param evaluator="xml" expression="get-property('year')" name="year"/>
+                    </operation>
+                </operations>
+                <source type="inline"/>
+                <target type="body"/>
+            </dataServiceCall>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <property description="Result" expression="json-eval($)" name="resultcount" scope="default" type="STRING"/>
+            <filter regex="false" source="boolean(get-property('resultcount'))">
+                <then>
+                    <property description="Success data" name="datacount" scope="default" type="STRING" value="{}"/>
+                </then>
+                <else>
+                    <property description="Success data" expression="json-eval($.data_filtered.countid)" name="datacount" scope="default" type="STRING"/>
+                </else>
+            </filter>
+            <dataServiceCall description="Count item" serviceName="LoccanaSellingDataService">
+                <operations type="single">
+                    <operation name="getSellingInvoiceCountNotFiltered"/>
+                </operations>
+                <source type="inline"/>
+                <target type="body"/>
+            </dataServiceCall>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <property description="Result" expression="json-eval($)" name="resultcountnotfiltered" scope="default" type="STRING"/>
+            <filter regex="false" source="boolean(get-property('resultcountnotfiltered'))">
+                <then>
+                    <property description="Success data" name="datacountnotfiltered" scope="default" type="STRING" value="{}"/>
+                </then>
+                <else>
+                    <property description="Success data" expression="json-eval($.data_not_filtered.countid)" name="datacountnotfiltered" scope="default" type="STRING"/>
+                </else>
+            </filter>
+            <property description="Success Message" name="message" scope="default" type="STRING" value="List Selling Invoice"/>
+            <payloadFactory media-type="json">
+                <format>{
+					          "table": $1,
+					          "jumlah_filter": $2,
+					          "jumlah": $3
+					      }
+   				</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('datalist')"/>
+                    <arg evaluator="xml" expression="get-property('datacount')"/>
+                    <arg evaluator="xml" expression="get-property('datacountnotfiltered')"/>
+                </args>
+            </payloadFactory>
+            <log description="Log Items" level="custom">
+                <property expression="json-eval($)" name="Log Message selling Invoice"/>
+            </log>
+            <property description="Success data" expression="json-eval($)" name="data" scope="default" type="STRING"/>
+            <sequence key="LoccanaSellingGetResponseSuccess"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <property description="ErrorMessage" expression="get-property('ERROR_MESSAGE')" name="message" scope="default" type="STRING"/>
+            <sequence key="LoccanaSellingGetResponseError"/>
+        </faultSequence>
+    </resource>
+    <resource methods="GET" uri-template="/list-select">
+        <inSequence>
+            <sequence key="LoccanaSellingInvoicesListSelect"/>
+            <filter regex="false" source="boolean(get-property('data'))">
+                <then>
+                    <property description="Error Message" name="message" scope="default" type="STRING" value="selling invoice tidak ditemukan."/>
+                    <sequence key="LoccanaSellingGetResponseError"/>
+                </then>
+                <else>
+                    <property description="Success Message" name="message" scope="default" type="STRING" value="selling invoices ditemukan."/>
+                    <sequence key="LoccanaSellingGetResponseSuccess"/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <property description="ErrorMessage" expression="get-property('ERROR_MESSAGE')" name="message" scope="default" type="STRING"/>
+            <sequence key="LoccanaSellingGetResponseError"/>
+        </faultSequence>
+    </resource>
+    <resource methods="POST" uri-template="/mtd">
+        <inSequence>
+            <!--             <validate cache-schema="true" source="json-eval($)"> -->
+            <!--                 <schema key="conf:schema/LoccanaMasterUomsUpsert.json"/> -->
+            <!--                 <on-fail> -->
+            <!--                     <property description="Error Message" expression="$ctx:ERROR_MESSAGE" name="message" scope="default" type="STRING"/> -->
+            <!--                     <sequence key="LoccanaSellingGetResponseError"/> -->
+            <!--                 </on-fail> -->
+            <!--             </validate> -->
+            <log description="Log start" level="custom">
+                <property name="Log Message" value="List MTD Selling Invoice"/>
+            </log>
+            <propertyGroup description="Parameter Input">
+                <property expression="json-eval($.month)" name="month" scope="default" type="STRING"/>
+                <property expression="json-eval($.year)" name="year" scope="default" type="STRING"/>
+            </propertyGroup>
+            <dataServiceCall description="Create MTD Selling Invoice" serviceName="LoccanaSellingDataService">
+                <operations type="single">
+                    <operation name="MTDSellingInvoice">
+                        <param evaluator="xml" expression="get-property('month')" name="month"/>
+                        <param evaluator="xml" expression="get-property('year')" name="year"/>
+                    </operation>
+                </operations>
+                <source type="inline"/>
+                <target type="body"/>
+            </dataServiceCall>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <property description="Result" expression="json-eval($)" name="result" scope="default" type="STRING"/>
+            <filter regex="false" source="boolean(get-property('result'))">
+                <then>
+                    <property description="Success Message" name="data" scope="default" type="STRING" value="{}"/>
+                </then>
+                <else>
+                    <property description="Success Message" name="message" scope="default" type="STRING" value="Total Invoice Penjualan"/>
+                    <property description="Success data" expression="json-eval($.data.mtd_inv_sell)" name="data" scope="default" type="STRING"/>
+                    <sequence key="LoccanaSellingGetResponseSuccess"/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <property description="ErrorMessage" expression="get-property('ERROR_MESSAGE')" name="message" scope="default" type="STRING"/>
+            <sequence key="LoccanaSellingGetResponseError"/>
+        </faultSequence>
+    </resource>
+    <resource methods="POST">
+        <inSequence>
+            <!--             <validate cache-schema="true" source="json-eval($)"> -->
+            <!--                 <schema key="conf:schema/CreateLoccanaSelllingInvoice.json"/> -->
+            <!--                 <on-fail> -->
+            <!--                     <property description="Error Message" expression="$ctx:ERROR_MESSAGE" name="message" scope="default" type="STRING"/> -->
+            <!--                     <sequence key="LoccanaSellingGetResponseError"/> -->
+            <!--                 </on-fail> -->
+            <!--             </validate> -->
+            <log description="Log start" level="custom">
+                <property name="Log Message" value="Insert data selling invoice"/>
+            </log>
+            <propertyGroup description="Parameter Input">
+                <property expression="json-eval($.selling_id)" name="selling_id" scope="default" type="STRING"/>
+                <property expression="json-eval($.invoice_number)" name="invoice_number" scope="default" type="STRING"/>
+                <property expression="json-eval($.date_invoice)" name="date_invoice" scope="default" type="STRING"/>
+                <property expression="json-eval($.due_date)" name="due_date" scope="default" type="STRING"/>
+                <property expression="json-eval($.attention)" name="attention" scope="default" type="STRING"/>
+                <property expression="json-eval($.notes)" name="notes" scope="default" type="STRING"/>
+                <property expression="json-eval($.sign)" name="sign" scope="default" type="STRING"/>
+                <property expression="json-eval($.tax_invoice)" name="tax_invoice" scope="default" type="STRING"/>
+                <property expression="json-eval($.status)" name="status" scope="default" type="STRING"/>
+                <property expression="json-eval($.items)" name="items" scope="default" type="STRING"/>
+                <property expression="get-property('SYSTEM_DATE', 'yyyy-MM-dd HH:mm:ss')" name="currentDate" scope="default" type="STRING"/>
+                <property expression="json-eval($.id_user)" name="id_user" scope="default" type="STRING"/>
+                <property name="menu" scope="default" type="STRING" value="Invoice Penjualan"/>
+                <property name="aktivitas" scope="default" type="STRING" value="Tambah"/>
+                <property expression="json-eval($.rate)" name="rate" scope="default" type="STRING"/>
+            </propertyGroup>
+            <dataServiceCall description="Create selling invoice" serviceName="LoccanaSellingDataService">
+                <operations type="single">
+                    <operation name="createSellingInvoices">
+                        <param evaluator="xml" expression="get-property('selling_id')" name="selling_id"/>
+                        <param evaluator="xml" expression="get-property('invoice_number')" name="invoice_number"/>
+                        <param evaluator="xml" expression="get-property('date_invoice')" name="date_invoice"/>
+                        <param evaluator="xml" expression="get-property('due_date')" name="due_date"/>
+                        <param evaluator="xml" expression="get-property('attention')" name="attention"/>
+                        <param evaluator="xml" expression="get-property('notes')" name="notes"/>
+                        <param evaluator="xml" expression="get-property('sign')" name="sign"/>
+                        <param evaluator="xml" expression="get-property('tax_invoice')" name="tax_invoice"/>
+                        <param evaluator="xml" expression="get-property('status')" name="status"/>
+                        <param evaluator="xml" expression="get-property('currentDate')" name="created_at"/>
+                        <param evaluator="xml" expression="get-property('currentDate')" name="updated_at"/>
+                    </operation>
+                </operations>
+                <source type="inline"/>
+                <target type="body"/>
+            </dataServiceCall>
+            <property description="result" expression="json-eval($)" name="result" scope="default" type="STRING"/>
+            <filter regex="false" source="boolean(get-property('result'))">
+                <then>
+                    <property description="Error Message" name="message" scope="default" type="STRING" value="Gagal menambahkan selling invoice"/>
+                    <sequence key="LoccanaSellingGetResponseError"/>
+                </then>
+                <else/>
+            </filter>
+            <property description="Get Data Selling" expression="json-eval($.return)" name="return" scope="default" type="STRING"/>
+            <property description="Get ID Selling" expression="json-eval($.return.id)" name="selling_invoice_id" scope="default" type="STRING"/>
+            <property description="Get ID Selling" expression="json-eval($.return.invoice_number)" name="invoice_number" scope="default" type="STRING"/>
+            <property description="Get ID Selling" expression="json-eval($.return.date_invoice)" name="date_invoice" scope="default" type="STRING"/>
+            <!-- <log description="Log start" level="custom">
+                <property expression="get-property('invoice_number')" name="test get invoice_number"/>
+                 <property expression="get-property('date_invoice')" name="test get date_invoice"/>
+            </log> -->
+            <enrich description="Deploy selling invoice kalkulasi ">
+                <source clone="false" property="items" type="property"/>
+                <target type="body"/>
+            </enrich>
+            <foreach description="Foreach array untuk mengkalkulasi selling invoice" expression="json-eval($)" id="foreach-items">
+                <sequence>
+                    <propertyGroup description="input selling invoice detail">
+                        <property expression="json-eval($.selling_detail_id)" name="selling_detail_id" scope="default" type="STRING"/>
+                        <property expression="json-eval($.unit_price)" name="unit_price" scope="default" type="STRING"/>
+                        <property expression="json-eval($.qty)" name="qty" scope="default" type="STRING"/>
+                        <property expression="json-eval($.qty_box)" name="qty_box" scope="default" type="STRING"/>
+                        <property expression="json-eval($.qty_pcs)" name="qty_pcs" scope="default" type="STRING"/>
+                        <property expression="json-eval($.box_amount)" name="box_amount" scope="default" type="STRING"/>
+                        <property expression="json-eval($.price)" name="price" scope="default" type="STRING"/>
+                        <property expression="json-eval($.discount)" name="discount" scope="default" type="STRING"/>
+                        <property expression="json-eval($.notes)" name="notes" scope="default" type="STRING"/>
+                    </propertyGroup>
+                    <payloadFactory media-type="json">
+                        <format>        
+                            	{
+                            		"selling_invoice_id": "$1",
+                              		"selling_detail_id": "$2",
+      					            "unit_price": "$3",
+      					            "qty": "$4",
+      					            "qty_box": $5,
+      					            "qty_pcs": "$6",
+      					            "box_amount": "$7",
+      					            "price": "$8",
+      					            "discount": "$9",
+      					            "notes": "$10",
+      					            "created_at": "$11",
+      					            "updated_at": "$11"
+      					        }
+         				    </format>
+                        <args>
+                            <arg evaluator="xml" expression="get-property('selling_invoice_id')"/>
+                            <arg evaluator="xml" expression="get-property('selling_detail_id')"/>
+                            <arg evaluator="xml" expression="get-property('unit_price')"/>
+                            <arg evaluator="xml" expression="get-property('qty')"/>
+                            <arg evaluator="xml" expression="get-property('qty_box')"/>
+                            <arg evaluator="xml" expression="get-property('qty_pcs')"/>
+                            <arg evaluator="xml" expression="get-property('box_amount')"/>
+                            <arg evaluator="xml" expression="get-property('price')"/>
+                            <arg evaluator="xml" expression="get-property('discount')"/>
+                            <arg evaluator="xml" expression="get-property('notes')"/>
+                            <arg evaluator="xml" expression="get-property('currentDate')"/>
+                        </args>
+                    </payloadFactory>
+                </sequence>
+            </foreach>
+            <property description="Get result" expression="json-eval($)" name="resultKalkulasiSellingInvoice" scope="default" type="STRING"/>
+            <!--             <log description="get log" level="custom"> -->
+            <!--                 <property expression="json-eval($)" name="resultKalkulasiSellingInvoice"/> -->
+            <!--             </log> -->
+            <payloadFactory media-type="json">
+                <format>
+       	                {
+       						"createSellingInvoiceDetail_batch_req": {
+       							"createSellingInvoiceDetail": $1
+       						}
+       					}
+       				</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('resultKalkulasiSellingInvoice')"/>
+                </args>
+            </payloadFactory>
+            <property description="Get result" expression="json-eval($)" name="DataSellingInvoicedetail" scope="default" type="STRING"/>
+            <enrich description="Deploy selling invoice kalkulasi ">
+                <source clone="false" property="DataSellingInvoicedetail" type="property"/>
+                <target type="body"/>
+            </enrich>
+            <dataServiceCall description="Batch insert ke selling invoice detail" serviceName="LoccanaSellingDataService">
+                <source type="body"/>
+                <target type="body"/>
+            </dataServiceCall>
+            <property description="Get Data Selling" expression="json-eval($.returnDetail)" name="returnDetail" scope="default" type="STRING"/>
+            <property description="Get ID Selling" expression="json-eval($.returnDetail.price)" name="price" scope="default" type="STRING"/>
+            <property description="Get ID Selling" expression="json-eval($.returnDetail.notes)" name="notes" scope="default" type="STRING"/>
+            <log description="Log start" level="custom">
+                <property expression="get-property('price')" name="test get price"/>
+                <property expression="get-property('notes')" name="test get notes"/>
+            </log>
+            <sequence key="InsertCoaValue1"/>
+            <sequence key="InsertCoaValue2"/>
+            <sequence key="InsertCoaValue3"/>
+            <sequence key="InsertCoaValue4"/>
+            <sequence key="InsertCoaValue5"/>
+            <property description="Success Message" expression="concat('Berhasil menambahkan Invoice Penjualan Dengan No Invoice ',get-property('invoice_number'))" name="message" scope="default" type="STRING"/>
+            <property description="Success data" expression="get-property('selling_invoice_id')" name="data" scope="default" type="STRING"/>
+            <sequence key="SellingUserActivities"/>
+            <sequence key="LoccanaSellingGetResponseSuccess"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <property description="ErrorMessage" expression="get-property('ERROR_MESSAGE')" name="message" scope="default" type="STRING"/>
+            <sequence key="LoccanaSellingGetResponseError"/>
+        </faultSequence>
+    </resource>
+    <resource methods="GET" uri-template="/search-add">
+        <inSequence>
+            <sequence key="LoccanaSellingInvoiceSearchAdd"/>
+            <filter regex="false" source="boolean(get-property('data'))">
+                <then>
+                    <property description="Error Message" name="message" scope="default" type="STRING" value="selling return tidak ditemukan."/>
+                    <sequence key="LoccanaSellingGetResponseError"/>
+                </then>
+                <else>
+                    <property description="Success Message" name="message" scope="default" type="STRING" value="selling Return ditemukan."/>
+                    <sequence key="LoccanaSellingGetResponseSuccess"/>
+                </else>
+            </filter>
+        </inSequence>
+        <outSequence/>
+        <faultSequence>
+            <property description="ErrorMessage" expression="get-property('ERROR_MESSAGE')" name="message" scope="default" type="STRING"/>
+            <sequence key="LoccanaSellingGetResponseError"/>
+        </faultSequence>
+    </resource>
+</api>

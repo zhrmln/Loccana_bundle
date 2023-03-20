@@ -5,7 +5,7 @@
       <outputConnector>
         <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.0/@inputConnector"/>
       </outputConnector>
-      <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+      <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
       <mediatorFlow>
         <children xsi:type="esb:DSSMediator" description="Get selling return detail" serviceName="LoccanaSellingDataService" availableDataServices="LoccanaSellingDataService">
           <operations operationName="getSellingReturnDetailsDetail">
@@ -25,22 +25,13 @@
           </outputConnector>
           <valueExpression propertyValue="json-eval($)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
         </children>
-        <children xsi:type="esb:LogMediator" description="Log start" logLevel="CUSTOM" logSeparator=", ">
-          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
-          <outputConnector>
-            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.3/@inputConnector"/>
-          </outputConnector>
-          <properties propertyName="selling return details id" propertyValueType="EXPRESSION" propertyValue="">
-            <propertyExpression propertyValue="get-property('resultData')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
-          </properties>
-        </children>
         <children xsi:type="esb:FilterMediator" regex="true">
-          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
           <outputConnector>
             <outgoingLink target="//@server/@children.0/@inputConnector"/>
           </outputConnector>
           <passOutputConnector>
-            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.3/@filterContainer/@passContainer/@mediatorFlow/@children.0/@inputConnector"/>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.2/@filterContainer/@passContainer/@mediatorFlow/@children.0/@inputConnector"/>
           </passOutputConnector>
           <failOutputConnector/>
           <xpath prettyName="Filter Source XPath" propertyName="filterSourceXpath" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
@@ -49,9 +40,18 @@
             <passContainer>
               <mediatorFlow>
                 <children xsi:type="esb:PropertyMediator" valueType="EXPRESSION" newPropertyName="data">
-                  <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.3/@passOutputConnector/@outgoingLink"/>
-                  <outputConnector/>
+                  <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.2/@passOutputConnector/@outgoingLink"/>
+                  <outputConnector>
+                    <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.2/@filterContainer/@passContainer/@mediatorFlow/@children.1/@inputConnector"/>
+                  </outputConnector>
                   <valueExpression propertyValue="json-eval($.data)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                </children>
+                <children xsi:type="esb:LogMediator" description="Log start" logLevel="CUSTOM" logSeparator=", ">
+                  <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.2/@filterContainer/@passContainer/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+                  <outputConnector/>
+                  <properties propertyName="selling return details id" propertyValueType="EXPRESSION" propertyValue="">
+                    <propertyExpression propertyValue="get-property('data')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                  </properties>
                 </children>
               </mediatorFlow>
             </passContainer>

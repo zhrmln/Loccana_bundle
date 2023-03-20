@@ -23,15 +23,7 @@
             <properties/>
         </item>
     </artifact>
-    <artifact name="CreateSellingHistory" groupId="com.loccana.selling.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
-        <item>
-            <file>CreateSellingHistory.json</file>
-            <path>/_system/config/schema</path>
-            <mediaType>application/json</mediaType>
-            <properties/>
-        </item>
-    </artifact>
-    <artifact name="ListSelling" groupId="com.loccana.selling.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
+        <artifact name="ListSelling" groupId="com.loccana.selling.resource" version="1.0.0" type="registry/resource" serverRole="EnterpriseIntegrator">
         <item>
             <file>ListSelling.json</file>
             <path>/_system/config/schema</path>

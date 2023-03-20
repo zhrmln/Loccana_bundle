@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="SellingUserActivities" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <!--     <switch source="get-property('operation')"> -->
-    <!--         <case regex="1"> -->
-    <!--             <property name="aktivitas" scope="default" type="STRING" value="Tambah"/> -->
-    <!--             <property expression="concat(concat('Tambah ',get-property('menu')), ' ', get-property('no_selling'))" name="keterangan" scope="default" type="STRING"/> -->
-    <!--         </case> -->
-    <!--         <case regex="2"> -->
-    <!--             <property name="aktivitas" scope="default" type="STRING" value="Update"/> -->
-    <!--             <property expression="concat(concat('Update ',get-property('menu')), ' ', get-property('no_selling'))" name="keterangan" scope="default" type="STRING"/> -->
-    <!--         </case> -->
-    <!--         <case regex="3"> -->
-    <!--             <property name="aktivitas" scope="default" type="STRING" value="Delete"/> -->
-    <!--             <property expression="concat(concat('Delete ',get-property('menu')), ' ', get-property('no_selling'))" name="keterangan" scope="default" type="STRING"/> -->
-    <!--         </case> -->
-    <!--         <case regex="4"> -->
-    <!--             <property name="aktivitas" scope="default" type="STRING" value="approve"/> -->
-    <!--             <property expression="concat(concat('Konfirmasi ',get-property('menu')), ' ', 'Oleh' , ' ', get-property('approved_by'))" name="keterangan" scope="default" type="STRING"/> -->
-    <!--         </case> -->
-    <!--         <default/> -->
-    <!--     </switch> -->
     <propertyGroup description="Parameter Input">
         <property expression="get-property('id_user')" name="id_user" scope="default" type="STRING"/>
         <property expression="get-property('menu')" name="menu" scope="default" type="STRING"/>

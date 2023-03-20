@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="LoccanaSellingGetResponseError" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log category="ERROR" description="Log all error" level="full"/>
+    <filter regex="false" source="boolean(get-property('errorCode'))">
+        <then>
+            <property description="Error Code" name="errorCode" scope="default" type="STRING" value="400"/>
+        </then>
+        <else/>
+    </filter>
+    <filter regex="false" source="boolean(get-property('message'))">
+        <then>
+            <property description="Error Message" name="message" scope="default" type="STRING" value="Bad request."/>
+        </then>
+        <else/>
+    </filter>
+    <payloadFactory description="formatResponse" media-type="json">
+        <format>{
+	"success": false,
+	"message": "$1",
+	"data": {}
+} </format>
+        <args>
+            <arg evaluator="xml" expression="get-property('message')"/>
+        </args>
+    </payloadFactory>
+    <property description="Set header error" expression="get-property('errorCode')" name="HTTP_SC" scope="axis2" type="STRING"/>
+    <respond/>
+</sequence>

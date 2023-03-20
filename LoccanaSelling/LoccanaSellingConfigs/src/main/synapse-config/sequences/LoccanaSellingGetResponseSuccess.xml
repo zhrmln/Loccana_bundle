@@ -14,10 +14,11 @@
     </filter>
     <payloadFactory description="format Respon" media-type="json">
         <format>{
-	"success": true,
-	"message": "$1",
-	"data": $2
-} </format>
+					"success": true,
+					"message": "$1",
+					"data": $2
+				} 		
+		</format>
         <args>
             <arg evaluator="xml" expression="get-property('message')"/>
             <arg evaluator="xml" expression="get-property('data')"/>

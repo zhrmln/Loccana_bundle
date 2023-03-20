@@ -2,25 +2,6 @@
 <esb:EsbDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb">
   <server type="SEQUENCE">
     <children xsi:type="esb:Sequences" name="SellingUserActivities">
-      <commentsList>     &lt;switch source=&quot;get-property('operation')&quot;> </commentsList>
-      <commentsList>         &lt;case regex=&quot;1&quot;> </commentsList>
-      <commentsList>             &lt;property name=&quot;aktivitas&quot; scope=&quot;default&quot; type=&quot;STRING&quot; value=&quot;Tambah&quot;/> </commentsList>
-      <commentsList>             &lt;property expression=&quot;concat(concat('Tambah ',get-property('menu')), ' ', get-property('no_selling'))&quot; name=&quot;keterangan&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/> </commentsList>
-      <commentsList>         &lt;/case> </commentsList>
-      <commentsList>         &lt;case regex=&quot;2&quot;> </commentsList>
-      <commentsList>             &lt;property name=&quot;aktivitas&quot; scope=&quot;default&quot; type=&quot;STRING&quot; value=&quot;Update&quot;/> </commentsList>
-      <commentsList>             &lt;property expression=&quot;concat(concat('Update ',get-property('menu')), ' ', get-property('no_selling'))&quot; name=&quot;keterangan&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/> </commentsList>
-      <commentsList>         &lt;/case> </commentsList>
-      <commentsList>         &lt;case regex=&quot;3&quot;> </commentsList>
-      <commentsList>             &lt;property name=&quot;aktivitas&quot; scope=&quot;default&quot; type=&quot;STRING&quot; value=&quot;Delete&quot;/> </commentsList>
-      <commentsList>             &lt;property expression=&quot;concat(concat('Delete ',get-property('menu')), ' ', get-property('no_selling'))&quot; name=&quot;keterangan&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/> </commentsList>
-      <commentsList>         &lt;/case> </commentsList>
-      <commentsList>         &lt;case regex=&quot;4&quot;> </commentsList>
-      <commentsList>             &lt;property name=&quot;aktivitas&quot; scope=&quot;default&quot; type=&quot;STRING&quot; value=&quot;approve&quot;/> </commentsList>
-      <commentsList>             &lt;property expression=&quot;concat(concat('Konfirmasi ',get-property('menu')), ' ', 'Oleh' , ' ', get-property('approved_by'))&quot; name=&quot;keterangan&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/> </commentsList>
-      <commentsList>         &lt;/case> </commentsList>
-      <commentsList>         &lt;default/> </commentsList>
-      <commentsList>     &lt;/switch> </commentsList>
       <outputConnector>
         <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.0/@inputConnector"/>
       </outputConnector>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="LoccanaSellingReturnSearchAdd" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <dataServiceCall description="Get selling invoice list" serviceName="LoccanaSellingDataService">
+        <operations type="single">
+            <operation name="searchAddSellingReturn"/>
+        </operations>
+        <source type="inline"/>
+        <target type="body"/>
+    </dataServiceCall>
+    <property expression="json-eval($)" name="resultData" scope="default" type="STRING"/>
+    <log description="Log start" level="custom">
+        <property expression="get-property('resultData')" name="list selling return add search"/>
+    </log>
+    <filter regex="true" source="boolean(get-property('resultData'))">
+        <then>
+            <property expression="json-eval($.data.list)" name="data" scope="default" type="STRING"/>
+        </then>
+        <else/>
+    </filter>
+</sequence>

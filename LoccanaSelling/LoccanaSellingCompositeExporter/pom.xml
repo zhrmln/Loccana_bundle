@@ -21,6 +21,7 @@
     <com.loccana.selling.resource_._CreateLoccanaSellingReturn>capp/EnterpriseIntegrator</com.loccana.selling.resource_._CreateLoccanaSellingReturn>
     <com.loccana.selling.metadata_._LoccanaSellingReturn_swagger>capp/EnterpriseServiceBus</com.loccana.selling.metadata_._LoccanaSellingReturn_swagger>
     <com.loccana.selling.sequence_._LoccanaSellingsGetDetail>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._LoccanaSellingsGetDetail>
+    <com.loccana.selling.sequence_._LoccanaSellingInvoiceSearchAdd>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._LoccanaSellingInvoiceSearchAdd>
     <com.loccana.selling.sequence_._GetInsertSellingMutation>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._GetInsertSellingMutation>
     <com.loccana.selling.sequence_._LoccanaSellingReturnGetDetail>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._LoccanaSellingReturnGetDetail>
     <com.loccana.selling.sequence_._LoccanaSellingInvoicesListSelect>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._LoccanaSellingInvoicesListSelect>
@@ -42,7 +43,6 @@
     <com.loccana.selling.resource_._ListSelling>capp/EnterpriseIntegrator</com.loccana.selling.resource_._ListSelling>
     <com.loccana.selling.sequence_._GetInsertSellingHistory>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._GetInsertSellingHistory>
     <com.loccana.selling.metadata_._SellingInvoiceInsertTo2Table_metadata>capp/EnterpriseServiceBus</com.loccana.selling.metadata_._SellingInvoiceInsertTo2Table_metadata>
-    <com.loccana.selling.resource_._CreateSellingHistory>capp/EnterpriseIntegrator</com.loccana.selling.resource_._CreateSellingHistory>
     <com.loccana.selling.sequence_._UpdateSellingOrdering>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._UpdateSellingOrdering>
     <com.loccana.selling.sequence_._LoccanaSellingsReport>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._LoccanaSellingsReport>
     <com.loccana.selling.metadata_._TestInsertTo2Table_metadata>capp/EnterpriseServiceBus</com.loccana.selling.metadata_._TestInsertTo2Table_metadata>
@@ -55,6 +55,7 @@
     <com.loccana.selling.sequence_._InsertCoaValue5>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._InsertCoaValue5>
     <com.loccana.selling.sequence_._InsertCoaValue4>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._InsertCoaValue4>
     <com.loccana.selling.dataservice_._LoccanaSellingDataService>capp/DataServicesServer</com.loccana.selling.dataservice_._LoccanaSellingDataService>
+    <com.loccana.selling.sequence_._LoccanaSellingReturnSearchAdd>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._LoccanaSellingReturnSearchAdd>
     <com.loccana.selling.sequence_._LoccanaSellingSearchID>capp/EnterpriseServiceBus</com.loccana.selling.sequence_._LoccanaSellingSearchID>
     <com.loccana.selling.metadata_._LoccanaSellingInvoices_swagger>capp/EnterpriseServiceBus</com.loccana.selling.metadata_._LoccanaSellingInvoices_swagger>
     <com.loccana.selling.api_._LoccanaSellingReturn>capp/EnterpriseServiceBus</com.loccana.selling.api_._LoccanaSellingReturn>
@@ -105,6 +106,12 @@
     <dependency>
       <groupId>com.loccana.selling.sequence</groupId>
       <artifactId>LoccanaSellingsGetDetail</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.loccana.selling.sequence</groupId>
+      <artifactId>LoccanaSellingInvoiceSearchAdd</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
     </dependency>
@@ -229,12 +236,6 @@
       <type>yaml</type>
     </dependency>
     <dependency>
-      <groupId>com.loccana.selling.resource</groupId>
-      <artifactId>CreateSellingHistory</artifactId>
-      <version>1.0.0</version>
-      <type>zip</type>
-    </dependency>
-    <dependency>
       <groupId>com.loccana.selling.sequence</groupId>
       <artifactId>UpdateSellingOrdering</artifactId>
       <version>1.0.0</version>
@@ -305,6 +306,12 @@
       <artifactId>LoccanaSellingDataService</artifactId>
       <version>1.0.0</version>
       <type>dbs</type>
+    </dependency>
+    <dependency>
+      <groupId>com.loccana.selling.sequence</groupId>
+      <artifactId>LoccanaSellingReturnSearchAdd</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
     </dependency>
     <dependency>
       <groupId>com.loccana.selling.sequence</groupId>

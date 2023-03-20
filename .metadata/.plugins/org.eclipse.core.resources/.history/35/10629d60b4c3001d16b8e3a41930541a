@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="InsertCoaValue1" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <propertyGroup description="Parameter Input">
+        <property name="id_parents" scope="default" type="STRING" value="0"/>
+        <property name="coa_id" scope="default" type="STRING" value="24"/>
+        <property name="payment_id" scope="default" type="STRING" value="0"/>
+        <property name="adjusment" scope="default" type="STRING" value="0"/>
+        <property name="type_cash" scope="default" type="STRING" value="0"/>
+        <property name="notes_invoice" scope="default" type="STRING" value="Invoice Penjualan"/>
+        <property name="asset_id" scope="default" type="STRING" value="0"/>
+        <property expression="get-property('SYSTEM_DATE', 'yyyy-MM-dd HH:mm:ss')" name="currentDate" scope="default" type="STRING"/>
+    </propertyGroup>
+    <!--     <log description="Log start" level="custom"> -->
+    <!--         <property expression="get-property('rate')" name="test get rate"/> -->
+    <!--     </log> -->
+    <payloadFactory media-type="json">
+        <format>        
+                    { 
+			            "id_parents" : "$1",
+						"coa_id" : "$2",
+						"payment_id" : "$3",
+						"date" : "$4",
+						"date_insert" : "$13",
+						"value" : "$5",
+						"value_real" : "$5",
+						"adjusment" : "$6",
+						"type_cash" : "$7",
+						"notes" : "$8",
+						"rate" : "$9",
+						"description" : "$10",
+						"invoice_number" : "$11",
+						"asset_id" : "$12",
+						"created_at" : "$13",
+						"updated_at" : "$13"
+			            
+			        }
+		        </format>
+        <args>
+            <arg evaluator="xml" expression="get-property('id_parents')"/>
+            <arg evaluator="xml" expression="get-property('coa_id')"/>
+            <arg evaluator="xml" expression="get-property('payment_id')"/>
+            <arg evaluator="xml" expression="get-property('date_invoice')"/>
+            <arg evaluator="xml" expression="get-property('price')"/>
+            <arg evaluator="xml" expression="get-property('adjusment')"/>
+            <arg evaluator="xml" expression="get-property('type_cash')"/>
+            <arg evaluator="xml" expression="get-property('notes_invoice')"/>
+            <arg evaluator="xml" expression="get-property('rate')"/>
+            <arg evaluator="xml" expression="get-property('notes')"/>
+            <arg evaluator="xml" expression="get-property('invoice_number')"/>
+            <arg evaluator="xml" expression="get-property('asset_id')"/>
+            <arg evaluator="xml" expression="get-property('currentDate')"/>
+        </args>
+    </payloadFactory>
+    <property description="Get result" expression="json-eval($)" name="resultCoaValue" scope="default" type="STRING"/>
+    <payloadFactory media-type="json">
+        <format>
+      		{
+				"createCoaValues": {
+			    	"createCoaValue": $1
+			  	}
+			}
+		</format>
+        <args>
+            <arg evaluator="xml" expression="get-property('resultCoaValue')"/>
+        </args>
+    </payloadFactory>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <property description="Data Items" expression="json-eval($.return)" name="dataCoaValue" scope="default" type="STRING"/>
+    <dataServiceCall description="Batch insert ke coa value" serviceName="LoccanaSellingDataService">
+        <source type="body"/>
+        <target type="body"/>
+    </dataServiceCall>
+    <property description="Result" expression="json-eval($.return.rate)" name="rate" scope="default" type="STRING"/>
+    <!--     <property name="messageType" scope="axis2" type="STRING" value="application/json"/> -->
+    <!--     <property description="Result" expression="json-eval($)" name="result" scope="default" type="STRING"/> -->
+    <!--     <log description="get log" level="custom"> -->
+    <!--                 <property expression="json-eval($)" name="resultInsertIntoCOA_VALUES"/> -->
+    <!--             </log> -->
+</sequence>

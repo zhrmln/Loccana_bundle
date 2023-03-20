@@ -110,4 +110,10 @@
     <artifact name="InsertCoaValue5" groupId="com.loccana.selling.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/InsertCoaValue5.xml</file>
     </artifact>
+    <artifact name="LoccanaSellingReturnSearchAdd" groupId="com.loccana.selling.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/LoccanaSellingReturnSearchAdd.xml</file>
+    </artifact>
+    <artifact name="LoccanaSellingInvoiceSearchAdd" groupId="com.loccana.selling.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/LoccanaSellingInvoiceSearchAdd.xml</file>
+    </artifact>
 </artifacts>

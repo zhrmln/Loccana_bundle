@@ -31,8 +31,7 @@
 						"invoice_number" : "$11",
 						"asset_id" : "$12",
 						"created_at" : "$13",
-						"updated_at" : "$13"
-			            
+						"updated_at" : "$13"			            
 			        }
 		        </format>
         <args>
@@ -71,9 +70,4 @@
         <target type="body"/>
     </dataServiceCall>
     <property description="Result" expression="json-eval($.return.rate)" name="rate" scope="default" type="STRING"/>
-    <!--     <property name="messageType" scope="axis2" type="STRING" value="application/json"/> -->
-    <!--     <property description="Result" expression="json-eval($)" name="result" scope="default" type="STRING"/> -->
-    <!--     <log description="get log" level="custom"> -->
-    <!--                 <property expression="json-eval($)" name="resultInsertIntoCOA_VALUES"/> -->
-    <!--             </log> -->
 </sequence>

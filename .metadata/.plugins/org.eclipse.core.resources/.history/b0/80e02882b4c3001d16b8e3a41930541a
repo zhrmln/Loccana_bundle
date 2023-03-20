@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="LoccanaSellingGetResponseSuccess" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <filter regex="false" source="boolean(get-property('message'))">
+        <then>
+            <property description="Success Message" name="message" scope="default" type="STRING" value="Success."/>
+        </then>
+        <else/>
+    </filter>
+    <filter regex="false" source="boolean(get-property('data'))">
+        <then>
+            <property description="Handling data kosong" name="data" scope="default" type="STRING" value="{}"/>
+        </then>
+        <else/>
+    </filter>
+    <payloadFactory description="format Respon" media-type="json">
+        <format>{
+	"success": true,
+	"message": "$1",
+	"data": $2
+} </format>
+        <args>
+            <arg evaluator="xml" expression="get-property('message')"/>
+            <arg evaluator="xml" expression="get-property('data')"/>
+        </args>
+    </payloadFactory>
+    <respond/>
+</sequence>

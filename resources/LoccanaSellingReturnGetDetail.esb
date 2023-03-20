@@ -5,7 +5,7 @@
       <outputConnector>
         <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.0/@inputConnector"/>
       </outputConnector>
-      <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+      <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.5/@outputConnector/@outgoingLink"/>
       <mediatorFlow>
         <children xsi:type="esb:DSSMediator" description="Get selling return detail" serviceName="LoccanaSellingDataService" availableDataServices="LoccanaSellingDataService">
           <operations operationName="getSellingReturnDetail">
@@ -37,7 +37,7 @@
         <children xsi:type="esb:FilterMediator" regex="true">
           <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
           <outputConnector>
-            <outgoingLink target="//@server/@children.0/@inputConnector"/>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.4/@inputConnector"/>
           </outputConnector>
           <passOutputConnector>
             <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.3/@filterContainer/@passContainer/@mediatorFlow/@children.0/@inputConnector"/>
@@ -59,6 +59,22 @@
               <mediatorFlow/>
             </failContainer>
           </filterContainer>
+        </children>
+        <children xsi:type="esb:PropertyMediator" valueType="EXPRESSION" newPropertyName="no_selling">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.3/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@mediatorFlow/@children.5/@inputConnector"/>
+          </outputConnector>
+          <valueExpression propertyValue="json-eval($.data.no_selling)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+        </children>
+        <children xsi:type="esb:LogMediator" description="Log start" logLevel="CUSTOM" logSeparator=", ">
+          <inputConnector incomingLinks="//@server/@children.0/@mediatorFlow/@children.4/@outputConnector/@outgoingLink"/>
+          <outputConnector>
+            <outgoingLink target="//@server/@children.0/@inputConnector"/>
+          </outputConnector>
+          <properties propertyName="test get no selling" propertyValueType="EXPRESSION" propertyValue="">
+            <propertyExpression propertyValue="get-property('no_selling')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+          </properties>
         </children>
       </mediatorFlow>
       <onError prettyName="OnError sequence Key" keyName="OnError sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>

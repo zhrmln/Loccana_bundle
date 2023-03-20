@@ -65,7 +65,7 @@
             </failContainer>
           </filterContainer>
         </children>
-        <children xsi:type="esb:PayloadFactoryMediator" description="formatResponse" payload="{&#xA;&#x9;&quot;success&quot;: false,&#xA;&#x9;&quot;message&quot;: &quot;$1&quot;,&#xA;&#x9;&quot;data&quot;: {}&#xA;} " mediaType="json">
+        <children xsi:type="esb:PayloadFactoryMediator" description="formatResponse" payload="{&#xA;&#x9;&#x9;&#x9;&quot;success&quot;: false,&#xA;&#x9;&#x9;&#x9;&quot;message&quot;: &quot;$1&quot;,&#xA;&#x9;&#x9;&#x9;&quot;data&quot;: {}&#xA;&#x9;&#x9;&#x9;&#x9;}&#xA;&#x9;&#x9;" mediaType="json">
           <payloadKey prettyName="Sequence Key" keyName="Sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
           <args argumentType="Expression">
             <argumentExpression propertyValue="get-property('message')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>

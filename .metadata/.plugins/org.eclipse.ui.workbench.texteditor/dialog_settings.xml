@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="getReportCashSaldoQuery"/>
+		<item key="selection" value="getPiutangSelling"/>
 		<item key="wrap" value="true"/>
-		<item key="casesensitive" value="true"/>
+		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="getReportCashSaldoQuery"/>
-			<item value="pin_id_coa"/>
-			<item value="pin_coa_id"/>
-			<item value="pin_end_date"/>
-			<item value="pin_start_date"/>
-			<item value=";"/>
-			<item value="jumlah tabel approve selling"/>
-			<item value="jumlah tabel approve selling "/>
-			<item value="test insert data selling history"/>
-			<item value="test get data array item id ke 2 "/>
-			<item value="updateItemQty"/>
-			<item value="createSellingHistoryQuery"/>
-			<item value="createSellingHistoryBatch"/>
-			<item value="selling_id"/>
-			<item value="getSellingsDetail"/>
+			<item value="getPiutangSelling"/>
+			<item value="selling return detail"/>
+			<item value="test get no selling"/>
+			<item value="LOCCANA SELLING INVOICE"/>
+			<item value="LOCCANA SELLING RETURN"/>
+			<item value="list selling invoice"/>
+			<item value="searchAddSellingInvoice"/>
+			<item value="add"/>
+			<item value="selling invoice"/>
+			<item value="SELECT &#x0A;&#x09;a.id AS id_selling,&#x0A;&#x09;a.`no_selling`,&#x0A;&#x09;a.`date_selling`,&#x0A;&#x09;a.`total_amount`,&#x0A;&#x09;b.`name`&#x0A;&#x09;from&#x0A;&#x09;    `loccana_selling`.`selling` a &#x0A;&#x09;    JOIN `loccana_masterdata`.`partners` b ON a.`partner_id`=b.`id`&#x0A;&#x09;    LEFT JOIN `loccana_selling`.`selling_invoice` d ON a.id=d.`selling_id`&#x0A;&#x09;    WHERE d.`invoice_number` IS NULL"/>
+			<item value="getSellingInvoicesSearchID"/>
+			<item value="getSellingReturnDetail"/>
+			<item value="getSellingsListQuery"/>
+			<item value="getPiutangSellingQuery"/>
+			<item value="SELLING"/>
 		</list>
 		<list key="replacehistory">
 			<item value=":id_coa"/>
@@ -42,8 +42,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="0"/>
-		<item key="DIALOG_Y_ORIGIN" value="299"/>
+		<item key="DIALOG_X_ORIGIN" value="763"/>
+		<item key="DIALOG_Y_ORIGIN" value="206"/>
 		<item key="DIALOG_WIDTH" value="460"/>
 		<item key="DIALOG_HEIGHT" value="405"/>
 		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>

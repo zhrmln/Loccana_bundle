@@ -2,149 +2,6 @@
 <esb:EsbDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esb="http:///org/wso2/integrationstudio/eclipse/gmf/esb">
   <server type="API">
     <children xsi:type="esb:SynapseAPI" apiName="LoccanaSellingInvoices" context="/loccana/selling/invoice">
-      <commentsList> &lt;resource methods=&quot;POST&quot;>
-        &lt;inSequence>
-            &lt;validate cache-schema=&quot;true&quot; source=&quot;json-eval($)&quot;>
-                &lt;schema key=&quot;conf:schema/CreateLoccanaSelllingInvoice.json&quot;/>
-                &lt;on-fail>
-                    &lt;property description=&quot;Error Message&quot; expression=&quot;$ctx:ERROR_MESSAGE&quot; name=&quot;message&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                    &lt;sequence key=&quot;LoccanaSellingGetResponseError&quot;/>
-                &lt;/on-fail>
-            &lt;/validate>
-            &lt;log description=&quot;Log start&quot; level=&quot;custom&quot;>
-                &lt;property name=&quot;Log Message&quot; value=&quot;Insert data selling invoice&quot;/>
-            &lt;/log>
-            &lt;propertyGroup description=&quot;Parameter Input&quot;>
-                &lt;property expression=&quot;json-eval($.selling_id)&quot; name=&quot;selling_id&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.invoice_number)&quot; name=&quot;invoice_number&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.date_invoice)&quot; name=&quot;date_invoice&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.due_date)&quot; name=&quot;due_date&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.attention)&quot; name=&quot;attention&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.notes)&quot; name=&quot;notes&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.sign)&quot; name=&quot;sign&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.tax_invoice)&quot; name=&quot;tax_invoice&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.status)&quot; name=&quot;status&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.items)&quot; name=&quot;items&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;get-property('SYSTEM_DATE', 'yyyy-MM-dd HH:mm:ss')&quot; name=&quot;currentDate&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property expression=&quot;json-eval($.id_user)&quot; name=&quot;id_user&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                &lt;property name=&quot;menu&quot; scope=&quot;default&quot; type=&quot;STRING&quot; value=&quot;Invoice Penjualan&quot;/>
-                &lt;property name=&quot;aktivitas&quot; scope=&quot;default&quot; type=&quot;STRING&quot; value=&quot;Tambah&quot;/>
-            &lt;/propertyGroup>
-            &lt;dataServiceCall description=&quot;Create selling invoice&quot; serviceName=&quot;LoccanaSellingDataService&quot;>
-                &lt;operations type=&quot;single&quot;>
-                    &lt;operation name=&quot;createSellingInvoices&quot;>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('selling_id')&quot; name=&quot;selling_id&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('invoice_number')&quot; name=&quot;invoice_number&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('date_invoice')&quot; name=&quot;date_invoice&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('due_date')&quot; name=&quot;due_date&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('attention')&quot; name=&quot;attention&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('notes')&quot; name=&quot;notes&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('sign')&quot; name=&quot;sign&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('tax_invoice')&quot; name=&quot;tax_invoice&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('status')&quot; name=&quot;status&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('currentDate')&quot; name=&quot;created_at&quot;/>
-                        &lt;param evaluator=&quot;xml&quot; expression=&quot;get-property('currentDate')&quot; name=&quot;updated_at&quot;/>
-                    &lt;/operation>
-                &lt;/operations>
-                &lt;source type=&quot;inline&quot;/>
-                &lt;target type=&quot;body&quot;/>
-            &lt;/dataServiceCall>
-            &lt;property description=&quot;result&quot; expression=&quot;json-eval($)&quot; name=&quot;result&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-            &lt;filter regex=&quot;false&quot; source=&quot;boolean(get-property('result'))&quot;>
-                &lt;then>
-                    &lt;property description=&quot;Error Message&quot; name=&quot;message&quot; scope=&quot;default&quot; type=&quot;STRING&quot; value=&quot;Gagal menambahkan selling invoice&quot;/>
-                    &lt;sequence key=&quot;LoccanaSellingGetResponseError&quot;/>
-                &lt;/then>
-                &lt;else/>
-            &lt;/filter>
-            &lt;property description=&quot;Get Data Selling&quot; expression=&quot;json-eval($.return)&quot; name=&quot;return&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-            &lt;property description=&quot;Get ID Selling&quot; expression=&quot;json-eval($.return.id)&quot; name=&quot;selling_invoice_id&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-            &lt;enrich description=&quot;Deploy selling invoice kalkulasi &quot;>
-                &lt;source clone=&quot;false&quot; property=&quot;items&quot; type=&quot;property&quot;/>
-                &lt;target type=&quot;body&quot;/>
-            &lt;/enrich>
-            &lt;foreach description=&quot;Foreach array untuk mengkalkulasi selling invoice&quot; expression=&quot;json-eval($)&quot; id=&quot;foreach-items&quot;>
-                &lt;sequence>
-                    &lt;propertyGroup description=&quot;input selling invoice detail&quot;>
-                        &lt;property expression=&quot;json-eval($.selling_detail_id)&quot; name=&quot;selling_detail_id&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                        &lt;property expression=&quot;json-eval($.unit_price)&quot; name=&quot;unit_price&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                        &lt;property expression=&quot;json-eval($.qty)&quot; name=&quot;qty&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                        &lt;property expression=&quot;json-eval($.qty_box)&quot; name=&quot;qty_box&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                        &lt;property expression=&quot;json-eval($.qty_pcs)&quot; name=&quot;qty_pcs&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                        &lt;property expression=&quot;json-eval($.box_amount)&quot; name=&quot;box_amount&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                        &lt;property expression=&quot;json-eval($.price)&quot; name=&quot;price&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                        &lt;property expression=&quot;json-eval($.discount)&quot; name=&quot;discount&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                        &lt;property expression=&quot;json-eval($.notes)&quot; name=&quot;notes&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-                    &lt;/propertyGroup>
-                    &lt;payloadFactory media-type=&quot;json&quot;>
-                        &lt;format>        
-                            	{
-                            		&quot;selling_invoice_id&quot;: &quot;$1&quot;,
-                              		&quot;selling_detail_id&quot;: &quot;$2&quot;,
-      					            &quot;unit_price&quot;: &quot;$3&quot;,
-      					            &quot;qty&quot;: &quot;$4&quot;,
-      					            &quot;qty_box&quot;: $5,
-      					            &quot;qty_pcs&quot;: &quot;$6&quot;,
-      					            &quot;box_amount&quot;: &quot;$7&quot;,
-      					            &quot;price&quot;: &quot;$8&quot;,
-      					            &quot;discount&quot;: &quot;$9&quot;,
-      					            &quot;notes&quot;: &quot;$10&quot;,
-      					            &quot;created_at&quot;: &quot;$11&quot;,
-      					            &quot;updated_at&quot;: &quot;$11&quot;
-      					        }
-         				    &lt;/format>
-                        &lt;args>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('selling_invoice_id')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('selling_detail_id')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('unit_price')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('qty')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('qty_box')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('qty_pcs')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('box_amount')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('price')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('discount')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('notes')&quot;/>
-                            &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('currentDate')&quot;/>
-                        &lt;/args>
-                    &lt;/payloadFactory>
-                &lt;/sequence>
-            &lt;/foreach>
-            &lt;property description=&quot;Get result&quot; expression=&quot;json-eval($)&quot; name=&quot;resultKalkulasiSellingInvoice&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-            &lt;log description=&quot;get log&quot; level=&quot;custom&quot;>
-                &lt;property expression=&quot;json-eval($)&quot; name=&quot;resultKalkulasiSellingInvoice&quot;/>
-            &lt;/log>
-            &lt;payloadFactory media-type=&quot;json&quot;>
-                &lt;format>
-       	                {
-       						&quot;createSellingInvoiceDetail_batch_req&quot;: {
-       							&quot;createSellingInvoiceDetail&quot;: $1
-       						}
-       					}
-       				&lt;/format>
-                &lt;args>
-                    &lt;arg evaluator=&quot;xml&quot; expression=&quot;get-property('resultKalkulasiSellingInvoice')&quot;/>
-                &lt;/args>
-            &lt;/payloadFactory>
-            &lt;property description=&quot;Get result&quot; expression=&quot;json-eval($)&quot; name=&quot;DataSellingInvoicedetail&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-            &lt;enrich description=&quot;Deploy selling invoice kalkulasi &quot;>
-                &lt;source clone=&quot;false&quot; property=&quot;DataSellingInvoicedetail&quot; type=&quot;property&quot;/>
-                &lt;target type=&quot;body&quot;/>
-            &lt;/enrich>
-            &lt;dataServiceCall description=&quot;Batch insert ke selling invoice detail&quot; serviceName=&quot;LoccanaSellingDataService&quot;>
-                &lt;source type=&quot;body&quot;/>
-                &lt;target type=&quot;body&quot;/>
-            &lt;/dataServiceCall>
-            &lt;property description=&quot;Success Message&quot; expression=&quot;concat('Berhasil menambahkan Invoice Penjualan Dengan No Invoice ',get-property('invoice_number'))&quot; name=&quot;message&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-            &lt;property description=&quot;Success data&quot; expression=&quot;get-property('selling_invoice_id')&quot; name=&quot;data&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-            &lt;sequence key=&quot;SellingUserActivities&quot;/>
-            &lt;sequence key=&quot;LoccanaSellingGetResponseSuccess&quot;/>
-        &lt;/inSequence>
-        &lt;outSequence/>
-        &lt;faultSequence>
-            &lt;property description=&quot;ErrorMessage&quot; expression=&quot;get-property('ERROR_MESSAGE')&quot; name=&quot;message&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/>
-            &lt;sequence key=&quot;LoccanaSellingGetResponseError&quot;/>
-        &lt;/faultSequence>
-    &lt;/resource> </commentsList>
       <resources urlStyle="URI_TEMPLATE" uriTemplate="/{id}" allowPut="true">
         <inputConnector/>
         <outputConnector>
@@ -848,7 +705,7 @@
         <outputConnector>
           <outgoingLink target="//@server/@children.0/@resources.3/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.0/@inputConnector"/>
           <commentMediators commentText="         &lt;validate cache-schema=&quot;true&quot; source=&quot;json-eval($)&quot;> "/>
-          <commentMediators commentText="             &lt;schema key=&quot;conf:schema/ListItemsSchema.json&quot;/> "/>
+          <commentMediators commentText="             &lt;schema key=&quot;conf:schema/ListSelling.json&quot;/> "/>
           <commentMediators commentText="             &lt;on-fail> "/>
           <commentMediators commentText="                 &lt;property description=&quot;Error Message&quot; expression=&quot;$ctx:ERROR_MESSAGE&quot; name=&quot;message&quot; scope=&quot;default&quot; type=&quot;STRING&quot;/> "/>
           <commentMediators commentText="                 &lt;sequence key=&quot;LoccanaSellingGetResponseError&quot;/> "/>
@@ -1150,7 +1007,7 @@
                 </outputConnector>
                 <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
               </children>
-              <children xsi:type="esb:PayloadFactoryMediator" payload="{&#xA;          &quot;table&quot;: $1,&#xA;          &quot;jumlah_filter&quot;: $2,&#xA;          &quot;jumlah&quot;: $3&#xA;      }&#xA;    " mediaType="json">
+              <children xsi:type="esb:PayloadFactoryMediator" payload="{&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;          &quot;table&quot;: $1,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;          &quot;jumlah_filter&quot;: $2,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;          &quot;jumlah&quot;: $3&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;      }&#xA;   &#x9;&#x9;&#x9;&#x9;" mediaType="json">
                 <payloadKey prettyName="Sequence Key" keyName="Sequence Key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
                 <args argumentType="Expression">
                   <argumentExpression propertyValue="get-property('datalist')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
@@ -1413,17 +1270,8 @@
                         </outputConnector>
                         <valueExpression propertyValue="json-eval($.data.mtd_inv_sell)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
                       </children>
-                      <children xsi:type="esb:LogMediator" description="Log start" logLevel="CUSTOM" logSeparator=", ">
-                        <inputConnector incomingLinks="//@server/@children.0/@resources.5/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.5/@filterContainer/@failContainer/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
-                        <outputConnector>
-                          <outgoingLink target="//@server/@children.0/@resources.5/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.5/@filterContainer/@failContainer/@mediatorFlow/@children.3/@inputConnector"/>
-                        </outputConnector>
-                        <properties propertyName="Log Message" propertyValueType="EXPRESSION" propertyValue="">
-                          <propertyExpression propertyValue="get-property('data')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
-                        </properties>
-                      </children>
                       <children xsi:type="esb:Sequence" name="LoccanaSellingGetResponseSuccess">
-                        <inputConnector incomingLinks="//@server/@children.0/@resources.5/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.5/@filterContainer/@failContainer/@mediatorFlow/@children.2/@outputConnector/@outgoingLink"/>
+                        <inputConnector incomingLinks="//@server/@children.0/@resources.5/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.5/@filterContainer/@failContainer/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
                         <outputConnector/>
                         <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
                         <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="LoccanaSellingGetResponseSuccess" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
@@ -1848,74 +1696,85 @@
                 <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.17/@outputConnector/@outgoingLink"/>
                 <outputConnector>
                   <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.19/@inputConnector"/>
-                  <commentMediators commentText=" &lt;log description=&quot;Log start&quot; level=&quot;custom&quot;>&#xA;                &lt;property expression=&quot;get-property('price')&quot; name=&quot;test get price&quot;/>&#xA;                 &lt;property expression=&quot;get-property('notes')&quot; name=&quot;test get notes&quot;/>&#xA;            &lt;/log> "/>
                 </outputConnector>
                 <valueExpression propertyValue="json-eval($.returnDetail.notes)" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
               </children>
-              <children xsi:type="esb:Sequence" name="InsertCoaValue1">
+              <children xsi:type="esb:LogMediator" description="Log start" logLevel="CUSTOM" logSeparator=", ">
                 <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.18/@outputConnector/@outgoingLink"/>
                 <outputConnector>
                   <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.20/@inputConnector"/>
+                </outputConnector>
+                <properties propertyName="test get price" propertyValueType="EXPRESSION" propertyValue="">
+                  <propertyExpression propertyValue="get-property('price')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                </properties>
+                <properties propertyName="test get notes" propertyValueType="EXPRESSION" propertyValue="">
+                  <propertyExpression propertyValue="get-property('notes')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                </properties>
+              </children>
+              <children xsi:type="esb:Sequence" name="InsertCoaValue1">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.19/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.21/@inputConnector"/>
                 </outputConnector>
                 <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
                 <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="InsertCoaValue1" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
               </children>
               <children xsi:type="esb:Sequence" name="InsertCoaValue2">
-                <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.19/@outputConnector.0/@outgoingLink"/>
-                <outputConnector>
-                  <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.21/@inputConnector"/>
-                </outputConnector>
-                <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
-                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="InsertCoaValue2" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
-              </children>
-              <children xsi:type="esb:Sequence" name="InsertCoaValue3">
                 <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.20/@outputConnector.0/@outgoingLink"/>
                 <outputConnector>
                   <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.22/@inputConnector"/>
                 </outputConnector>
                 <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
-                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="InsertCoaValue3" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="InsertCoaValue2" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
               </children>
-              <children xsi:type="esb:Sequence" name="InsertCoaValue4">
+              <children xsi:type="esb:Sequence" name="InsertCoaValue3">
                 <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.21/@outputConnector.0/@outgoingLink"/>
                 <outputConnector>
                   <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.23/@inputConnector"/>
                 </outputConnector>
                 <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
-                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="InsertCoaValue4" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="InsertCoaValue3" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
               </children>
-              <children xsi:type="esb:Sequence" name="InsertCoaValue5">
+              <children xsi:type="esb:Sequence" name="InsertCoaValue4">
                 <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.22/@outputConnector.0/@outgoingLink"/>
                 <outputConnector>
                   <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.24/@inputConnector"/>
                 </outputConnector>
                 <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
-                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="InsertCoaValue5" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="InsertCoaValue4" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
               </children>
-              <children xsi:type="esb:PropertyMediator" description="Success Message" valueType="EXPRESSION" newPropertyName="message">
+              <children xsi:type="esb:Sequence" name="InsertCoaValue5">
                 <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.23/@outputConnector.0/@outgoingLink"/>
                 <outputConnector>
                   <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.25/@inputConnector"/>
                 </outputConnector>
+                <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="InsertCoaValue5" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+              </children>
+              <children xsi:type="esb:PropertyMediator" description="Success Message" valueType="EXPRESSION" newPropertyName="message">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.24/@outputConnector.0/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.26/@inputConnector"/>
+                </outputConnector>
                 <valueExpression propertyValue="concat('Berhasil menambahkan Invoice Penjualan Dengan No Invoice ',get-property('invoice_number'))" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
               </children>
               <children xsi:type="esb:PropertyMediator" description="Success data" valueType="EXPRESSION" newPropertyName="data">
-                <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.24/@outputConnector/@outgoingLink"/>
+                <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.25/@outputConnector/@outgoingLink"/>
                 <outputConnector>
-                  <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.26/@inputConnector"/>
+                  <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.27/@inputConnector"/>
                 </outputConnector>
                 <valueExpression propertyValue="get-property('selling_invoice_id')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
               </children>
               <children xsi:type="esb:Sequence" name="SellingUserActivities">
-                <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.25/@outputConnector/@outgoingLink"/>
+                <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.26/@outputConnector/@outgoingLink"/>
                 <outputConnector>
-                  <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.27/@inputConnector"/>
+                  <outgoingLink target="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.28/@inputConnector"/>
                 </outputConnector>
                 <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
                 <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="SellingUserActivities" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
               </children>
               <children xsi:type="esb:Sequence" name="LoccanaSellingGetResponseSuccess">
-                <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.26/@outputConnector.0/@outgoingLink"/>
+                <inputConnector incomingLinks="//@server/@children.0/@resources.6/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.27/@outputConnector.0/@outgoingLink"/>
                 <outputConnector/>
                 <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
                 <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="LoccanaSellingGetResponseSuccess" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
@@ -1936,6 +1795,98 @@
                 <inputConnector/>
                 <outputConnector>
                   <outgoingLink target="//@server/@children.0/@resources.6/@container/@faultContainer/@mediatorFlow/@children.0/@inputConnector"/>
+                </outputConnector>
+                <valueExpression propertyValue="get-property('ERROR_MESSAGE')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+              </children>
+            </mediatorFlow>
+          </faultContainer>
+        </container>
+        <inSequenceKey prettyName="In Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+        <outSequenceKey prettyName="Out Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+        <faultSequenceKey prettyName="Fault Sequence Reference" keyName="key" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+      </resources>
+      <resources urlStyle="URI_TEMPLATE" uriTemplate="/search-add" allowGet="true">
+        <inputConnector/>
+        <outputConnector>
+          <outgoingLink target="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.0/@inputConnector"/>
+        </outputConnector>
+        <outSequenceOutputConnector/>
+        <faultInputConnector incomingLinks="//@server/@children.0/@resources.7/@container/@faultContainer/@mediatorFlow/@children.0/@outputConnector.0/@outgoingLink"/>
+        <container>
+          <sequenceAndEndpointContainer>
+            <mediatorFlow>
+              <children xsi:type="esb:Sequence" name="LoccanaSellingInvoiceSearchAdd">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.7/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@inputConnector"/>
+                </outputConnector>
+                <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="LoccanaSellingInvoiceSearchAdd" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+              </children>
+              <children xsi:type="esb:FilterMediator" regex="false">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.0/@outputConnector.0/@outgoingLink"/>
+                <outputConnector/>
+                <passOutputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@filterContainer/@passContainer/@mediatorFlow/@children.0/@inputConnector"/>
+                </passOutputConnector>
+                <failOutputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@filterContainer/@failContainer/@mediatorFlow/@children.0/@inputConnector"/>
+                </failOutputConnector>
+                <xpath prettyName="Filter Source XPath" propertyName="filterSourceXpath" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                <source propertyValue="boolean(get-property('data'))" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                <filterContainer>
+                  <passContainer>
+                    <mediatorFlow>
+                      <children xsi:type="esb:PropertyMediator" description="Error Message" value="selling invoice tidak ditemukan." newPropertyName="message">
+                        <inputConnector incomingLinks="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@passOutputConnector/@outgoingLink"/>
+                        <outputConnector>
+                          <outgoingLink target="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@filterContainer/@passContainer/@mediatorFlow/@children.1/@inputConnector"/>
+                        </outputConnector>
+                        <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                      </children>
+                      <children xsi:type="esb:Sequence" name="LoccanaSellingGetResponseError">
+                        <inputConnector incomingLinks="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@filterContainer/@passContainer/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+                        <outputConnector/>
+                        <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                        <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="LoccanaSellingGetResponseError" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+                      </children>
+                    </mediatorFlow>
+                  </passContainer>
+                  <failContainer>
+                    <mediatorFlow>
+                      <children xsi:type="esb:PropertyMediator" description="Success Message" value="selling invoice ditemukan." newPropertyName="message">
+                        <inputConnector incomingLinks="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@failOutputConnector/@outgoingLink"/>
+                        <outputConnector>
+                          <outgoingLink target="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@filterContainer/@failContainer/@mediatorFlow/@children.1/@inputConnector"/>
+                        </outputConnector>
+                        <valueExpression prettyName="Property Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
+                      </children>
+                      <children xsi:type="esb:Sequence" name="LoccanaSellingGetResponseSuccess">
+                        <inputConnector incomingLinks="//@server/@children.0/@resources.7/@container/@sequenceAndEndpointContainer/@mediatorFlow/@children.1/@filterContainer/@failContainer/@mediatorFlow/@children.0/@outputConnector/@outgoingLink"/>
+                        <outputConnector/>
+                        <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                        <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="LoccanaSellingGetResponseSuccess" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+                      </children>
+                    </mediatorFlow>
+                  </failContainer>
+                </filterContainer>
+              </children>
+            </mediatorFlow>
+          </sequenceAndEndpointContainer>
+          <faultContainer>
+            <mediatorFlow>
+              <children xsi:type="esb:Sequence" name="LoccanaSellingGetResponseError">
+                <inputConnector incomingLinks="//@server/@children.0/@resources.7/@container/@faultContainer/@mediatorFlow/@children.1/@outputConnector/@outgoingLink"/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.7/@faultInputConnector"/>
+                </outputConnector>
+                <dynamicReferenceKey prettyName="Sequence Expression" propertyName="expression" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078"/>
+                <staticReferenceKey prettyName="Sequence Key" keyName="Sequence Key" keyValue="LoccanaSellingGetResponseError" filters="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400196F72672E77736F322E636172626F6E2E6D6564696174797065737200136A6176612E7574696C2E41727261794C6973747881D21D99C7619D03000149000473697A6578700000000177040000000174001D6170706C69636174696F6E2F766E642E77736F322E73657175656E63657878"/>
+              </children>
+              <children xsi:type="esb:PropertyMediator" description="ErrorMessage" valueType="EXPRESSION" newPropertyName="message">
+                <inputConnector/>
+                <outputConnector>
+                  <outgoingLink target="//@server/@children.0/@resources.7/@container/@faultContainer/@mediatorFlow/@children.0/@inputConnector"/>
                 </outputConnector>
                 <valueExpression propertyValue="get-property('ERROR_MESSAGE')" namespaces="ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F400000000000007708000000100000000078" supportJsonPaths="true"/>
               </children>

@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="UpdateSellingOrdering" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
-    <!-- 	 <validate cache-schema="true" source="json-eval($)"> -->
-    <!--                 <schema key="conf:schema/coas_validator.json"/> -->
-    <!--                 <on-fail> -->
-    <!--                     <property description="Error Message" expression="$ctx:ERROR_MESSAGE" name="message" scope="default" type="STRING"/> -->
-    <!--                     <sequence key="LoccanaMasterGetResponseError"/> -->
-    <!--                 </on-fail> -->
-    <!--             </validate> -->
     <log description="Log start" level="custom">
         <property name="Log Message" value="Update Ordering Selling"/>
     </log>
@@ -22,7 +15,4 @@
     </dataServiceCall>
     <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
     <property description="Result" expression="json-eval($)" name="result" scope="default" type="STRING"/>
-    <!--                 <log description="Log start" level="custom"> -->
-    <!--                             <property expression="get-property('result')" name="Tambah seq_max"/> -->
-    <!--                         </log> -->
 </sequence>

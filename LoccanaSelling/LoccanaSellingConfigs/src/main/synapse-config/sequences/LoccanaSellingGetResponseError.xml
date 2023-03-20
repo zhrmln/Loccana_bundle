@@ -15,10 +15,11 @@
     </filter>
     <payloadFactory description="formatResponse" media-type="json">
         <format>{
-	"success": false,
-	"message": "$1",
-	"data": {}
-} </format>
+			"success": false,
+			"message": "$1",
+			"data": {}
+				}
+		</format>
         <args>
             <arg evaluator="xml" expression="get-property('message')"/>
         </args>

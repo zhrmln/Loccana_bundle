@@ -94,3 +94,8 @@ paths:
       responses:
         default:
           description: Default response
+  /search-add:
+    get:
+      responses:
+        default:
+          description: Default response

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="UpdateSellingOrdering" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <!-- 	 <validate cache-schema="true" source="json-eval($)"> -->
+    <!--                 <schema key="conf:schema/coas_validator.json"/> -->
+    <!--                 <on-fail> -->
+    <!--                     <property description="Error Message" expression="$ctx:ERROR_MESSAGE" name="message" scope="default" type="STRING"/> -->
+    <!--                     <sequence key="LoccanaMasterGetResponseError"/> -->
+    <!--                 </on-fail> -->
+    <!--             </validate> -->
+    <log description="Log start" level="custom">
+        <property name="Log Message" value="Update Ordering Selling"/>
+    </log>
+    <!--     <propertyGroup description="Parameter Input"> -->
+    <!--         <property expression="json-eval($.id_ordering)" name="id_ordering" scope="default" type="STRING"/> -->
+    <!--     </propertyGroup> -->
+    <dataServiceCall description="update Ordering Selling" serviceName="LoccanaSellingDataService">
+        <operations type="single">
+            <operation name="updateOrdering"/>
+        </operations>
+        <source type="inline"/>
+        <target type="body"/>
+    </dataServiceCall>
+    <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+    <property description="Result" expression="json-eval($)" name="result" scope="default" type="STRING"/>
+</sequence>

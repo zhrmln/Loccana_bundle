@@ -31,8 +31,7 @@
 						"invoice_number" : "$11",
 						"asset_id" : "$12",
 						"created_at" : "$13",
-						"updated_at" : "$13"
-			            
+						"updated_at" : "$13"			            
 			        }
 		        </format>
         <args>

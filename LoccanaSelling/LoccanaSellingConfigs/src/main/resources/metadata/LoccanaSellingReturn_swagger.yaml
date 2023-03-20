@@ -4,7 +4,7 @@ info:
   description: API Definition of LoccanaSellingReturn
   version: 1.0.0
 servers:
-- url: http://localhost:8290/loccana/selling/selling-return
+- url: http://localhost:8290/loccana/selling/return
 paths:
   /:
     post:
@@ -113,6 +113,11 @@ paths:
                 payload:
                   type: object
         required: false
+      responses:
+        default:
+          description: Default response
+  /search-add:
+    get:
       responses:
         default:
           description: Default response
